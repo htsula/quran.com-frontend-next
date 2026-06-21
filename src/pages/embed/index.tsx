@@ -419,8 +419,6 @@ const AyahWidgetBuilderPage = () => {
         showArabic: preferences.showArabic,
         showTranslationName: preferences.showTranslatorName,
         showTafsirs: preferences.showTafsirs,
-        showReflections: preferences.showReflections,
-        showLessons: preferences.showLessons,
         showAnswers: preferences.showAnswers,
         mergeVerses: preferences.mergeVerses,
       });

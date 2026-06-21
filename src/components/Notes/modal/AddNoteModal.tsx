@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import { useSWRConfig } from 'swr';
 
-import { LOADING_POST_ID } from '@/components/Notes/modal/constant';
 import Header from '@/components/Notes/modal/Header';
 import type { OnSaveNote } from '@/components/Notes/modal/hooks/useNotesStates';
 import NoteFormModal from '@/components/Notes/modal/NoteFormModal';
@@ -11,8 +10,6 @@ import {
   CacheAction,
   getNoteFromResponse,
   invalidateCache,
-  isNotePublishFailed,
-  addReflectionEntityToNote,
 } from '@/components/Notes/modal/utility';
 import { getNoteServerErrors } from '@/components/Notes/modal/validation';
 import { ToastStatus, useToast } from '@/dls/Toast/Toast';
@@ -57,35 +54,27 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
     return verseKeysToRanges(verseKeys);
   }, [verseKeys]);
 
-  const handleSaveNote: OnSaveNote = async ({ note: noteBody, isPublic }) => {
+  const handleSaveNote: OnSaveNote = async ({ note: noteBody }) => {
     try {
-      const data = await addNote({ body: noteBody, ranges, saveToQR: isPublic });
+      const data = await addNote({ body: noteBody, ranges });
 
       const hasValidationError = isValidationError(data);
-      const isFailedToPublish = isNotePublishFailed(data);
       const noteFromResponse = getNoteFromResponse(data);
 
       if (hasValidationError) return getNoteServerErrors(data, t, lang);
 
-      if (isFailedToPublish) {
-        toast(t('notes:save-publish-failed'), { status: ToastStatus.Error });
-      } else if (noteFromResponse?.id && noteFromResponse?.createdAt) {
+      if (noteFromResponse?.id && noteFromResponse?.createdAt) {
         toast(t('notes:save-success'), { status: ToastStatus.Success });
       } else {
         throw data;
       }
 
-      const isPrivate = isFailedToPublish || !isPublic;
-
       return invalidateCache({
         mutate,
         cache,
         verseKeys,
-        note: isPrivate
-          ? noteFromResponse
-          : addReflectionEntityToNote(noteFromResponse, LOADING_POST_ID),
+        note: noteFromResponse,
         invalidateCount: true,
-        invalidateReflections: isPublic,
         flushNotesList: true,
         action: CacheAction.CREATE,
       });

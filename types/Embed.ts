@@ -83,12 +83,6 @@ export type WidgetOptions = {
   // Should the widget display tafsirs button
   showTafsirs: boolean;
 
-  // Should the widget display reflections button
-  showReflections: boolean;
-
-  // Should the widget display lessons button
-  showLessons: boolean;
-
   // Should the widget display answers button
   showAnswers: boolean;
 
@@ -146,7 +140,5 @@ export type WidgetLabels = {
   surah: string;
   verse: string;
   tafsirs: string;
-  reflections: string;
-  lessons: string;
   answers: string;
 };

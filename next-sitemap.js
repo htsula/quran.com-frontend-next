@@ -23,7 +23,6 @@ const BASE_PATH =
 
 const { API_GATEWAY_URL } = process.env;
 const API_CONTENT_URL = `${API_GATEWAY_URL}/content`;
-const API_AUTH_URL = `${API_GATEWAY_URL}/auth`;
 const QDC_PREFIX = '/api/qdc';
 
 const chapters = range(1, 115);
@@ -36,20 +35,6 @@ const generateSignature = (url) => {
   const encodedSignature = CryptoJS.enc.Base64.stringify(signature);
 
   return { signature: encodedSignature, timestamp: currentTimestamp };
-};
-
-const getAvailableCourses = async () => {
-  const coursesURL = `${API_AUTH_URL}/courses`;
-  const { signature, timestamp } = generateSignature(coursesURL);
-  const res = await fetch(coursesURL, {
-    headers: {
-      'x-auth-signature': signature,
-      'x-timestamp': timestamp,
-      'x-internal-client': process.env.INTERNAL_CLIENT_ID,
-    },
-  });
-  const data = await res.json();
-  return data;
 };
 
 const getAvailableTafsirs = async () => {
@@ -175,12 +160,7 @@ module.exports = {
   siteUrl: BASE_PATH,
   sitemapSize: 20000,
   generateRobotsTxt: isProduction,
-  exclude: [
-    ...locales.map((locale) => `/${locale}`),
-    '/*/product-updates*',
-    '/*/search',
-    '/*my-learning-plans',
-  ],
+  exclude: [...locales.map((locale) => `/${locale}`), '/*/search'],
   alternateRefs: locales.map((locale) => ({
     href: `${BASE_PATH}/${locale}`,
     hreflang: locale,
@@ -256,12 +236,6 @@ module.exports = {
                 alternateRefs: getAlternateRefs(chapterId, false, '', location),
               });
             });
-            // 7. /[verseKey]/reflections
-            const reflectionsLocation = `${verseKey}/reflections`;
-            result.push({
-              loc: reflectionsLocation,
-              alternateRefs: getAlternateRefs(chapterId, false, '', reflectionsLocation),
-            });
           });
         });
         // 7. /juz/[juzId]
@@ -289,19 +263,7 @@ module.exports = {
           });
         });
 
-        // 12. /learning-plans/[learningPlanSlug]
-        const learningPlans = await getAvailableCourses();
-        // TODO: handle pagination in the future when we have more than 10 learning plans
-        learningPlans.data.forEach((learningPlan) => {
-          const location = `/learning-plans/${learningPlan.slug}`;
-          // TODO: handle per language learning plans e.g. Arabic learning plan should only show under /ar/[learning-plan-slug]
-          result.push({
-            loc: location,
-            alternateRefs: getAlternateRefs('', false, '', location),
-          });
-        });
-
-        // 13. /verseKey for verses that have Qiraat (recitation variations)
+        // 12. /verseKey for verses that have Qiraat (recitation variations)
         const versesWithQiraat = await getVersesWithQiraat();
         versesWithQiraat.forEach((verseKey) => {
           const location = `${verseKey}/qiraat`;

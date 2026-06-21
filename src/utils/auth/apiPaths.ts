@@ -174,29 +174,6 @@ export const makeGetNoteByAttachedEntityUrl = (queryParams: GetNoteByAttachedEnt
 
 export const makeDeleteOrUpdateNoteUrl = (id: string) => makeUrl(`notes/${id}`);
 
-export const makePublishNoteUrl = (id: string) => makeUrl(`notes/${id}/publish`);
-
-export type GetCoursesQueryParams = {
-  myCourses?: boolean;
-  languages?: string[];
-  cursor?: string;
-};
-
-export const makeGetCoursesUrl = (params?: GetCoursesQueryParams) =>
-  makeUrl('courses', params as GetCoursesQueryParams);
-export const makeGetCourseUrl = (courseSlugOrId: string) => makeUrl(`courses/${courseSlugOrId}`);
-
-export const makeGetLessonUrlPrefix = (courseSlugOrId: string) =>
-  makeUrl(`courses/${courseSlugOrId}/lessons`);
-
-export const makeGetLessonUrl = (courseSlugOrId: string, lessonSlugOrId: string) =>
-  `${makeGetLessonUrlPrefix(courseSlugOrId)}/${lessonSlugOrId}`;
-
-export const makeEnrollUserUrl = () => makeUrl('courses/enroll');
-export const makeGetUserCoursesCountUrl = () => makeUrl('courses/count');
-
-export const makeCourseFeedbackUrl = (courseId: string) => makeUrl(`courses/${courseId}/feedback`);
-
 export const makeUpdateCollectionUrl = (collectionId: string) =>
   makeUrl(`collections/${collectionId}`);
 
@@ -214,8 +191,6 @@ export const makeDeleteCollectionBookmarkByIdUrl = (collectionId: string, bookma
 
 export const makeDeleteCollectionBookmarkByKeyUrl = (collectionId: string) =>
   makeUrl(`collections/${collectionId}/bookmarks`);
-
-export const makePostReflectionViewsUrl = (postId: string) => makeUrl(`posts/${postId}/views`);
 
 export const makeBookmarkCollectionsUrl = (
   mushafId: number,

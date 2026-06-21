@@ -5,12 +5,13 @@ import useTranslation from 'next-translate/useTranslation';
 
 import NavigationButton from './HeroButtons/NavigationButton';
 import PopularButton from './HeroButtons/PopularButton';
+import RadioButton from './HeroButtons/RadioButton';
+import RecitersButton from './HeroButtons/RecitersButton';
 import styles from './HomePageHero.module.scss';
 
 import PopularDropdown from '@/components/HomePage/PopularDropdown';
 import SearchInput from '@/components/Search/SearchInput';
 import Background from '@/icons/background.svg';
-import Logo from '@/icons/logo_main.svg';
 
 const HomePageHero = () => {
   const { t } = useTranslation('common');
@@ -34,18 +35,13 @@ const HomePageHero = () => {
       </div>
       <div>
         <div className={styles.innerContainer}>
-          <div className={styles.logoContainer}>
-            <Logo />
-          </div>
-          <SearchInput
-            placeholder={t('command-bar.placeholder')}
-            shouldExpandOnClick
-            shouldOpenDrawerOnMobile
-          />
+          <SearchInput placeholder={t('command-bar.placeholder')} shouldExpandOnClick />
           {!isPopularDropdownOpen && (
             <div className={styles.buttonsContainer}>
               <NavigationButton />
               <PopularButton onClick={handlePopularClick} />
+              <RadioButton />
+              <RecitersButton />
             </div>
           )}
           <PopularDropdown isOpen={isPopularDropdownOpen} onClose={handleDropdownClose} />

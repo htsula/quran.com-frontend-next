@@ -6,10 +6,10 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   block-size: var(--navbar-height);
   max-block-size: var(--navbar-height);
-  background-color: var(--color-background-elevated);
+  background-color: transparent;
 
   svg,
   g {
@@ -49,6 +49,8 @@
 
 .rightCTA {
   display: flex;
+  // Re-enable interaction on the floating buttons (parent nav is pointer-events: none).
+  pointer-events: auto;
   margin-inline-end: var(--spacing-medium);
   align-items: center;
 

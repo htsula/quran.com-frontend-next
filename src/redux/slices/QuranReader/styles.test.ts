@@ -10,8 +10,6 @@ import { MushafLines, QuranFont } from '@/types/QuranReader';
 vi.mock('@/redux/defaultSettings/util', () => ({
   getQuranReaderStylesInitialState: () => ({
     tafsirFontScale: 3,
-    reflectionFontScale: 3,
-    lessonFontScale: 3,
     quranTextFontScale: 3,
     translationFontScale: 3,
     wordByWordFontScale: 3,
@@ -25,8 +23,6 @@ vi.mock('@/redux/defaultSettings/util', () => ({
 
 const initialState: QuranReaderStyles = {
   tafsirFontScale: 3,
-  reflectionFontScale: 3,
-  lessonFontScale: 3,
   quranTextFontScale: 3,
   translationFontScale: 3,
   wordByWordFontScale: 3,

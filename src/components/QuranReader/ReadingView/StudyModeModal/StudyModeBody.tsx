@@ -64,7 +64,6 @@ const StudyModeBody: React.FC<StudyModeBodyProps> = ({
     activeTab,
     verseKey: verse.verseKey,
     onTabChange,
-    hasRelatedVerses: verse.hasRelatedVerses,
     relatedVersesCount,
   });
 

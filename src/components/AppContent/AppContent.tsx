@@ -15,13 +15,8 @@ import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/dls/Footer/Footer';
 import useAuthData from '@/hooks/auth/useAuthData';
 import useShowNavbar from '@/hooks/useShowNavbar';
-import { selectIsBannerVisible } from '@/redux/slices/banner';
-import {
-  selectIsLanguageDrawerOpen,
-  selectIsNavigationDrawerOpen,
-  selectIsSettingsDrawerOpen,
-} from '@/redux/slices/navbar';
-import { isAuthPage } from '@/utils/routes';
+import { selectIsLanguageDrawerOpen, selectIsSettingsDrawerOpen } from '@/redux/slices/navbar';
+import { isAuthPage, isQuranReaderRoutePathname } from '@/utils/routes';
 import { createSEOConfig } from '@/utils/seo';
 
 interface AppContentProps {
@@ -35,11 +30,12 @@ function AppContent({ Component, pageProps }: AppContentProps) {
   const { t } = useTranslation('common');
   const { userData } = useAuthData();
   const isAuth = isAuthPage(router);
+  // On reader routes the navbar bar is not rendered (the ContextMenu is the top
+  // header), so the navbar no longer occupies any space.
+  const isReaderRoute = isQuranReaderRoutePathname(router.pathname);
   const showNavbar = useShowNavbar();
-  const isNavigationDrawerOpen = useSelector(selectIsNavigationDrawerOpen);
   const isSettingsDrawerOpen = useSelector(selectIsSettingsDrawerOpen);
   const isLanguageDrawerOpen = useSelector(selectIsLanguageDrawerOpen);
-  const isBannerVisible = useSelector(selectIsBannerVisible);
   const isEmbedPage = router.pathname === '/embed/v1';
 
   if (isEmbedPage) {
@@ -49,8 +45,6 @@ function AppContent({ Component, pageProps }: AppContentProps) {
   return (
     <div
       className={classNames({
-        bannerActive: isBannerVisible,
-        desktopStandaloneBannerActive: isBannerVisible,
         navbarVisible: showNavbar,
         navbarHidden: !showNavbar,
       })}
@@ -63,9 +57,10 @@ function AppContent({ Component, pageProps }: AppContentProps) {
       <DeveloperUtility />
       <div
         className={classNames(styles.contentContainer, {
-          [styles.dimmed]: isNavigationDrawerOpen || isSettingsDrawerOpen || isLanguageDrawerOpen,
+          [styles.dimmed]: isSettingsDrawerOpen || isLanguageDrawerOpen,
+          [styles.readerRoute]: isReaderRoute,
         })}
-        {...((isNavigationDrawerOpen || isSettingsDrawerOpen || isLanguageDrawerOpen) && {
+        {...((isSettingsDrawerOpen || isLanguageDrawerOpen) && {
           inert: true,
           'aria-hidden': true, // eslint-disable-line @typescript-eslint/naming-convention
         })}

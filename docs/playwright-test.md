@@ -58,13 +58,11 @@ Settings and UI:
   - `changeWebsiteTheme`, `withSettingsDrawer`, `selectQuranFont`, `selectMushafLines`, word-by-word
     helpers.
 - `tests/helpers/navigation.ts`
-  - `openNavigationDrawer`, `openSearchDrawer`, `openQuranNavigation`.
+  - `openQuranNavigation`.
 - `tests/helpers/language.ts`
   - `selectNavigationDrawerLanguage`, `ensureEnglishLanguage`.
 - `tests/helpers/mode-switching.ts`
   - `switchToReadingMode`, `switchToTranslationMode`.
-- `tests/helpers/banner.ts`
-  - `clickCreateMyGoalButton`.
 - `tests/helpers/streak-api-mocks.ts`
   - `mockStreakWithGoal`, `mockStreakWithoutGoal`.
 
@@ -114,8 +112,8 @@ test.describe('Feature X', () => {
     const home = new Homepage(page, context);
     await home.goTo('/');
 
-    await page.getByTestId(TestId.NAVIGATE_QURAN_BUTTON).click();
-    await expect(page.getByTestId(TestId.NAVIGATION_DRAWER)).toBeVisible();
+    await page.getByTestId(TestId.OPEN_SEARCH_DRAWER).click();
+    await expect(page.getByTestId(TestId.SEARCH_DRAWER_CONTAINER)).toBeVisible();
   });
 });
 ```

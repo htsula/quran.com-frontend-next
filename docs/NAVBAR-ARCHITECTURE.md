@@ -32,9 +32,9 @@ AppContent (wrapper with .bannerActive class)
 │           │   ├── bannerContainerCenter (desktop only, >= 768px)
 │           │   │   └── Banner
 │           │   ├── ProfileAvatarButton
-│           │   ├── SearchButton → SearchDrawer
+│           │   ├── ThemeSwitcher (dynamic import) → theme popover
+│           │   ├── LanguageButton → LanguageDrawer
 │           │   ├── SidebarNavigation (dynamic import)
-│           │   ├── MenuButton → NavigationDrawer
 │           │   └── SettingsDrawer
 │           └── [dimmed overlay pseudo-element]
 │
@@ -194,11 +194,9 @@ The SCSS variables are exported as CSS custom properties for use in component st
 ```typescript
 type Navbar = {
   isVisible: boolean; // Scroll-based visibility
-  isNavigationDrawerOpen: boolean; // Navigation drawer state
-  isSearchDrawerOpen: boolean; // Search drawer state
   isSettingsDrawerOpen: boolean; // Settings drawer state
+  isLanguageDrawerOpen: boolean; // Language drawer state
   settingsView: SettingsView; // Current settings tab
-  disableSearchDrawerTransition: boolean;
   lockVisibilityState: boolean; // Lock during tab switch
 };
 ```
@@ -278,7 +276,7 @@ interface Props {
 **Key Logic:**
 
 - Renders Banner in two locations (top for mobile, center for desktop)
-- Applies `.dimmed` class when navigation drawer open
+- Applies `.dimmed` class when the settings or language drawer is open
 - Manages sidebar navigation lifecycle
 
 **Conditional Rendering:**
@@ -467,8 +465,8 @@ const QURAN_READER_ROUTES = new Set([
 | Navbar               | `src/components/Navbar/Navbar.tsx`                                        |
 | NavbarBody           | `src/components/Navbar/NavbarBody/index.tsx`                              |
 | Banner               | `src/components/Banner/Banner.tsx`                                        |
-| NavigationDrawer     | `src/components/Navbar/NavigationDrawer/NavigationDrawer.tsx`             |
-| SearchDrawer         | `src/components/Navbar/SearchDrawer/SearchDrawer.tsx`                     |
+| ThemeSwitcher        | `src/components/Navbar/ThemeSwitcher/index.tsx`                           |
+| LanguageDrawer       | `src/components/Navbar/LanguageDrawer/LanguageDrawer.tsx`                 |
 | SettingsDrawer       | `src/components/Navbar/SettingsDrawer/SettingsDrawer.tsx`                 |
 | ContextMenu          | `src/components/QuranReader/ContextMenu/index.tsx`                        |
 | TajweedBar           | `src/components/QuranReader/TajweedBar/TajweedBar.tsx`                    |

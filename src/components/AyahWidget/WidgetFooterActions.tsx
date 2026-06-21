@@ -1,8 +1,6 @@
 import React from 'react';
 
 import BookIcon from '@/icons/book-open.svg';
-import ChatIcon from '@/icons/chat.svg';
-import GraduationCapIcon from '@/icons/graduation-cap.svg';
 import LightbulbOnIcon from '@/icons/lightbulb-on.svg';
 import LightbulbIcon from '@/icons/lightbulb.svg';
 import type { WidgetOptions, WidgetColors } from '@/types/Embed';
@@ -17,7 +15,7 @@ type Props = {
 };
 
 type FooterAction = {
-  key: 'tafsirs' | 'lessons' | 'reflections' | 'answers';
+  key: 'tafsirs' | 'answers';
   label: string;
   href: string;
   icon: JSX.Element;
@@ -59,18 +57,6 @@ const WidgetFooterActions = ({ verse, options, colors, children }: Props): JSX.E
       label: options.labels?.tafsirs || 'Tafsirs',
       href: `${baseUrl}/tafsirs/169`,
       icon: <BookIcon style={ICON_STYLE} />,
-    },
-    options.showLessons && {
-      key: 'lessons',
-      label: options.labels?.lessons || 'Lessons',
-      href: `${baseUrl}/lessons`,
-      icon: <GraduationCapIcon style={ICON_STYLE} />,
-    },
-    options.showReflections && {
-      key: 'reflections',
-      label: options.labels?.reflections || 'Reflections',
-      href: `${baseUrl}/reflections`,
-      icon: <ChatIcon style={ICON_STYLE} />,
     },
     options.showAnswers &&
       options.hasAnswers && {

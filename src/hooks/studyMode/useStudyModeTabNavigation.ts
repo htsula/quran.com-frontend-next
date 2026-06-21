@@ -9,8 +9,6 @@ import { selectSelectedTafsirs } from '@/redux/slices/QuranReader/tafsirs';
 import {
   fakeNavigateReplace,
   getVerseSelectedTafsirNavigationUrl,
-  getVerseReflectionNavigationUrl,
-  getVerseLessonNavigationUrl,
   getVerseAnswersNavigationUrl,
   getVerseQiraatNavigationUrl,
   getVerseLayersNavigationUrl,
@@ -51,12 +49,6 @@ const useStudyModeTabNavigation = ({
           return getVerseSelectedTafsirNavigationUrl(chId, Number(vNum), tafsirSlug);
         }
         return getVerseSelectedTafsirNavigationUrl(chId, Number(vNum), 'en-tafisr-ibn-kathir');
-      }
-      if (tab === StudyModeTabId.REFLECTIONS) {
-        return getVerseReflectionNavigationUrl(vk);
-      }
-      if (tab === StudyModeTabId.LESSONS) {
-        return getVerseLessonNavigationUrl(vk);
       }
       if (tab === StudyModeTabId.LAYERS) {
         return getVerseLayersNavigationUrl(vk);

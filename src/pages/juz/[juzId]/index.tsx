@@ -82,12 +82,21 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       pagesLookupResponse.lookupRange.from,
       pagesLookupResponse.lookupRange.to,
     ).length;
+    // QF's by_juz endpoint returns 0 verses for perPage:'all' and ignores
+    // from/to, so fetch the first page by COUNT (the first mushaf page's verse
+    // count) using numeric page-based pagination, which QF does honor. perPage
+    // then drives the reader's infinite scroll for the rest of the juz. This is
+    // equivalent to the all+range request on backends that support it.
+    const firstPageVerseCount = generateVerseKeysBetweenTwoVerseKeys(
+      chaptersData,
+      firstPageOfJuzLookup.from,
+      firstPageOfJuzLookup.to,
+    ).length;
     const juzVersesResponse = await getJuzVerses(juzId, locale, {
       ...getDefaultWordFields(getQuranReaderStylesInitialState(locale).quranFont),
       mushaf: defaultMushafId,
-      perPage: 'all',
-      from: firstPageOfJuzLookup.from,
-      to: firstPageOfJuzLookup.to,
+      perPage: firstPageVerseCount,
+      page: 1,
     });
     const metaData = { numberOfVerses };
     juzVersesResponse.metaData = metaData;

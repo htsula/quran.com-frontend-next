@@ -101,7 +101,7 @@
 }
 
 .description {
-  max-inline-size: calc(15 * var(--spacing-mega));
+  max-inline-size: none;
   opacity: var(--opacity-75);
   margin-block-start: var(--spacing-xxsmall);
   margin-block-end: var(--spacing-medium);
@@ -121,8 +121,8 @@
 }
 
 .titleAndDescriptionContainer {
-  max-inline-size: calc(12.5 * var(--spacing-mega));
-  margin-inline-end: var(--spacing-medium);
+  inline-size: 100%;
+  max-inline-size: none;
 }
 
 .bottomSectionContainer {

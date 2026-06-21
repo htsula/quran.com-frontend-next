@@ -16,18 +16,15 @@ import useOutsideClickDetector from '@/hooks/useOutsideClickDetector';
 import useSearchWithVoice from '@/hooks/useSearchWithVoice';
 import SearchIcon from '@/icons/search.svg';
 import { selectIsExpanded, setIsExpanded } from '@/redux/slices/CommandBar/state';
-import { setIsSearchDrawerOpen, setDisableSearchDrawerTransition } from '@/redux/slices/navbar';
 import checkSpeechRecognitionSupport from '@/utils/browser';
 import { logButtonClick } from '@/utils/eventLogger';
 import { getSearchQueryNavigationUrl } from '@/utils/navigation';
-import { isMobile } from '@/utils/responsive';
 import { useHandleMicError } from '@/utils/voice-search-errors';
 
 type Props = {
   placeholder?: string;
   initialSearchQuery?: string;
   shouldExpandOnClick?: boolean;
-  shouldOpenDrawerOnMobile?: boolean;
 };
 
 /**
@@ -39,7 +36,6 @@ const SearchInput: React.FC<Props> = ({
   placeholder,
   initialSearchQuery,
   shouldExpandOnClick = false,
-  shouldOpenDrawerOnMobile = false,
 }) => {
   const { t } = useTranslation('common');
   const toast = useToast();
@@ -95,13 +91,8 @@ const SearchInput: React.FC<Props> = ({
     }
   };
 
-  const shouldSearchBeInSearchDrawer = shouldOpenDrawerOnMobile && isMobile();
-
   const onInputClick = () => {
-    if (shouldSearchBeInSearchDrawer) {
-      dispatch({ type: setDisableSearchDrawerTransition.type, payload: true });
-      dispatch({ type: setIsSearchDrawerOpen.type, payload: true });
-    } else if (shouldExpandOnClick) {
+    if (shouldExpandOnClick) {
       // Explicitly set isExpanded to true to ensure the dropdown shows
       dispatch({ type: setIsExpanded.type, payload: true });
     }

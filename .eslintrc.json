@@ -117,6 +117,7 @@
     "prettier/prettier": [
       2,
       {
+        "endOfLine": "auto",
         "arrowParens": "always",
         "bracketSpacing": true,
         "bracketSameLine": false,

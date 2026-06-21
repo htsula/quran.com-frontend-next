@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-import { openSearchDrawer } from '@/tests/helpers/navigation';
 import Homepage from '@/tests/POM/home-page';
 import { getChapterContainerTestId, TestId } from '@/tests/test-ids';
 
@@ -19,10 +18,8 @@ test(
     await homePage.goTo('/');
     await page.getByTestId(getChapterContainerTestId(1)).click();
     await expect(page).toHaveURL(/\/1$/);
-    await openSearchDrawer(page);
-    await page.keyboard.type('eat');
-    await expect(page.getByTestId(TestId.MORE_RESULTS)).toBeVisible();
-    await page.getByTestId(TestId.MORE_RESULTS).click();
+    // Navigate to the search results page directly (the search drawer has been removed)
+    await page.goto('/search?page=1&query=eat');
     await expect(page).toHaveURL(/search\?page=1&query=eat/);
     await page.getByTestId(TestId.NEXT_PAGE_BUTTON).click();
     await expect(page).toHaveURL(/search\?page=2&query=eat/);
@@ -51,10 +48,8 @@ test(
     await homePage.goTo('/');
     await page.getByTestId(getChapterContainerTestId(1)).click();
     await expect(page).toHaveURL(/\/1$/);
-    await openSearchDrawer(page);
-    await page.keyboard.type('eat');
-    await expect(page.getByTestId(TestId.MORE_RESULTS)).toBeVisible();
-    await page.getByTestId(TestId.MORE_RESULTS).click();
+    // Navigate to the search results page directly (the search drawer has been removed)
+    await page.goto('/search?page=1&query=eat');
     await expect(page).toHaveURL(/search\?page=1&query=eat/);
     await page.getByTestId(TestId.NEXT_PAGE_BUTTON).click();
     await expect(page).toHaveURL(/search\?page=2&query=eat/);

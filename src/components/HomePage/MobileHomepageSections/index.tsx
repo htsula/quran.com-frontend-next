@@ -2,9 +2,7 @@ import React from 'react';
 
 import classNames from 'classnames';
 
-import CommunitySection from '../CommunitySection';
 import ExploreTopicsSection from '../ExploreTopicsSection';
-import LearningPlansSection from '../LearningPlansSection';
 import QuranGrowthJourneySection from '../QuranGrowthJourneySection';
 import QuranInYearSection from '../QuranInYearSection';
 
@@ -20,9 +18,6 @@ type Props = {
 const MobileHomepageSections: React.FC<Props> = ({ isUserLoggedIn, todayAyah, chaptersData }) => {
   return isUserLoggedIn ? (
     <>
-      <div className={classNames(styles.flowItem, styles.fullWidth, styles.homepageCard)}>
-        <LearningPlansSection />
-      </div>
       {todayAyah && (
         <div className={classNames(styles.flowItem, styles.fullWidth, styles.homepageCard)}>
           <QuranInYearSection chaptersData={chaptersData} />
@@ -30,9 +25,6 @@ const MobileHomepageSections: React.FC<Props> = ({ isUserLoggedIn, todayAyah, ch
       )}
       <div className={classNames(styles.flowItem, styles.fullWidth, styles.homepageCard)}>
         <ExploreTopicsSection />
-      </div>
-      <div className={classNames(styles.flowItem, styles.fullWidth, styles.homepageCard)}>
-        <CommunitySection />
       </div>
     </>
   ) : (
@@ -48,12 +40,6 @@ const MobileHomepageSections: React.FC<Props> = ({ isUserLoggedIn, todayAyah, ch
           <QuranInYearSection chaptersData={chaptersData} />
         </div>
       )}
-      <div className={classNames(styles.flowItem, styles.fullWidth, styles.homepageCard)}>
-        <LearningPlansSection />
-      </div>
-      <div className={classNames(styles.flowItem, styles.fullWidth, styles.homepageCard)}>
-        <CommunitySection />
-      </div>
     </>
   );
 };

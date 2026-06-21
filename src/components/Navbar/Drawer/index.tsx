@@ -6,8 +6,6 @@ import { useRouter } from 'next/router';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import SearchDrawerFooter from '../SearchDrawer/Footer';
-
 import styles from './Drawer.module.scss';
 import DrawerCloseButton from './DrawerCloseButton';
 
@@ -17,16 +15,12 @@ import {
   Navbar,
   selectNavbar,
   setIsLanguageDrawerOpen,
-  setIsNavigationDrawerOpen,
-  setIsSearchDrawerOpen,
   setIsSettingsDrawerOpen,
   setLockVisibilityState,
 } from '@/redux/slices/navbar';
 import { logEvent } from '@/utils/eventLogger';
 
 export enum DrawerType {
-  Navigation = 'navigation',
-  Search = 'search',
   Settings = 'settings',
   Language = 'language',
 }
@@ -59,31 +53,18 @@ interface Props {
  * @returns {boolean}
  */
 const getIsOpen = (type: DrawerType, navbar: Navbar): boolean => {
-  const { isNavigationDrawerOpen, isSettingsDrawerOpen, isSearchDrawerOpen, isLanguageDrawerOpen } =
-    navbar;
-  if (type === DrawerType.Navigation) {
-    return isNavigationDrawerOpen;
-  }
+  const { isSettingsDrawerOpen, isLanguageDrawerOpen } = navbar;
   if (type === DrawerType.Language) {
     return isLanguageDrawerOpen;
   }
-  if (type === DrawerType.Settings) {
-    return isSettingsDrawerOpen;
-  }
-  return isSearchDrawerOpen;
+  return isSettingsDrawerOpen;
 };
 
 const getActionCreator = (type: DrawerType) => {
-  if (type === DrawerType.Navigation) {
-    return setIsNavigationDrawerOpen.type;
-  }
-  if (type === DrawerType.Settings) {
-    return setIsSettingsDrawerOpen.type;
-  }
   if (type === DrawerType.Language) {
     return setIsLanguageDrawerOpen.type;
   }
-  return setIsSearchDrawerOpen.type;
+  return setIsSettingsDrawerOpen.type;
 };
 
 const logDrawerCloseEvent = (type: string, actionSource: string) => {
@@ -132,7 +113,7 @@ const Drawer: React.FC<Props> = ({
     },
     [dispatch, type, canCloseDrawer],
   );
-  // enableOnFormTags is added for when Search Drawer's input field is focused or when Settings Drawer's select input is focused
+  // enableOnFormTags is added for when the Settings Drawer's select input is focused
   useHotkeys(
     'Escape',
     () => {
@@ -175,7 +156,6 @@ const Drawer: React.FC<Props> = ({
     isOpen,
   );
 
-  const isSearchDrawer = type === DrawerType.Search;
   const isSettingsDrawer = type === DrawerType.Settings;
 
   return (
@@ -186,7 +166,6 @@ const Drawer: React.FC<Props> = ({
         [styles.containerOpen]: isOpen,
         [styles.left]: side === DrawerSide.Left,
         [styles.right]: side === DrawerSide.Right,
-        [styles.noTransition]: type === DrawerType.Search && navbar.disableSearchDrawerTransition,
         [styles.settingsDrawer]: isSettingsDrawer,
       })}
       ref={drawerRef}
@@ -216,16 +195,12 @@ const Drawer: React.FC<Props> = ({
         </div>
       )}
       <div
-        className={classNames(styles.bodyContainer, {
-          [styles.navigationBodyContainer]: type === DrawerType.Navigation,
-          [styles.bodyWithBottomPadding]: !isSearchDrawer,
-          [styles.searchContainer]: isSearchDrawer,
+        className={classNames(styles.bodyContainer, styles.bodyWithBottomPadding, {
           [styles.noBodySpacing]: removeBodySpacing,
         })}
         id={bodyId}
       >
         {children}
-        {isSearchDrawer && <SearchDrawerFooter />}
       </div>
     </div>
   );

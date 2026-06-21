@@ -43,11 +43,7 @@ const WordMobileModal: React.FC<Props> = ({ isOpen, onClose, verse }) => {
 
           <div className={styles.bottomActionsContainer}>
             <BottomActionsExpandProvider>
-              <BottomActions
-                verseKey={verse.verseKey}
-                isTranslationView={false}
-                hasRelatedVerses={verse.hasRelatedVerses}
-              />
+              <BottomActions verseKey={verse.verseKey} isTranslationView={false} />
             </BottomActionsExpandProvider>
           </div>
         </div>

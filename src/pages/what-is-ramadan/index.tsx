@@ -13,7 +13,7 @@ import PageContainer from '@/components/PageContainer';
 import InlineLink from '@/components/RamadanActivity/InlineLink';
 import { getWhatIsRamadanOgImageUrl } from '@/lib/og';
 import styles from '@/pages/contentPage.module.scss';
-import pageStyles from '@/pages/ramadan/RamadanActivities.module.scss';
+import pageStyles from '@/styles/RamadanActivities.module.scss';
 import { getDir, getLanguageAlternates } from '@/utils/locale';
 import { getCanonicalUrl, getWhatIsRamadanNavigationUrl } from '@/utils/navigation';
 import Language from 'types/Language';

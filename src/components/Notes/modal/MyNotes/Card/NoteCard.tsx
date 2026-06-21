@@ -7,8 +7,6 @@ import styles from './Card.module.scss';
 
 import InlineShowMore from '@/components/InlineShowMore';
 import DeleteNoteButton from '@/components/Notes/modal/MyNotes/DeleteNoteButton';
-import QRButton from '@/components/Notes/modal/MyNotes/QrButton';
-import { NoteWithRecentReflection } from '@/components/Notes/modal/type';
 import DataContext from '@/contexts/DataContext';
 import Button, { ButtonShape, ButtonSize, ButtonVariant } from '@/dls/Button/Button';
 import IconContainer, { IconSize } from '@/dls/IconContainer/IconContainer';
@@ -20,9 +18,8 @@ import { getSurahRangeNavigationUrlByVerseKey } from '@/utils/navigation';
 import { parseVerseRange, readableVerseRangeKeys } from '@/utils/verseKeys';
 
 export interface NoteCardProps {
-  note: NoteWithRecentReflection;
+  note: Note;
   onEdit: (note: Note) => void;
-  onPostToQr: (note: Note) => void;
   onDelete: (note: Note) => void;
   isDeletingNote: boolean;
   showReadMore?: boolean;
@@ -31,7 +28,6 @@ export interface NoteCardProps {
 const NoteCard: React.FC<NoteCardProps> = ({
   note,
   onEdit,
-  onPostToQr,
   onDelete,
   isDeletingNote,
   showReadMore = false,
@@ -40,7 +36,7 @@ const NoteCard: React.FC<NoteCardProps> = ({
   const chaptersData = useContext(DataContext);
 
   const formatNoteTitle = useCallback(
-    (noteWithPostUrl: NoteWithRecentReflection) => {
+    (noteWithPostUrl: Note) => {
       if (!noteWithPostUrl.ranges || noteWithPostUrl.ranges.length === 0) return '';
       const readableRangeKeys = readableVerseRangeKeys(noteWithPostUrl.ranges, chaptersData, lang);
       if (readableRangeKeys.length === 0) return '';
@@ -50,7 +46,7 @@ const NoteCard: React.FC<NoteCardProps> = ({
     [chaptersData, lang],
   );
 
-  const getVerseLink = useCallback((noteWithPostUrl: NoteWithRecentReflection) => {
+  const getVerseLink = useCallback((noteWithPostUrl: Note) => {
     if (!noteWithPostUrl.ranges || noteWithPostUrl.ranges.length === 0) return '';
     const firstRange = noteWithPostUrl.ranges[0];
     const parsedRange = parseVerseRange(firstRange, true);
@@ -84,8 +80,6 @@ const NoteCard: React.FC<NoteCardProps> = ({
           </time>
         </div>
         <div className={styles.noteActions}>
-          <QRButton note={note} postUrl={note.postUrl} onPostToQrClick={onPostToQr} />
-
           <Button
             variant={ButtonVariant.Ghost}
             size={ButtonSize.Small}

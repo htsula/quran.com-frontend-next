@@ -25,7 +25,7 @@ const GlobalScrollListener = () => {
       }
 
       if (isMobile) {
-        // MOBILE: Asymmetric thresholds for smooth handoff with MobileStickyItemsBar
+        // MOBILE: Asymmetric thresholds for smooth navbar show/hide on scroll
         // - Hide early on scroll-down (10px) to prevent content jump
         // - Show early on scroll-up (75px) to allow smooth handoff
         const HIDE_THRESHOLD = 10;

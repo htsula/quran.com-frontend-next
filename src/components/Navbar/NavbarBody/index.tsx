@@ -8,29 +8,20 @@ import useTranslation from 'next-translate/useTranslation';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './NavbarBody.module.scss';
-import ProfileAvatarButton from './ProfileAvatarButton';
 
-import Banner, { BannerVariant } from '@/components/Banner/Banner';
-import NavbarLogoWrapper from '@/components/Navbar/Logo/NavbarLogoWrapper';
 import Button, { ButtonShape, ButtonVariant } from '@/dls/Button/Button';
 import Spinner from '@/dls/Spinner/Spinner';
-import useIsLoggedIn from '@/hooks/auth/useIsLoggedIn';
 import useNavbarDrawerActions from '@/hooks/useNavbarDrawerActions';
 import IconGlobe from '@/icons/globe.svg';
-import IconMenu from '@/icons/menu.svg';
-import IconSearch from '@/icons/search.svg';
-import {
-  selectIsLanguageDrawerOpen,
-  selectIsNavigationDrawerOpen,
-  selectIsSettingsDrawerOpen,
-} from '@/redux/slices/navbar';
+import IconHome from '@/icons/home.svg';
+import { selectIsLanguageDrawerOpen, selectIsSettingsDrawerOpen } from '@/redux/slices/navbar';
 import { selectIsPersistGateHydrationComplete } from '@/redux/slices/persistGateHydration';
 import {
   selectIsSidebarNavigationVisible,
   setIsSidebarNavigationVisible,
 } from '@/redux/slices/QuranReader/sidebarNavigation';
-import { TestId } from '@/tests/test-ids';
 import { getSidebarTransitionDurationFromCss } from '@/utils/css';
+import { ROUTES } from '@/utils/navigation';
 import { isQuranReaderRoutePathname } from '@/utils/routes';
 
 const SidebarNavigation = dynamic(
@@ -41,17 +32,16 @@ const SidebarNavigation = dynamic(
   },
 );
 
-interface Props {
-  isBannerVisible: boolean;
-}
+const ThemeSwitcher = dynamic(() => import('@/components/Navbar/ThemeSwitcher'), {
+  ssr: false,
+  loading: () => <Spinner />,
+});
 
-const NavbarBody: React.FC<Props> = ({ isBannerVisible }) => {
+const NavbarBody: React.FC = () => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
-  const isNavigationDrawerOpen = useSelector(selectIsNavigationDrawerOpen);
   const isSettingsDrawerOpen = useSelector(selectIsSettingsDrawerOpen);
   const isLanguageDrawerOpen = useSelector(selectIsLanguageDrawerOpen);
-  const { isLoggedIn } = useIsLoggedIn();
   const router = useRouter();
   const isQuranReaderRoute = isQuranReaderRoutePathname(router.pathname);
   const normalizedPathname = router.asPath.split(/[?#]/)[0];
@@ -118,89 +108,54 @@ const NavbarBody: React.FC<Props> = ({ isBannerVisible }) => {
     dispatch(setIsSidebarNavigationVisible(false));
   }, [dispatch, isPersistHydrationComplete, isQuranReaderRoute]);
 
-  const { openSearchDrawer, openNavigationDrawer, openLanguageDrawer } = useNavbarDrawerActions();
-
-  const bannerCopy = {
-    mobileLineOne: t('fundraising-sticky-banner-v2.mobile-line-one'),
-    mobileLineTwo: t('fundraising-sticky-banner-v2.mobile-line-two'),
-  };
-
-  const standaloneDesktopText = `${bannerCopy.mobileLineOne} ${bannerCopy.mobileLineTwo}`;
-
-  const standaloneBannerProps = {
-    copy: {
-      desktop: standaloneDesktopText,
-      mobileLineOne: bannerCopy.mobileLineOne,
-      mobileLineTwo: bannerCopy.mobileLineTwo,
-    },
-    text: standaloneDesktopText,
-    ctaButtonText: t('fundraising-sticky-banner-v2.cta'),
-  };
+  const { openLanguageDrawer } = useNavbarDrawerActions();
 
   return (
     <>
-      {isBannerVisible && (
+      {/* The theme/language bar is only shown off reader routes. On reader routes
+          these actions live in the ContextMenu instead. */}
+      {!isQuranReaderRoute && (
         <div
-          className={classNames(styles.bannerContainerTop, {
-            [styles.dimmed]: isNavigationDrawerOpen || isSettingsDrawerOpen || isLanguageDrawerOpen,
+          className={classNames(styles.itemsContainer, {
+            [styles.dimmed]: isSettingsDrawerOpen || isLanguageDrawerOpen,
           })}
+          inert={isSettingsDrawerOpen || isLanguageDrawerOpen || undefined}
         >
-          <Banner {...standaloneBannerProps} variant={BannerVariant.Standalone} />
+          <div className={styles.centerVertically}>
+            <div className={styles.rightCTA}>
+              {router.pathname !== ROUTES.HOME && (
+                <Button
+                  href={ROUTES.HOME}
+                  tooltip={t('home')}
+                  variant={ButtonVariant.Ghost}
+                  shape={ButtonShape.Circle}
+                  shouldFlipOnRTL={false}
+                  ariaLabel={t('home')}
+                  data-testid="navbar-home-button"
+                >
+                  <IconHome />
+                </Button>
+              )}
+              <ThemeSwitcher />
+              <Button
+                tooltip={t('languages')}
+                variant={ButtonVariant.Ghost}
+                onClick={openLanguageDrawer}
+                shape={ButtonShape.Circle}
+                shouldFlipOnRTL={false}
+                ariaLabel={t('languages')}
+                data-testid="open-language-drawer"
+              >
+                <IconGlobe />
+              </Button>
+            </div>
+          </div>
         </div>
       )}
-      <div
-        className={classNames(styles.itemsContainer, {
-          [styles.dimmed]: isNavigationDrawerOpen || isSettingsDrawerOpen || isLanguageDrawerOpen,
-        })}
-        inert={isNavigationDrawerOpen || isSettingsDrawerOpen || isLanguageDrawerOpen || undefined}
-      >
-        <div className={styles.centerVertically}>
-          <div className={styles.leftCTA}>
-            <NavbarLogoWrapper />
-          </div>
-        </div>
-        <div className={styles.centerVertically}>
-          <div className={styles.rightCTA}>
-            {!isLoggedIn && <ProfileAvatarButton />}
-            <Button
-              tooltip={t('languages')}
-              variant={ButtonVariant.Ghost}
-              onClick={openLanguageDrawer}
-              shape={ButtonShape.Circle}
-              shouldFlipOnRTL={false}
-              ariaLabel={t('languages')}
-              data-testid="open-language-drawer"
-            >
-              <IconGlobe />
-            </Button>
-            <Button
-              tooltip={t('search.title')}
-              variant={ButtonVariant.Ghost}
-              onClick={openSearchDrawer}
-              shape={ButtonShape.Circle}
-              shouldFlipOnRTL={false}
-              ariaLabel={t('search.title')}
-              data-testid="open-search-drawer"
-            >
-              <IconSearch />
-            </Button>
 
-            {shouldRenderSidebarNavigation && <SidebarNavigation />}
-            {isLoggedIn && <ProfileAvatarButton />}
-
-            <Button
-              tooltip={t('menu')}
-              variant={ButtonVariant.Ghost}
-              shape={ButtonShape.Circle}
-              onClick={openNavigationDrawer}
-              ariaLabel={t('aria.nav-drawer-open')}
-              data-testid={TestId.OPEN_NAVIGATION_DRAWER}
-            >
-              <IconMenu />
-            </Button>
-          </div>
-        </div>
-      </div>
+      {/* SidebarNavigation is a fixed overlay; it must render on reader routes
+          even though the navbar bar itself is not rendered there. */}
+      {shouldRenderSidebarNavigation && <SidebarNavigation />}
     </>
   );
 };

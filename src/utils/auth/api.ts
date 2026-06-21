@@ -15,7 +15,6 @@ import { ShortenUrlResponse } from './types/ShortenUrl';
 
 import { fetcher } from '@/api';
 import { addSentryBreadcrumb, logErrorToSentry } from '@/lib/sentry';
-import { RamadanChallengeResponse } from '@/types/ApiResponses';
 import {
   ActivityDay,
   ActivityDayType,
@@ -28,14 +27,7 @@ import {
   UpdateQuranReadingProgramActivityDayBody,
 } from '@/types/auth/ActivityDay';
 import ConsentType from '@/types/auth/ConsentType';
-import { Course } from '@/types/auth/Course';
-import {
-  CreateGoalRequest,
-  CreateGoalRequestUnion,
-  Goal,
-  GoalCategory,
-  UpdateGoalRequest,
-} from '@/types/auth/Goal';
+import { CreateGoalRequest, Goal, GoalCategory, UpdateGoalRequest } from '@/types/auth/Goal';
 import { Note } from '@/types/auth/Note';
 import QuranProgramWeekResponse from '@/types/auth/QuranProgramWeekResponse';
 import { Response } from '@/types/auth/Response';
@@ -62,7 +54,6 @@ import {
   makeCompleteSignupUrl,
   makeCountNotesWithinRangeUrl,
   makeCountQuestionsWithinRangeUrl,
-  makeCourseFeedbackUrl,
   makeDeleteAccountUrl,
   makeDeleteBookmarkUrl,
   makeDeleteCollectionBookmarkByIdUrl,
@@ -70,14 +61,11 @@ import {
   makeDeleteCollectionUrl,
   makeDeleteOrUpdateNoteUrl,
   makeEnrollUserInQuranProgramUrl,
-  makeEnrollUserUrl,
   makeEstimateRangesReadingTimeUrl,
   makeFilterActivityDaysUrl,
   makeFullUrlById,
   makeGenerateMediaFileUrl,
   makeGetBookmarkByCollectionId,
-  makeGetCoursesUrl,
-  makeGetCourseUrl,
   makeGetMediaFileProgressUrl,
   makeGetMonthlyMediaFilesCountUrl,
   makeGetNoteByIdUrl,
@@ -85,13 +73,10 @@ import {
   makeGetQuestionByIdUrl,
   makeGetQuestionsByVerseKeyUrl,
   makeGetQuranicWeekUrl,
-  makeGetUserCoursesCountUrl,
   makeGetUserQuranProgramUrl,
   makeGoalUrl,
-  makeReadingGoalCountUrl,
   makeLogoutUrl,
   makeNotesUrl,
-  makePublishNoteUrl,
   makeReadingSessionsUrl,
   makeRefreshTokenUrl,
   makeShortenUrlUrl,
@@ -104,8 +89,6 @@ import {
   makeUserPreferencesUrl,
   makeUserProfileUrl,
   makeVerificationCodeUrl,
-  makeReadingGoalStatusUrl,
-  GetCoursesQueryParams,
   makeMapUrl,
   makeTranslationFeedbackUrl,
   makeAddPinnedItemUrl,
@@ -117,7 +100,6 @@ import {
 } from '@/utils/auth/apiPaths';
 import { getAdditionalHeaders } from '@/utils/headers';
 import CompleteAnnouncementRequest from 'types/auth/CompleteAnnouncementRequest';
-import EnrollmentMethod from 'types/auth/EnrollmentMethod';
 import { GetBookmarkCollectionsIdResponse } from 'types/auth/GetBookmarksByCollectionId';
 import PreferenceGroup from 'types/auth/PreferenceGroup';
 import RefreshToken from 'types/auth/RefreshToken';
@@ -407,21 +389,8 @@ export const getSurahBookmarks = async (
   return bookmarksMap;
 };
 
-// No auth required
-export const getReadingGoalCount = async (
-  category: GoalCategory,
-): Promise<{ data: { count: number } }> => fetcher(makeReadingGoalCountUrl({ type: category }));
-
-export const getReadingGoalStatus = async (
-  type: GoalCategory,
-): Promise<{ data: RamadanChallengeResponse }> =>
-  privateFetcher(makeReadingGoalStatusUrl({ type }));
-
-export const addReadingGoal = async (data: CreateGoalRequestUnion): Promise<{ data?: Goal }> => {
-  if (data.category === GoalCategory.RAMADAN_CHALLENGE) {
-    return postRequest(makeGoalUrl({ type: data.category }), {});
-  }
-  const { category, mushafId, ...requestBody } = data as CreateGoalRequest;
+export const addReadingGoal = async (data: CreateGoalRequest): Promise<{ data?: Goal }> => {
+  const { category, mushafId, ...requestBody } = data;
   return postRequest(makeGoalUrl({ mushafId, type: category }), requestBody);
 };
 
@@ -691,43 +660,6 @@ export const getBookmarksByCollectionId = async (
   return privateFetcher(makeGetBookmarkByCollectionId(collectionId, queryParams));
 };
 
-type EnrollUserParams = {
-  courseId: string;
-  enrollmentMethod: EnrollmentMethod;
-};
-
-export const enrollUser = async ({
-  courseId,
-  enrollmentMethod,
-}: EnrollUserParams): Promise<{ success: boolean }> =>
-  postRequest(makeEnrollUserUrl(), {
-    courseId,
-    enrollmentMethod,
-  });
-
-export const postCourseFeedback = async ({
-  courseId,
-  rating,
-  body,
-}: {
-  courseId: string;
-  rating: number;
-  body?: string;
-}): Promise<{ success: boolean }> =>
-  postRequest(makeCourseFeedbackUrl(courseId), {
-    rating,
-    body,
-  });
-
-export const getCourses = async (params?: GetCoursesQueryParams): Promise<Course[]> =>
-  privateFetcher(makeGetCoursesUrl(params));
-
-export const getCourse = async (courseSlugOrId: string): Promise<Course> =>
-  privateFetcher(makeGetCourseUrl(courseSlugOrId));
-
-export const getUserCoursesCount = async (): Promise<{ count: number }> =>
-  privateFetcher(makeGetUserCoursesCountUrl());
-
 export const addCollection = async (collectionName: string): Promise<Collection> => {
   // Some endpoints may return `200` with `{ success: false, ... }` on validation errors.
   const response = await postRequest<unknown>(makeAddCollectionUrl(), { name: collectionName });
@@ -770,18 +702,9 @@ export const getQuestionById = async (questionId: string): Promise<QuestionRespo
   return privateFetcher(makeGetQuestionByIdUrl(questionId));
 };
 
-export const addNote = async (payload: Pick<Note, 'body' | 'ranges' | 'saveToQR'>) => {
+export const addNote = async (payload: Pick<Note, 'body' | 'ranges'>) => {
   return postRequest(makeNotesUrl(), payload);
 };
-
-export const publishNoteToQR = async (
-  noteId: string,
-  payload: {
-    body: string;
-    ranges?: string[];
-  },
-): Promise<{ success: boolean; postId: string }> =>
-  postRequest(makePublishNoteUrl(noteId), payload);
 
 export const getNoteById = async (id: string): Promise<Note> =>
   privateFetcher(makeGetNoteByIdUrl(id));
@@ -798,10 +721,9 @@ export const getNotesByVerse = async (verseKey: string): Promise<Note[]> => {
   return notes;
 };
 
-export const updateNote = async (id: string, body: string, saveToQR: boolean) =>
+export const updateNote = async (id: string, body: string) =>
   patchRequest(makeDeleteOrUpdateNoteUrl(id), {
     body,
-    saveToQR,
   });
 
 export const deleteNote = async (id: string) => deleteRequest(makeDeleteOrUpdateNoteUrl(id));

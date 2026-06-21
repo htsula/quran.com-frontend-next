@@ -78,3 +78,9 @@ keys
 
 # Specs
 docs/specs
+
+# Claude Code
+.claude/
+
+# Husky generated runtime
+.husky/_/

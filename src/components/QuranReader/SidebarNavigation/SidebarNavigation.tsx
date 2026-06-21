@@ -14,11 +14,10 @@ import RevelationOrderNavigationNotice, {
   RevelationOrderNavigationNoticeView,
 } from '@/components/QuranReader/RevelationOrderNavigationNotice';
 import Button, { ButtonShape, ButtonSize, ButtonVariant } from '@/dls/Button/Button';
-import KeyboardInput from '@/dls/KeyboardInput';
 import Switch from '@/dls/Switch/Switch';
 import useOutsideClickDetector from '@/hooks/useOutsideClickDetector';
 import IconClose from '@/icons/close.svg';
-import { selectIsNavigationDrawerOpen, selectNavbar } from '@/redux/slices/navbar';
+import { selectNavbar } from '@/redux/slices/navbar';
 import {
   NavigationItem,
   selectIsSidebarNavigationVisible,
@@ -37,7 +36,6 @@ const SidebarNavigation = () => {
   const { isVisible: isNavbarVisible } = useSelector(selectNavbar, shallowEqual);
   const selectedNavigationItem = useSelector(selectSelectedNavigationItem);
   const isReadingByRevelationOrder = useSelector(selectIsReadingByRevelationOrder);
-  const isNavigationDrawerOpen = useSelector(selectIsNavigationDrawerOpen);
 
   const dispatch = useDispatch();
   const { t } = useTranslation('common');
@@ -96,10 +94,7 @@ const SidebarNavigation = () => {
       ref={sidebarRef}
       data-is-homepage={isHomePage}
       data-testid={showSidebar ? 'sidebar-navigation' : undefined}
-      className={classNames(styles.container, {
-        [styles.dimmed]: isNavigationDrawerOpen,
-        [styles.drawerShown]: isNavigationDrawerOpen,
-        [styles.drawerHide]: !isNavigationDrawerOpen,
+      className={classNames(styles.container, styles.drawerHide, {
         [styles.visibleContainer]: showSidebar && isNavbarVisible,
         [styles.visibleContainerCollapsed]: showSidebar && !isNavbarVisible,
         [styles.containerAuto]: isSidebarAuto && isNavbarVisible,
@@ -138,10 +133,6 @@ const SidebarNavigation = () => {
               <IconClose />
             </Button>
           </div>
-          <p className={styles.tip}>
-            <span>{t('sidebar.try-navigating-with')}</span>
-            <KeyboardInput meta keyboardKey="K" />
-          </p>
 
           <div className={styles.contentContainer}>
             <SidebarNavigationSelections

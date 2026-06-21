@@ -5,7 +5,6 @@ import MoreMenuItem from './MenuItems/MoreMenuItem';
 import PinMenuItem from './MenuItems/PinMenuItem';
 import PlayAudioMenuItem from './MenuItems/PlayAudioMenuItem';
 import QuestionsMenuItem from './MenuItems/QuestionsMenuItem';
-import QuranReflectMenuItem from './MenuItems/QuranReflectMenuItem';
 import ShareMenuItem from './MenuItems/ShareMenuItem';
 import TafsirMenuItem from './MenuItems/TafsirMenuItem';
 import TranslationsMenuItem from './MenuItems/TranslationsMenuItem';
@@ -44,7 +43,6 @@ const MainActionsMenu: React.FC<Props> = ({
 
       <TranslationsMenuItem verse={verse} onActionTriggered={onActionTriggered} />
       <TafsirMenuItem verse={verse} onActionTriggered={onActionTriggered} />
-      <QuranReflectMenuItem verse={verse} onActionTriggered={onActionTriggered} />
       <QuestionsMenuItem verse={verse} onActionTriggered={onActionTriggered} />
       <BookmarkAction
         verse={verse}

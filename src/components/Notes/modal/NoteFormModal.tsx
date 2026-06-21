@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 
 import classNames from 'classnames';
 import useTranslation from 'next-translate/useTranslation';
@@ -9,10 +9,8 @@ import styles from './NoteFormModal.module.scss';
 import { LoadingState, useNotesStates } from '@/components/Notes/modal/hooks/useNotesStates';
 import type { OnSaveNote } from '@/components/Notes/modal/hooks/useNotesStates';
 import NotesOnVerseButton from '@/components/Notes/modal/NotesOnVerseButton';
-import PostQRConfirmationModal from '@/components/Notes/modal/PostQrConfirmationModal';
-import ReflectionIntro from '@/components/Notes/modal/ReflectionIntro';
 import DataContext from '@/contexts/DataContext';
-import Button, { ButtonSize, ButtonVariant } from '@/dls/Button/Button';
+import Button, { ButtonSize } from '@/dls/Button/Button';
 import ContentModal from '@/dls/ContentModal/ContentModal';
 import TextArea from '@/dls/Forms/TextArea';
 import { readableVerseRangeKeys } from '@/utils/verseKeys';
@@ -44,30 +42,13 @@ const NoteFormModal: React.FC<NoteFormModalProps> = ({
 }) => {
   const { t, lang } = useTranslation();
   const chaptersData = useContext(DataContext);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-  const {
-    noteInput,
-    errors,
-    loading,
-    onNoteInputChange,
-    onPrivateSave,
-    onPublicSaveRequest,
-    validateNoteInput,
-  } = useNotesStates(initialNote, onSaveNote, onMyNotes, isModalOpen);
-
-  const handlePublicSaveClick = useCallback(() => {
-    if (validateNoteInput()) setShowConfirmationModal(true);
-  }, [validateNoteInput]);
-
-  const handleConfirmationBack = useCallback(() => {
-    setShowConfirmationModal(false);
-  }, []);
-
-  const handleConfirmationConfirm = useCallback(async () => {
-    await onPublicSaveRequest();
-    setShowConfirmationModal(false);
-  }, [onPublicSaveRequest]);
+  const { noteInput, errors, loading, onNoteInputChange, onPrivateSave } = useNotesStates(
+    initialNote,
+    onSaveNote,
+    onMyNotes,
+    isModalOpen,
+  );
 
   const verseRanges = useMemo(() => {
     if (!ranges || ranges.length === 0) return [];
@@ -75,92 +56,68 @@ const NoteFormModal: React.FC<NoteFormModalProps> = ({
   }, [ranges, chaptersData, lang]);
 
   return (
-    <>
-      <ContentModal
-        isOpen={isModalOpen && !showConfirmationModal}
-        header={header}
-        hasCloseButton
-        onClose={onModalClose}
-        onEscapeKeyDown={onModalClose}
-        overlayClassName={modalStyles.overlay}
-        headerClassName={modalStyles.headerClassName}
-        closeIconClassName={modalStyles.closeIconContainer}
-        contentClassName={classNames(modalStyles.content, modalStyles.formModalContent)}
-        innerContentClassName={classNames(styles.container, modalStyles.formModalContent)}
-        dataTestId={dataTestId}
-      >
-        <ReflectionIntro />
+    <ContentModal
+      isOpen={isModalOpen}
+      header={header}
+      hasCloseButton
+      onClose={onModalClose}
+      onEscapeKeyDown={onModalClose}
+      overlayClassName={modalStyles.overlay}
+      headerClassName={modalStyles.headerClassName}
+      closeIconClassName={modalStyles.closeIconContainer}
+      contentClassName={classNames(modalStyles.content, modalStyles.formModalContent)}
+      innerContentClassName={classNames(styles.container, modalStyles.formModalContent)}
+      dataTestId={dataTestId}
+    >
+      {verseRanges.length > 0 && (
+        <div className={styles.verseRangesContainer}>
+          {verseRanges.map((range) => (
+            <span key={range} className={styles.verseRangePill}>
+              {range}
+            </span>
+          ))}
+        </div>
+      )}
 
-        {verseRanges.length > 0 && (
-          <div className={styles.verseRangesContainer}>
-            {verseRanges.map((range) => (
-              <span key={range} className={styles.verseRangePill}>
-                {range}
-              </span>
-            ))}
+      <div className={styles.inputGroup}>
+        <TextArea
+          id="note"
+          name="note"
+          placeholder={t('notes:body-placeholder')}
+          containerClassName={styles.textArea}
+          value={noteInput}
+          onChange={onNoteInputChange}
+          dataTestId="notes-textarea"
+        />
+
+        {errors.note && (
+          <div className={styles.error} data-testid={`note-input-error-${errors.note.id}`}>
+            {errors.note.message}
           </div>
         )}
+      </div>
 
-        <div className={styles.inputGroup}>
-          <TextArea
-            id="note"
-            name="note"
-            placeholder={t('notes:body-placeholder')}
-            containerClassName={styles.textArea}
-            value={noteInput}
-            onChange={onNoteInputChange}
-            dataTestId="notes-textarea"
-          />
+      {showNotesOnVerseButton && notesCount > 0 && (
+        <NotesOnVerseButton
+          notesCount={notesCount}
+          onClick={onMyNotes}
+          disabled={loading !== null}
+        />
+      )}
 
-          {errors.note && (
-            <div className={styles.error} data-testid={`note-input-error-${errors.note.id}`}>
-              {errors.note.message}
-            </div>
-          )}
-        </div>
-
-        {showNotesOnVerseButton && notesCount > 0 && (
-          <NotesOnVerseButton
-            notesCount={notesCount}
-            onClick={onMyNotes}
-            disabled={loading !== null}
-          />
-        )}
-
-        <div className={styles.actions}>
-          <Button
-            className={classNames(styles.button, styles.saveToQrButton)}
-            size={ButtonSize.Small}
-            variant={ButtonVariant.Simplified}
-            isLoading={loading === LoadingState.Public}
-            isDisabled={loading !== null}
-            onClick={handlePublicSaveClick}
-            data-testid="save-to-qr-button"
-          >
-            {t('notes:save-post-to-qr')}
-          </Button>
-          <Button
-            className={classNames(styles.button)}
-            size={ButtonSize.Small}
-            isLoading={loading === LoadingState.Private}
-            isDisabled={loading !== null}
-            onClick={onPrivateSave}
-            data-testid="save-private-button"
-          >
-            {t('notes:save-privately')}
-          </Button>
-        </div>
-      </ContentModal>
-
-      <PostQRConfirmationModal
-        isModalOpen={showConfirmationModal && isModalOpen}
-        isLoading={loading === LoadingState.Public}
-        onBack={handleConfirmationBack}
-        onModalClose={handleConfirmationBack}
-        onEdit={handleConfirmationBack}
-        onConfirm={handleConfirmationConfirm}
-      />
-    </>
+      <div className={styles.actions}>
+        <Button
+          className={classNames(styles.button)}
+          size={ButtonSize.Small}
+          isLoading={loading === LoadingState.Private}
+          isDisabled={loading !== null}
+          onClick={onPrivateSave}
+          data-testid="save-private-button"
+        >
+          {t('notes:save-privately')}
+        </Button>
+      </div>
+    </ContentModal>
   );
 };
 

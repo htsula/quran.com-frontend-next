@@ -164,8 +164,6 @@ If you are using a custom embed domain, load the script from the same origin as 
 | `showTranslationName` | Show translator names                                | `false`       |
 | `showArabic`          | Show Arabic text                                     | `true`        |
 | `tafsir`              | Show tafsirs button                                  | `true`        |
-| `lessons`             | Show lessons button                                  | `true`        |
-| `reflections`         | Show reflections button                              | `true`        |
 | `answers`             | Show answers button                                  | `true`        |
 
 ## Prop-only trimming
@@ -225,10 +223,9 @@ Client-side interactions are handled by `src/hooks/widget/useWidgetInteractions.
 - **Audio**: Toggle play/pause with time clamping for verse segments
 - **Analytics**: Emits explicit interaction events: `embed_copy_text_clicked`,
   `embed_copy_link_clicked`, `embed_open_verse_clicked`, `embed_tafsirs_clicked`,
-  `embed_lessons_clicked`, `embed_reflections_clicked`, `embed_answers_clicked`,
-  `embed_audio_played`, `embed_audio_paused`, `embed_audio_ended`, `embed_word_clicked`,
-  `embed_translation_clicked`, `embed_verse_block_clicked`, `embed_merged_translation_clicked`,
-  `embed_merged_content_clicked`
+  `embed_answers_clicked`, `embed_audio_played`, `embed_audio_paused`, `embed_audio_ended`,
+  `embed_word_clicked`, `embed_translation_clicked`, `embed_verse_block_clicked`,
+  `embed_merged_translation_clicked`, `embed_merged_content_clicked`
 
 ## Analytics queries
 
@@ -256,7 +253,7 @@ Notes:
 
 Widget labels are localized via `next-translate` in the embed page. The builder locale list is
 derived from `i18n.json`. The header link text ("Read on Quran.com") uses
-`embed:widget.readOnQuran`. Action labels include separate `reflections` and `lessons` keys.
+`embed:widget.readOnQuran`.
 
 If you add new labels:
 

@@ -37,7 +37,7 @@ import type { Page } from '@playwright/test';
 
 import { switchToTranslationMode } from '@/tests/helpers/mode-switching';
 import Homepage from '@/tests/POM/home-page';
-import { AttachedEntity, AttachedEntityType, Note } from '@/types/auth/Note';
+import { Note } from '@/types/auth/Note';
 
 let homePage: Homepage;
 
@@ -98,32 +98,11 @@ const mockNotes = async (page: Page, count?: number): Promise<void> => {
 };
 
 /**
- * Generates a mock attached entity object representing a QuranReflect reflection post.
- * Used to simulate entities that can be attached to notes during publishing operations.
- *
- * @returns {object} An attached entity object with reflection type and current timestamps
- */
-const generateAttachedEntity = (id: string): AttachedEntity => {
-  return {
-    id,
-    type: AttachedEntityType.REFLECTION,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };
-};
-
-/**
  * Generates a mock note object for testing purposes with realistic properties.
- * Creates notes with randomized timestamps and optional attached entities.
  *
  * @returns {Note} A complete note object with all required properties for testing
  */
-const generateNote = (
-  id: string,
-  body: string,
-  verseKey: string,
-  attachedEntities?: string[],
-): Note => {
+const generateNote = (id: string, body: string, verseKey: string): Note => {
   const randomDate = () => new Date(new Date().getTime() + Math.random() * 10000);
 
   return {
@@ -134,25 +113,19 @@ const generateNote = (
     ranges: [`${verseKey}-${verseKey}`],
     createdAt: randomDate(),
     updatedAt: randomDate(),
-    saveToQR: attachedEntities?.length > 0,
-    attachedEntities: attachedEntities?.map(generateAttachedEntity),
   };
 };
 
 /**
- * Generates an array of mock notes for testing, including a mix of private and published notes.
- * Creates three test notes: two private notes and one note with attached QuranReflect entities.
+ * Generates an array of mock notes for testing.
  *
- * @returns {Note[]} Array of three note objects with varying properties for comprehensive testing
+ * @returns {Note[]} Array of note objects for comprehensive testing
  */
 const generateNotes = (verseKey: string): Note[] => {
   return [
     generateNote('note-1', `note-1 Note body`, verseKey),
     generateNote('note-2', `note-2 Note body`, verseKey),
-    generateNote('note-3-with-qr', `note-3-with-qr Note body`, verseKey, [
-      'reflection-1',
-      'reflection-2',
-    ]),
+    generateNote('note-3', `note-3 Note body`, verseKey),
   ];
 };
 
@@ -200,28 +173,6 @@ const mockEditNote = async (page: Page, noteId: string, noteText: string): Promi
 
   return page.route(`**/notes/${noteId}`, async (route) => {
     note.body = noteText;
-
-    await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify(note),
-    });
-  });
-};
-
-/**
- * MOCK NOTE PUBLISHING
- * Simulates: PATCH /notes/:noteId (for publishing note to QuranReflect)
- * State Effect: Adds attached entity to the note's attachedEntities array
- * Why: Simulates linking note to a published reflection post in backend storage
- * @returns {Promise} The route handler for the publish request (updated note returned in response)
- */
-const mockPublishNote = async (page: Page, noteId: string, attachId: string): Promise<void> => {
-  const note = notes.find((n) => n.id === noteId);
-  if (!note) throw new Error(`Note with id ${noteId} not found`);
-
-  return page.route(`**/notes/${noteId}`, async (route) => {
-    note.attachedEntities = [...(note.attachedEntities || []), generateAttachedEntity(attachId)];
 
     await route.fulfill({
       status: 200,
@@ -294,7 +245,6 @@ test.skip('Notes - Authenticated Users', () => {
         await expect(page.getByTestId('add-note-modal-title')).toBeVisible();
         await expect(page.getByTestId('notes-textarea')).toBeVisible();
         await expect(page.getByTestId('save-private-button')).toBeVisible();
-        await expect(page.getByTestId('save-to-qr-button')).toBeVisible();
 
         // Verify notes on verse button is hidden when no notes exist
         const notesOnVerseButton = page.getByTestId('notes-on-verse-button');
@@ -332,72 +282,6 @@ test.skip('Notes - Authenticated Users', () => {
     );
   });
 
-  test.describe('Text Content Expansions', () => {
-    test(
-      'should handle learn more toggle in text content expansions',
-      { tag: ['@notes', '@publish-note', '@qr', '@confirmation'] },
-      async ({ page }) => {
-        await mockNotes(page, 2);
-        await homePage.goTo(`/${ayah.surah}/${ayah.ayah}`);
-
-        // User opens confirmation modal
-        await switchToTranslationMode(page);
-        await openNotesModalFromTranslationView(page);
-
-        // Reflection intro should be visible
-        const reflectionIntro = page.getByTestId('reflection-intro');
-        await expect(reflectionIntro).toBeVisible();
-
-        // Learn more toggle should be visible
-        const RIToggle = reflectionIntro.getByTestId('ri-toggle');
-        await expect(RIToggle).toBeVisible();
-
-        // Reflection intro Learn more content should be hidden by default
-        const RIContent = reflectionIntro.getByTestId('ri-content');
-        await expect(RIContent).toBeHidden();
-
-        // User clicks Reflection intro Learn more toggle, content should expand
-        await RIToggle.click();
-        await expect(RIContent).toBeVisible();
-
-        // User clicks Reflection intro Learn more toggle again, content should collapse
-        await RIToggle.click();
-        await expect(RIContent).toBeHidden();
-
-        // Filling the textarea so validations pass
-        const textarea = page.getByTestId('notes-textarea');
-        await textarea.fill('TEST_NOTE_TEXT');
-
-        const saveToQRButton = page.getByTestId('save-to-qr-button');
-        await saveToQRButton.click();
-
-        // Confirmation modal should open
-        const confirmationModal = page.getByTestId('qr-confirmation-modal-content');
-        await expect(confirmationModal).toBeVisible();
-
-        // Post reflection intro should be visible
-        const postReflectionIntro = page.getByTestId('post-reflection-intro');
-        await expect(postReflectionIntro).toBeVisible();
-
-        // Post reflection intro Learn more toggle should be visible
-        const PRToggle = postReflectionIntro.getByTestId('pr-toggle');
-        await expect(PRToggle).toBeVisible();
-
-        // Post reflection intro Learn more content should be hidden by default
-        const PRContent = postReflectionIntro.getByTestId('pr-content');
-        await expect(PRContent).toBeHidden();
-
-        // User clicks Post reflection intro Learn more toggle, content should expand
-        await PRToggle.click();
-        await expect(PRContent).toBeVisible();
-
-        // User clicks Post reflection intro Learn more toggle again, content should collapse
-        await PRToggle.click();
-        await expect(PRContent).toBeHidden();
-      },
-    );
-  });
-
   test.describe('Form Validation', () => {
     test(
       'should show validation errors',
@@ -409,9 +293,9 @@ test.skip('Notes - Authenticated Users', () => {
         await switchToTranslationMode(page);
         await openNotesModalFromTranslationView(page);
 
-        // Try to save empty note publicly
-        const savePublicButton = page.getByTestId('save-to-qr-button');
-        await savePublicButton.click();
+        // Try to save empty note
+        const saveButton = page.getByTestId('save-private-button');
+        await saveButton.click();
 
         // Verify validation error is shown
         await expect(page.getByTestId('note-input-error-required-field')).toBeVisible();
@@ -419,7 +303,7 @@ test.skip('Notes - Authenticated Users', () => {
         // Enter very short text and try to save
         const textarea = page.getByTestId('notes-textarea');
         await textarea.fill('Hi');
-        await savePublicButton.click();
+        await saveButton.click();
 
         // Verify validation error is shown
         await expect(page.getByTestId('note-input-error-minimum-length')).toBeVisible();
@@ -427,7 +311,7 @@ test.skip('Notes - Authenticated Users', () => {
         // Enter note longer than 10000 characters and try to save
         const longText = 'a'.repeat(10001);
         await textarea.fill(longText);
-        await savePublicButton.click();
+        await saveButton.click();
 
         // Verify validation error is shown
         await expect(page.getByTestId('note-input-error-maximum-length')).toBeVisible();
@@ -469,22 +353,6 @@ test.skip('Notes - Authenticated Users', () => {
         for (const note of await notesCards.all()) {
           await expect(note.getByTestId('edit-note-button')).toBeVisible();
           await expect(note.getByTestId('delete-note-button')).toBeVisible();
-        }
-
-        const noteWithQR = myNotesModal.getByTestId('note-card-note-3-with-qr');
-        await expect(noteWithQR).toHaveCount(1);
-        await expect(noteWithQR).toBeVisible();
-        const noteQrViewButton = noteWithQR.getByTestId('qr-view-button');
-        const parentLink = noteQrViewButton.locator('..');
-        await expect(noteQrViewButton).toBeVisible();
-        // Parent link should be linked to the last reflection
-        await expect(parentLink).toHaveAttribute('href', expect.stringMatching(/reflection-2$/));
-
-        const noteWithoutQR = myNotesModal.getByTestId(/^note-card-note-(1|2)$/);
-        await expect(noteWithoutQR).toHaveCount(NOTE_COUNT - 1);
-
-        for (const note of await noteWithoutQR.all()) {
-          await expect(note.getByTestId('qr-view-button')).not.toBeVisible();
         }
 
         const addAnotherButton = page.getByTestId('add-another-note-button');
@@ -577,81 +445,6 @@ test.skip('Notes - Authenticated Users', () => {
         await expect(myNotesModal).toBeVisible();
 
         await expect(noteCard.getByTestId('note-text')).toHaveText(updatedNoteTextWithTimestamp);
-      },
-    );
-  });
-
-  test.describe('Public Note Publishing', () => {
-    test(
-      'should publish note to QuranReflect with confirmation',
-      { tag: ['@notes', '@publish-note', '@qr', '@public'] },
-      async ({ page }) => {
-        await mockNotes(page);
-
-        await homePage.goTo(`/${ayah.surah}/${ayah.ayah}`);
-
-        await switchToTranslationMode(page);
-        await openNotesModalFromTranslationView(page);
-
-        const note = notes.find((n) => (n.attachedEntities?.length ?? 0) === 0);
-        if (!note) throw new Error('No note found');
-        const reflectionPostId = `reflection---${note.id}`;
-        await mockPublishNote(page, note.id, reflectionPostId);
-
-        const updatedNoteTextWithTimestamp = `${UPDATED_NOTE_TEXT} ${new Date().toISOString()}`;
-
-        const notesOnVerseButton = page.getByTestId('notes-on-verse-button');
-        await notesOnVerseButton.click();
-
-        const myNotesModal = page.getByTestId('my-notes-modal-content');
-        await expect(myNotesModal).toBeVisible();
-
-        const noteCard = myNotesModal.getByTestId(`note-card-${note.id}`);
-        const noteQrViewButton = noteCard.getByTestId('qr-view-button');
-        await expect(noteCard).toBeVisible();
-        await expect(noteQrViewButton).toBeHidden();
-
-        const editButton = noteCard.getByTestId('edit-note-button');
-        await editButton.click();
-
-        const editModal = page.getByTestId('edit-note-modal-content');
-        await expect(editModal).toBeVisible();
-
-        const textarea = page.getByTestId('notes-textarea');
-        await expect(textarea).toHaveValue(note.body);
-
-        await textarea.fill(updatedNoteTextWithTimestamp);
-
-        // User clicks save to QR button
-        const saveToQRButton = page.getByTestId('save-to-qr-button');
-        await saveToQRButton.click();
-
-        // Confirmation modal should open
-        const confirmationModal = page.getByTestId('qr-confirmation-modal-content');
-        await expect(confirmationModal).toBeVisible();
-
-        const ECMEditButton = confirmationModal.getByTestId('edit-confirmation-button');
-        await expect(ECMEditButton).toBeVisible();
-        await ECMEditButton.click();
-
-        await expect(editModal).toBeVisible();
-        await expect(textarea).toHaveValue(updatedNoteTextWithTimestamp);
-
-        await saveToQRButton.click();
-
-        // User confirms publishing
-        const confirmButton = page.getByTestId('confirm-save-to-qr');
-        await confirmButton.click();
-
-        // My notes modal should reopen with QR view button visible
-        await expect(myNotesModal).toBeVisible();
-        await expect(noteQrViewButton).toBeVisible();
-        const parentLink = noteQrViewButton.locator('..');
-
-        await expect(parentLink).toHaveAttribute(
-          'href',
-          expect.stringMatching(new RegExp(`${reflectionPostId}$`)),
-        );
       },
     );
   });

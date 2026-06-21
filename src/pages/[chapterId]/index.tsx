@@ -47,6 +47,23 @@ type ChapterProps = {
 const isAyatulKursi = (chapterId: string, verseNumber: number): boolean =>
   chapterId === '2' && verseNumber === 255;
 
+/**
+ * The reader paginates verses by `verseIdx / pagination.perPage`, so `perPage`
+ * must equal the number of verses returned in this first page. QF's public API
+ * returns `perPage = total chapter verse count` for a `perPage:'all'` range
+ * request (instead of the count actually returned), which makes every verse map
+ * to page 1 so only the first page's verses ever render. Normalize it to the
+ * real returned count. No-op on backends that already report it correctly.
+ *
+ * @param {VersesResponse} versesResponse
+ */
+const normalizeFirstPagePerPage = (versesResponse: VersesResponse): void => {
+  if (versesResponse?.pagination && versesResponse.verses?.length) {
+    // eslint-disable-next-line no-param-reassign
+    versesResponse.pagination.perPage = versesResponse.verses.length;
+  }
+};
+
 const Chapter: NextPage<ChapterProps> = ({
   chapterResponse,
   versesResponse,
@@ -239,6 +256,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
       versesResponse.metaData = metaData;
       versesResponse.pagesLookup = pagesLookupResponse;
+      normalizeFirstPagePerPage(versesResponse);
 
       return {
         props: {
@@ -290,6 +308,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
 
     versesResponse.metaData = metaData;
     versesResponse.pagesLookup = pagesLookupResponse;
+    normalizeFirstPagePerPage(versesResponse);
 
     return {
       props: {

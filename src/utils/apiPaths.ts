@@ -3,7 +3,7 @@
 import { decamelizeKeys } from 'humps';
 
 // eslint-disable-next-line import/no-cycle
-import { getDefaultWordFields, getMushafId, ITEMS_PER_PAGE, makeUrl } from './api';
+import { getDefaultWordFields, getMushafId, ITEMS_PER_PAGE, makeAudioUrl, makeUrl } from './api';
 import stringify from './qs-stringify';
 import { getProxiedServiceUrl, QuranFoundationService } from './url';
 
@@ -101,10 +101,10 @@ export const makeLanguagesUrl = (language: string): string =>
  * @returns {string}
  */
 export const makeAvailableRecitersUrl = (locale: string, fields?: string[]): string =>
-  makeUrl('/audio/reciters', { locale, fields });
+  makeAudioUrl('/audio/reciters', { locale, fields });
 
 export const makeReciterUrl = (reciterId: string, locale: string): string =>
-  makeUrl(`/audio/reciters/${reciterId}`, {
+  makeAudioUrl(`/audio/reciters/${reciterId}`, {
     locale,
     fields: ['profile_picture', 'cover_image', 'bio'],
   });
@@ -122,10 +122,10 @@ export const makeChapterAudioDataUrl = (
   reciterId: number,
   chapter: number,
   segments: boolean,
-): string => makeUrl(`/audio/reciters/${reciterId}/audio_files`, { chapter, segments });
+): string => makeAudioUrl(`/audio/reciters/${reciterId}/audio_files`, { chapter, segments });
 
 export const makeAudioTimestampsUrl = (reciterId: number, verseKey: string) =>
-  makeUrl(`/audio/reciters/${reciterId}/timestamp?verse_key=${verseKey}`);
+  makeAudioUrl(`/audio/reciters/${reciterId}/timestamp?verse_key=${verseKey}`);
 
 /**
  * Compose the url for the translations' filter API.
@@ -337,17 +337,6 @@ export const makePageVersesUrl = (
  * @returns {string}
  */
 export const makeFootnoteUrl = (footnoteId: string): string => makeUrl(`/foot_notes/${footnoteId}`);
-
-export const makeDonateUrl = (showDonationPopup = false) =>
-  `https://donate.quran.foundation${showDonationPopup ? '?showDonationPopup' : ''}`;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const makeDonatePageUrl = (isOnce = true, shouldUseProviderUrl = false) => {
-  if (shouldUseProviderUrl) {
-    return `https://give.quran.foundation/give/${isOnce ? 482507 : 474400}/#!/donation/checkout`;
-  }
-  return makeDonateUrl();
-};
 
 // Qiraat API utilities
 export * from './qiraat';

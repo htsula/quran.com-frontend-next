@@ -25,9 +25,12 @@
   align-items: center;
   padding-inline: var(--spacing-small);
   padding-block: var(--spacing-medium2-px);
+  // Clear the now-overlapping transparent navbar, then add breathing room on top.
+  padding-block-start: calc(var(--navbar-height) + var(--spacing-large-px));
 
   @include breakpoints.tablet {
     padding-block: var(--spacing-large-px);
+    padding-block-start: calc(var(--navbar-height) + var(--spacing-xlarge-px));
   }
 
   margin-inline: auto;
@@ -43,6 +46,8 @@
 
 .buttonsContainer {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--spacing-medium-px);
   margin-block-start: var(--spacing-medium);
   @include breakpoints.smallerThanTablet {

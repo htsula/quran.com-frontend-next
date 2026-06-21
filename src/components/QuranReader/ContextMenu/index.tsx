@@ -8,6 +8,7 @@ import ReadingModeToggle from '../ReadingPreferenceSwitcher/ReadingModeToggle';
 import TajweedColors from '../TajweedBar/TajweedBar';
 
 import ChapterNavigation from './components/ChapterNavigation';
+import HeaderActionButtons from './components/HeaderActionButtons';
 import MobileReadingTabs from './components/MobileReadingTabs';
 import PageInfo from './components/PageInfo';
 import ProgressBar from './components/ProgressBar';
@@ -102,8 +103,13 @@ const ContextMenu: React.FC = (): JSX.Element | null => {
               onToggleSidebar={handleSidebarToggle}
               chapterNumber={getChapterNumberFromKey(verseKey)}
             />
-            {/* Settings button for mobile when navbar is visible */}
-            {showNavbar && <SettingsButton className={styles.mobileSettingsButton} />}
+            {/* Theme/language/settings actions for mobile when the menu is expanded */}
+            {showNavbar && isMobileView && (
+              <div className={styles.mobileHeaderActions}>
+                <HeaderActionButtons />
+                <SettingsButton />
+              </div>
+            )}
           </div>
         </div>
 
@@ -135,7 +141,10 @@ const ContextMenu: React.FC = (): JSX.Element | null => {
               context={SwitcherContext.ContextMenu}
             />
             {(!isMobileView || !showNavbar) && (
-              <SettingsButton className={styles.settingsNextToSwitcher} />
+              <>
+                <HeaderActionButtons />
+                <SettingsButton className={styles.settingsNextToSwitcher} />
+              </>
             )}
           </div>
         </div>

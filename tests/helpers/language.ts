@@ -1,13 +1,18 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-import { openNavigationDrawer } from '@/tests/helpers/navigation';
 import { getLanguageItemTestId, TestId } from '@/tests/test-ids';
 
+/**
+ * Open the language drawer from the navbar's language button and return the
+ * drawer container locator. Language selection lives directly in the navbar now
+ * (the navigation/side drawer has been removed).
+ *
+ * @returns {Promise<Locator>} The language drawer container locator.
+ */
 export const openNavigationDrawerLanguageSelector = async (page: Page): Promise<Locator> => {
-  await openNavigationDrawer(page);
-  await page.getByTestId(TestId.LANGUAGE_SELECTOR_BUTTON).click();
+  await page.getByTestId(TestId.OPEN_LANGUAGE_DRAWER).first().click();
 
-  const languageContainer = page.getByTestId(TestId.LANGUAGE_CONTAINER);
+  const languageContainer = page.getByTestId(TestId.LANGUAGE_DRAWER);
   await expect(languageContainer).toBeVisible();
   return languageContainer;
 };

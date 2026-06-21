@@ -13,13 +13,9 @@ import {
 import { logErrorToSentry } from '@/lib/sentry';
 import { toLocalizedNumber } from '@/utils/locale';
 
-export type OnSaveNote = (config: {
-  note: string;
-  isPublic: boolean;
-}) => Promise<void | NoteFormErrors | null>;
+export type OnSaveNote = (config: { note: string }) => Promise<void | NoteFormErrors | null>;
 
 export enum LoadingState {
-  Public = 'public',
   Private = 'private',
 }
 
@@ -77,38 +73,27 @@ export const useNotesStates = (
     return true;
   }, [noteInput, t, lang, setNoteError]);
 
-  const onSubmit = useCallback(
-    async (isPublic: boolean) => {
-      if (!validateNoteInput()) return;
-
-      try {
-        setLoading(isPublic ? LoadingState.Public : LoadingState.Private);
-        const noteFormErrors = await onSaveNote({ note: noteInput, isPublic });
-        if (noteFormErrors && Object.keys(noteFormErrors).length > 0) {
-          setErrors(noteFormErrors);
-        } else {
-          setNoteInput('');
-          onMyNotes?.();
-        }
-      } catch (error) {
-        logErrorToSentry(error, {
-          transactionName: isPublic ? 'notes.post-to-qr' : 'notes.save-privately',
-          metadata: { noteLength: noteInput.length },
-        });
-      } finally {
-        setLoading(null);
-      }
-    },
-    [noteInput, validateNoteInput, onSaveNote, onMyNotes],
-  );
-
   const onPrivateSave = useCallback(async () => {
-    await onSubmit(false);
-  }, [onSubmit]);
+    if (!validateNoteInput()) return;
 
-  const onPublicSaveRequest = useCallback(async () => {
-    await onSubmit(true);
-  }, [onSubmit]);
+    try {
+      setLoading(LoadingState.Private);
+      const noteFormErrors = await onSaveNote({ note: noteInput });
+      if (noteFormErrors && Object.keys(noteFormErrors).length > 0) {
+        setErrors(noteFormErrors);
+      } else {
+        setNoteInput('');
+        onMyNotes?.();
+      }
+    } catch (error) {
+      logErrorToSentry(error, {
+        transactionName: 'notes.save-privately',
+        metadata: { noteLength: noteInput.length },
+      });
+    } finally {
+      setLoading(null);
+    }
+  }, [noteInput, validateNoteInput, onSaveNote, onMyNotes]);
 
   const onNoteInputChange = useCallback((value: string) => {
     setNoteInput(value);
@@ -128,6 +113,5 @@ export const useNotesStates = (
     validateNoteInput,
     onNoteInputChange,
     onPrivateSave,
-    onPublicSaveRequest,
   };
 };

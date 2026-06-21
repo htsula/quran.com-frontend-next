@@ -17,8 +17,6 @@ export type Preferences = {
   enableWbwTransliteration: boolean;
   showTranslatorName: boolean;
   showTafsirs: boolean;
-  showReflections: boolean;
-  showLessons: boolean;
   showAnswers: boolean;
   locale: string;
   reciter: number | null;

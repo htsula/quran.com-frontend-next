@@ -13,7 +13,7 @@ import TableOfContents from './components/TableOfContents';
 import NextSeoWrapper from '@/components/NextSeoWrapper';
 import PageContainer from '@/components/PageContainer';
 import styles from '@/pages/contentPage.module.scss';
-import pageStyles from '@/pages/ramadan/RamadanActivities.module.scss';
+import pageStyles from '@/styles/RamadanActivities.module.scss';
 import { getLanguageAlternates } from '@/utils/locale';
 import { getCanonicalUrl, getTakeNotesNavigationUrl } from '@/utils/navigation';
 

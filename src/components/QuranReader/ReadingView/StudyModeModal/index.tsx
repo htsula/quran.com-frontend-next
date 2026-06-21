@@ -49,8 +49,6 @@ import { toLocalizedVerseKeyAuto } from '@/utils/locale';
 import {
   fakeNavigate,
   getVerseSelectedTafsirNavigationUrl,
-  getVerseReflectionNavigationUrl,
-  getVerseLessonNavigationUrl,
   getVerseAnswersNavigationUrl,
   getVerseQiraatNavigationUrl,
   getVerseLayersNavigationUrl,
@@ -153,10 +151,6 @@ const StudyModeModal: React.FC<Props> = ({
           getVerseSelectedTafsirNavigationUrl(chapterId, Number(verseNumber), tafsirs[0]),
           router.locale || Language.EN,
         );
-      } else if (tab === StudyModeTabId.REFLECTIONS) {
-        fakeNavigate(getVerseReflectionNavigationUrl(newVerseKey), router.locale || Language.EN);
-      } else if (tab === StudyModeTabId.LESSONS) {
-        fakeNavigate(getVerseLessonNavigationUrl(newVerseKey), router.locale || Language.EN);
       } else if (tab === StudyModeTabId.LAYERS) {
         fakeNavigate(getVerseLayersNavigationUrl(newVerseKey), router.locale || Language.EN);
       } else if (tab === StudyModeTabId.QIRAAT) {
@@ -347,10 +341,6 @@ const StudyModeModal: React.FC<Props> = ({
           ),
           router.locale,
         );
-      } else if (tabId === StudyModeTabId.REFLECTIONS) {
-        fakeNavigate(getVerseReflectionNavigationUrl(currentVerseKey), router.locale);
-      } else if (tabId === StudyModeTabId.LESSONS) {
-        fakeNavigate(getVerseLessonNavigationUrl(currentVerseKey), router.locale);
       } else if (tabId === StudyModeTabId.LAYERS) {
         fakeNavigate(getVerseLayersNavigationUrl(currentVerseKey), router.locale);
       } else if (tabId === StudyModeTabId.ANSWERS) {
@@ -413,8 +403,6 @@ const StudyModeModal: React.FC<Props> = ({
     [
       StudyModeTabId.TAFSIR,
       StudyModeTabId.LAYERS,
-      StudyModeTabId.REFLECTIONS,
-      StudyModeTabId.LESSONS,
       StudyModeTabId.ANSWERS,
       StudyModeTabId.QIRAAT,
       StudyModeTabId.RELATED_VERSES,

@@ -11,7 +11,7 @@ interface StudyModeControlsHeaderProps {
 
 const StudyModeControlsHeader: React.FC<StudyModeControlsHeaderProps> = ({
   languageSelector,
-  fontType = 'reflection',
+  fontType = 'tafsir',
 }) => {
   return (
     <div className={styles.container}>

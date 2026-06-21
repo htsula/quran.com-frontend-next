@@ -104,8 +104,6 @@ const StudyModeSsrContainer: React.FC<StudyModeSsrContainerProps> = ({
     [
       StudyModeTabId.TAFSIR,
       StudyModeTabId.LAYERS,
-      StudyModeTabId.REFLECTIONS,
-      StudyModeTabId.LESSONS,
       StudyModeTabId.ANSWERS,
       StudyModeTabId.QIRAAT,
       StudyModeTabId.HADITH,

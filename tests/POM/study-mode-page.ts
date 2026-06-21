@@ -37,16 +37,6 @@ class StudyModePage extends Homepage {
     await this.page.waitForLoadState('networkidle');
   }
 
-  async goToReflectionsPage(verseKey: string) {
-    await this.goTo(`/${verseKey}/reflections`);
-    await this.page.waitForLoadState('networkidle');
-  }
-
-  async goToLessonsPage(verseKey: string) {
-    await this.goTo(`/${verseKey}/lessons`);
-    await this.page.waitForLoadState('networkidle');
-  }
-
   async goToAnswersPage(verseKey: string) {
     await this.goTo(`/${verseKey}/answers`);
     await this.page.waitForLoadState('networkidle');

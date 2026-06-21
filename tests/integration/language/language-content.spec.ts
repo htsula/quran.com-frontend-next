@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
 import { selectNavigationDrawerLanguage } from '@/tests/helpers/language';
-import { openNavigationDrawer } from '@/tests/helpers/navigation';
 import Homepage from '@/tests/POM/home-page';
 import { getChapterContainerTestId, getVerseTestId, TestId } from '@/tests/test-ids';
 
@@ -18,9 +17,7 @@ test(
   async ({ page }) => {
     await expect(page.locator('html')).not.toHaveAttribute('dir', 'rtl');
 
-    // 1. Click on the menu
-    await homePage.closeNextjsErrorDialog();
-    await openNavigationDrawer(page);
+    // 1. Open the language selector
     await homePage.closeNextjsErrorDialog();
     // 2. select Arabic and wait for navigation to /ar
     await Promise.all([
@@ -37,9 +34,8 @@ test(
   'Surah name are displayed in the selected language on the homepage',
   { tag: ['@language', '@slow'] },
   async ({ page }) => {
-    // 1. Click on the menu
+    // 1. Open the language selector
     await homePage.closeNextjsErrorDialog();
-    await openNavigationDrawer(page);
     // 2. select Spanish and wait for navigation to /es
     await Promise.all([
       selectNavigationDrawerLanguage(page, 'es'),
@@ -61,9 +57,8 @@ test(
   'User interface is displayed in the selected language',
   { tag: ['@language', '@slow'] },
   async ({ page }) => {
-    // 1. Click on the menu
+    // 1. Open the language selector
     await homePage.closeNextjsErrorDialog();
-    await openNavigationDrawer(page);
     // 2. Select French and wait for navigation to /fr
     await Promise.all([
       selectNavigationDrawerLanguage(page, 'fr'),
@@ -87,9 +82,7 @@ test(
     tag: ['@nav', '@language', '@slow'],
   },
   async ({ page }) => {
-    // 1. Click on the menu
-    await openNavigationDrawer(page);
-    // 2. Select French and wait for navigation to /fr
+    // 1. Select French and wait for navigation to /fr
     await Promise.all([
       selectNavigationDrawerLanguage(page, 'fr'),
       page.waitForURL('**/fr', { waitUntil: 'networkidle' }),

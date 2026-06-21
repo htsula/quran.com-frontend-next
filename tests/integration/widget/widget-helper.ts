@@ -14,7 +14,6 @@ type WidgetParams = {
   showTranslatorNames?: boolean;
   showArabic?: boolean;
   showTafsirs?: boolean;
-  showReflections?: boolean;
   showAnswers?: boolean;
   locale?: string;
   width?: string;
@@ -49,7 +48,6 @@ export const renderWidgetPage = async (
     showTranslatorNames = false,
     showArabic = true,
     showTafsirs = true,
-    showReflections = true,
     showAnswers = true,
     locale = 'en',
     rangeEnd,
@@ -99,7 +97,6 @@ export const renderWidgetPage = async (
   url.searchParams.set('showTranslationName', String(showTranslatorNames));
   url.searchParams.set('showArabic', String(showArabic));
   url.searchParams.set('tafsir', String(showTafsirs));
-  url.searchParams.set('reflections', String(showReflections));
   url.searchParams.set('answers', String(showAnswers));
   url.searchParams.set('mergeVerses', String(mergeVerses));
   Object.entries(extraAttributes).forEach(([key, value]) => {

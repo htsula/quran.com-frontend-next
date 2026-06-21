@@ -10,26 +10,14 @@ export const getDefaultOgImageUrl = ({ locale }: BaseOgOptions) =>
 export const getAboutTheQuranImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og/about-the-quran?lang=${locale}`;
 
-export const getLearningPlansImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/learning-plans?lang=${locale}`;
-
 export const getEmbedOgImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og/embed?lang=${locale}`;
 
 export const getMediaGeneratorOgImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og/media?lang=${locale}`;
 
-export const getPreparingForRamadanOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/preparing-for-ramadan?lang=${locale}`;
-
 export const getBeyondRamadanOgImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og/beyond-ramadan?lang=${locale}`;
-
-export const getRamadanChallengeOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/ramadanchallenge?lang=${locale}`;
-
-export const getRamadan2026OgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/ramadan2026?lang=${locale}`;
 
 export const getChapterOgImageUrl = ({
   chapterId,

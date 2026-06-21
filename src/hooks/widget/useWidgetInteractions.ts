@@ -149,8 +149,6 @@ const useWidgetInteractions = (options?: WidgetOptions, widgetRef?: WidgetRootRe
         enableWbwTransliteration: options.enableWbwTransliteration,
         showArabic: options.showArabic,
         showTafsirs: options.showTafsirs,
-        showReflections: options.showReflections,
-        showLessons: options.showLessons,
         showAnswers: options.showAnswers,
         mergeVerses: options.mergeVerses,
       });
@@ -182,8 +180,6 @@ const useWidgetInteractions = (options?: WidgetOptions, widgetRef?: WidgetRootRe
       enableWbwTransliteration: options.enableWbwTransliteration,
       showArabic: options.showArabic,
       showTafsirs: options.showTafsirs,
-      showReflections: options.showReflections,
-      showLessons: options.showLessons,
       showAnswers: options.showAnswers,
       mergeVerses: options.mergeVerses,
     });
@@ -200,10 +196,6 @@ const useWidgetInteractions = (options?: WidgetOptions, widgetRef?: WidgetRootRe
       switch (footerAction) {
         case 'tafsirs':
           return 'embed_tafsirs_clicked';
-        case 'lessons':
-          return 'embed_lessons_clicked';
-        case 'reflections':
-          return 'embed_reflections_clicked';
         case 'answers':
           return 'embed_answers_clicked';
         default:

@@ -15,14 +15,12 @@ import { RelatedVersesResponse } from 'types/ApiResponses';
 interface StudyModeRelatedVersesTabProps {
   chapterId: string;
   verseNumber: string;
-  onGoToVerse?: (chapterId: string, verseNumber: string, previousVerseKey?: string) => void;
   setRelatedVersesCount?: (count: number) => void;
 }
 
 const StudyModeRelatedVersesTab: React.FC<StudyModeRelatedVersesTabProps> = ({
   chapterId,
   verseNumber,
-  onGoToVerse,
   setRelatedVersesCount,
 }) => {
   const { lang } = useTranslation();
@@ -110,12 +108,7 @@ const StudyModeRelatedVersesTab: React.FC<StudyModeRelatedVersesTabProps> = ({
   return (
     <div ref={containerRef} className={parentStyles.container}>
       {relatedVerses.map((relatedVerse) => (
-        <StudyModeRelatedVerseContent
-          key={relatedVerse.id}
-          relatedVerse={relatedVerse}
-          currentVerseKey={verseKey}
-          onGoToVerse={onGoToVerse}
-        />
+        <StudyModeRelatedVerseContent key={relatedVerse.id} relatedVerse={relatedVerse} />
       ))}
       <div ref={sentinelRef} style={{ height: 1 }} />
       {isLoadingMore && <StudyModeRelatedVersesSkeleton />}

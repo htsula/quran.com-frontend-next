@@ -6,10 +6,8 @@ import { searchIdToNavigationKey } from './search';
 import { getBasePath } from './url';
 import { getVerseAndChapterNumbersFromKey, getVerseNumberRangeFromKey } from './verse';
 
-import MyQuranTab from '@/components/MyQuran/tabs';
 import QueryParam from '@/types/QueryParam';
 import { QuranReaderFlow } from '@/types/QuranReader';
-import ContentType from '@/types/QuranReflect/ContentType';
 import { SearchNavigationType } from 'types/Search/SearchNavigationResult';
 
 /**
@@ -21,7 +19,6 @@ export const ROUTES = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   AUTH: '/auth',
-  MY_QURAN: '/my-quran',
   FORGET_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
   COMPLETE_SIGNUP: '/complete-signup',
@@ -29,10 +26,7 @@ export const ROUTES = {
   TERMS: '/terms-and-conditions',
   SITEMAP: '/sitemap.xml',
   READING_GOAL_PROGRESS: '/reading-goal/progress',
-  MY_LEARNING_PLANS: '/my-learning-plans',
   COLLECTIONS_ALL: '/collections/all',
-  RAMADAN_2026: '/ramadan2026',
-  RAMADAN_CHALLENGE: '/ramadanchallenge',
   // TODO: add all static routes here for incremental adoption
 };
 
@@ -51,49 +45,19 @@ export const AUTH_ROUTES = [
  */
 export const PROTECTED_ROUTES = [
   ROUTES.READING_GOAL_PROGRESS,
-  ROUTES.MY_LEARNING_PLANS,
   ROUTES.COLLECTIONS_ALL,
   ROUTES.COMPLETE_SIGNUP,
 ];
 
 export const EXTERNAL_ROUTES = {
-  QURAN_REFLECT: 'https://quranreflect.com',
-  SUNNAH: 'https://sunnah.com',
-  NUQAYAH: 'https://nuqayah.com',
-  LEGACY_QURAN_COM: 'https://legacy.quran.com',
-  CORPUS_QURAN_COM: 'https://corpus.quran.com',
-  QURAN_ANDROID:
-    'https://play.google.com/store/apps/details?id=com.quran.labs.androidquran&hl=en&pli=1',
-  QURAN_IOS:
-    'https://apps.apple.com/us/app/quran-by-quran-com-%D9%82%D8%B1%D8%A2%D9%86/id1118663303',
-  FEEDBACK: 'https://feedback.quran.com',
-  QURAN_FOUNDATION: 'https://quran.foundation',
   QURAN_REFLECT_ANDROID:
     'https://play.google.com/store/apps/details?id=com.quranreflect.quranreflect&hl=en',
   QURAN_REFLECT_IOS: 'https://apps.apple.com/us/app/quranreflect/id1444969758',
-  RAMADAN_CHALLENGE_WHATSAPP: 'https://whatsapp.com/channel/0029VbC4nzO7IUYRLY4r2g2f',
-  RAMADAN_CHALLENGE_TELEGRAM: 'https://t.me/+qzJBDj6_2R8xOTA5',
 };
 
 export const QURAN_URL = 'https://quran.com';
-export const MY_QURAN_URL = '/my-quran';
-export const LEARNING_PLANS_URL = '/learning-plans';
 export const RADIO_URL = '/radio';
 export const RECITERS_URL = '/reciters';
-export const ABOUT_US_URL = '/about-us';
-export const APPS_URL = '/apps';
-export const DEVELOPERS_URL = '/developers';
-export const PRODUCT_UPDATES_URL = '/product-updates';
-export const SUPPORT_URL = '/support';
-
-/**
- * Get the href link to the my quran page.
- *
- * @param {MyQuranTab} tab - The tab to navigate to specific tab.
- * @returns {string} - The href link to the my quran page with the specified tab.
- */
-export const getMyQuranNavigationUrl = (tab?: MyQuranTab): string =>
-  `/my-quran${tab ? `?${QueryParam.TAB}=${tab}` : ''}`;
 
 /**
  * Get the href link to a verse.
@@ -207,23 +171,6 @@ export const getVerseSelectedTafsirNavigationUrl = (
   verseNumber: number,
   tafsirId: number | string,
 ): string => `/${chapterId}:${verseNumber}/tafsirs/${tafsirId}`;
-
-/**
- * Get the href link to selected tafsir for Ayah.
- *
- * @param {string} verseKey
- * @returns {string}
- */
-export const getVerseReflectionNavigationUrl = (verseKey: string): string =>
-  `/${verseKey}/reflections`;
-
-/**
- * Get the href link to lessons of Ayah.
- *
- * @param {string} verseKey
- * @returns {string}
- */
-export const getVerseLessonNavigationUrl = (verseKey: string): string => `/${verseKey}/lessons`;
 
 /**
  * Get the href link to questions of Ayah.
@@ -435,24 +382,6 @@ export const getSurahInfoNavigationUrl = (chapterIdOrSlug: string, resourceId?: 
 export const getReciterNavigationUrl = (reciterId: string): string => `/reciters/${reciterId}`;
 
 /**
- * Get href link to the course page
- *
- * @param {string} courseSlug
- * @returns {string} coursePageUrl
- */
-export const getCourseNavigationUrl = (courseSlug: string): string =>
-  `/learning-plans/${courseSlug}`;
-
-/**
- * Get href link to the lesson page
- *
- * @param {string} courseSlug
- * @returns {string} lessonPageUrl
- */
-export const getLessonNavigationUrl = (courseSlug: string, lessonSlug: string): string =>
-  `/learning-plans/${courseSlug}/lessons/${lessonSlug}`;
-
-/**
  * Get href link to an audio recitation page by reciterId and chapterId
  *
  * @param {string} reciterId
@@ -472,15 +401,6 @@ export const getReciterChapterNavigationUrl = (reciterId: string, chapterId: str
 export const getCanonicalUrl = (lang: string, path: string): string =>
   `${getBasePath()}${lang === 'en' ? '' : `/${lang}`}${path}`;
 
-/**
- * Get the href link to the product updates page.
- *
- * @param {string} id
- * @returns {string}
- */
-export const getProductUpdatesUrl = (id = ''): string =>
-  `/product-updates${`${id ? `/${id}` : ''}`}`;
-
 export const getProfileNavigationUrl = () => {
   return '/profile';
 };
@@ -493,9 +413,6 @@ export const getReadingGoalNavigationUrl = (example?: string) =>
   example && example.trim() !== ''
     ? `/reading-goal?example=${encodeURIComponent(example)}`
     : '/reading-goal';
-export const getMyCoursesNavigationUrl = () => '/my-learning-plans';
-export const getCoursesNavigationUrl = () => '/learning-plans';
-export const getRamadanNavigationUrl = () => '/ramadan';
 export const getBeyondRamadanNavigationUrl = () => '/beyond-ramadan';
 export const getWhatIsRamadanNavigationUrl = () => '/what-is-ramadan';
 export const getTakeNotesNavigationUrl = () => '/take-notes';
@@ -571,10 +488,4 @@ export const scrollWindowToTop = (): void => {
   if (typeof window !== 'undefined') {
     window.scrollTo(0, 0);
   }
-};
-
-export const getReflectionNavigationUrl = (verseKey: string, selectedContentType: ContentType) => {
-  return selectedContentType === ContentType.REFLECTIONS
-    ? getVerseReflectionNavigationUrl(verseKey)
-    : getVerseLessonNavigationUrl(verseKey);
 };

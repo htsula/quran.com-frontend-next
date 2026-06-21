@@ -1,113 +1,57 @@
-<!--
-*** Thanks for checking out this Quran.com repo. If you have a suggestion that would
-*** make this better, please fork the repo and create a pull request or simply open
-***  an issue with the tag "enhancement".
-*** Thanks again! Now go create something AMAZING! :D
--->
+# quran.com-frontend — Personal Fork
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="https://quran.com">
-    <img src="public/logo.png" alt="Logo" width="80" height="80">
-  </a>
+This is a personal fork of the [Quran Foundation's](https://quran.foundation) open-source Next.js
+frontend for [quran.com](https://quran.com). The goal is a leaner, less-bloated reading experience
+while staying on the same backend infrastructure.
 
-  <h1 align="center">The Noble Quran</h1>
+## What's been removed
 
-  <p align="center">
-    The official source code repository for Quran.com
-    <br />
-    <a href="https://discord.gg/SpEeJ5bWEQ"><strong>Join Quran.com community »</strong></a>
-    <br />
-    <br />
-    <a href="https://quran.com">Visit Quran.com</a>
-    ·
-    <a href="https://github.com/quran/quran.com-frontend-next/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/quran/quran.com-frontend-next/issues">Request Feature</a>
-    •
-    <a href="https://quran.github.io/quran.com-frontend-next/storybook/master">Storybook</a>
-  </p>
-</p>
+- **Donation / fundraising UI** — donation banners, popups, and CTAs. Backend endpoints untouched.
+- **Sign-in / auth UI** — login button, profile avatar, and auth pages stubbed to redirect home. The
+  auth subsystem is intact; the app runs in permanent guest mode.
+- **Ramadan campaign pages** — `/ramadan`, `/ramadanchallenge`, `/ramadan2026`, associated nav
+  entries, and the chapter-event banner.
+- **Quran Apps Portal** — the `/apps` third-party app showcase and all related nav entries.
+- **Lessons & Reflections / QuranReflect integration** — action buttons, study-mode tabs, and the
+  QuranReflect-backed pages. Private notes remain.
+- **My Quran page** — the `/my-quran` tabbed hub (Saved/Recent/Notes). Collections pages still work.
+- **Developers / About / Support / Product Updates pages** — removed along with the nav-drawer
+  "More" and "Our Projects" sections and the Sanity CMS integration.
+- **Footer** — trimmed to title + description only; full-width layout.
 
-<!-- PROJECT SHIELDS -->
+## What's been kept
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Issues][issues-shield]][issues-url]
-[![Stargazers][stars-shield]][stars-url]
-[![MIT License][license-shield]][license-url]
+- Quran Reader (translation view, reading view, audio player, word-by-word)
+- Search
+- Tafsir and word analysis
+- Collections (`/collections/*`)
+- Reciters and Quran Radio pages
+- Related verses (reimplemented locally via proxy interception)
+- The signed API proxy pointed at the QF public gateway
 
-This project is the frontend for Quran.com. It is built on top of [Next.js](https://nextjs.org/docs/getting-started), a popular framework that takes the trouble and setup of setting up an isomorphic react app. We deploy it on now.sh automatically with automatic generation of builds for PRs.
+## Running locally
 
-### How to Contribute
+The fork targets the QF public API with OAuth client credentials. Set up `.env.local`:
 
-We trust that you will not copy this idea/project, this is at the end for the sake of Allah and we all have good intentions while working with this project. But we must stress that copying the code/project is unacceptable.
+```
+API_GATEWAY_URL=https://apis.quran.foundation
+USE_QF_PUBLIC_API=true
+INTERNAL_CLIENT_ID=...
+PROXY_SIGNATURE_TOKEN=...
+SIGNATURE_TOKEN=...
+```
 
-### Running the App Locally
+Then:
 
-- Ensure you have the latest `nodejs` and `npm` installed. Prefer 10+
-- Ensure you have `yarn` installed. Simply `npm i -g yarn`
-- Clone this repo
-- Run `yarn` on the repo to install `node_modules`
-- Run `yarn dev` to start the app. If you wish to run on a different port, run `yarn dev -p 8000`
-- Open `localhost:3000` in your browser
+```bash
+npm run dev    # dev server on http://localhost:3000
+npm run build  # production build
+```
 
-The app runs on Next.js and will automatically hot reload when you make changes.
+> The upstream repo is yarn-based; this fork uses npm.
 
-### Environment Variables
+---
 
-Rename the `env.example` file to `env.local`.
-
-### DLS (Design Language System)
-
-One mistake we made previously is treated each component as unique. This made our work not scalable. Secondly, when looking at large companies, they often develop a design style language that can be used across the app without the need to create unique components and ensure better consistency across the product. We are trying to take a similar approach. If something can be used elsewhere, please put it inside the `dls/` directory and create stories for it.
-
-### Storybook.js
-
-Our components are built within Storybook.js. See files with name `.stories.tsx`. This helps engineers view their work outside of the product, making it super easy to test different configurations of the component.
-
-[We also display all our components here](https://quran.github.io/quran.com-frontend-next/storybook/master).
-
-### Recommended Extensions
-
-Check `.vscode/extensions.json` for recommended VSCode Extensions
-
-### TypeScript
-
-We chose TypeScript as the language of choice of it's ease of type-safety. Please create types where you see fit.
-
-### Helping Out and Issues
-
-If you are interested to help out, please look at issues on the GitHub repo. This is a good place to start.
-
-### Filing Bugs
-
-Thank you for taking time to file a bug! We'd appreciate your help on fixing it 🙏. Please [open an issue](https://github.com/quran/quran.com-frontend-next/issues).
-
-### Community
-
-<a href="https://discord.gg/SpEeJ5bWEQ"><strong>Join Quran.com Discord community »</strong></a>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-
-[contributors-shield]: https://img.shields.io/github/contributors/quran/quran.com-frontend-next?style=for-the-badge
-[contributors-url]: https://github.com/quran/quran.com-frontend-next/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/quran/quran.com-frontend-next?style=for-the-badge
-[forks-url]: https://github.com/quran/quran.com-frontend-next/network/members
-[stars-shield]: https://img.shields.io/github/stars/quran/quran.com-frontend-next?style=for-the-badge
-[stars-url]: https://github.com/quran/quran.com-frontend-next/stargazers
-[issues-shield]: https://img.shields.io/github/issues/quran/quran.com-frontend-next?style=for-the-badge
-[issues-url]: https://github.com/quran/quran.com-frontend-next/issues
-[license-shield]: https://img.shields.io/github/license/quran/quran.com-frontend-next?style=for-the-badge
-[license-url]: https://github.com/quran/quran.com-frontend-next/blob/master/LICENSE.txt
-[product-screenshot]: images/screenshot.png
-
-### Credits
-
-- Localization was made possible by the help of [Lokalise](https://lokalise.com/) which is a computer-aided translation system that focuses on productivity and quality assurance and provides a seamless localization workflow.
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/15169499/139687128-15ed6189-6be2-44bf-9173-75cce317d546.png" width="400">
-</p>
+Original project:
+[github.com/quran/quran.com-frontend-next](https://github.com/quran/quran.com-frontend-next) — MIT
+License

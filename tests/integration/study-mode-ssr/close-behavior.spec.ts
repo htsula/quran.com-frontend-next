@@ -47,20 +47,6 @@ test.describe('Study Mode Close Behavior', () => {
   );
 
   test(
-    'Close from lessons page works',
-    { tag: ['@study-mode', '@close', '@ssr'] },
-    async ({ page }) => {
-      await studyModePage.goToLessonsPage('1:3');
-      await expect(studyModePage.modal).toBeVisible({ timeout: 30000 });
-
-      await expect(studyModePage.closeButton).toBeVisible({ timeout: 10000 });
-      await studyModePage.clickCloseButton();
-
-      await expect(page).toHaveURL(/startingVerse=3/, { timeout: 15000 });
-    },
-  );
-
-  test(
     'Close from answers page works',
     { tag: ['@study-mode', '@close', '@ssr'] },
     async ({ page }) => {

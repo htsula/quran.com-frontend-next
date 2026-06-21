@@ -44,8 +44,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       lp: true,
       mergeVerses: true,
       showTafsirs: false,
-      showReflections: false,
-      showLessons: false,
       showAnswers: false,
     });
 

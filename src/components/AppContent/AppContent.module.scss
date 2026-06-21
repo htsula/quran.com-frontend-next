@@ -3,3 +3,10 @@
 .contentContainer {
   @include utility.dimmedOverlay;
 }
+
+// On Quran reader routes the navbar bar is not rendered, so it occupies no space.
+// Zeroing the shared variable pulls the ContextMenu (top header), SidebarNavigation
+// and Notes up to the top accordingly.
+.readerRoute {
+  --navbar-container-height: 0px;
+}

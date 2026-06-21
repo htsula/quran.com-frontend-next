@@ -2,7 +2,6 @@ import { ScopedMutator, Cache } from 'swr/dist/types';
 
 import { GetAllNotesResponse, Note } from '@/types/auth/Note';
 import { makeGetNoteByIdUrl, makeGetNotesByVerseUrl, makeNotesUrl } from '@/utils/auth/apiPaths';
-import { makeGetUserReflectionsUrl } from '@/utils/quranReflect/apiPaths';
 import { isVerseKeyWithinRanges } from '@/utils/verse';
 
 /**
@@ -32,7 +31,6 @@ export const invalidateCache = ({
   verseKeys,
   note,
   invalidateCount = false,
-  invalidateReflections = false,
   flushNotesList = false,
   action,
 }: {
@@ -41,14 +39,12 @@ export const invalidateCache = ({
   verseKeys?: string[];
   note?: Note;
   invalidateCount?: boolean;
-  invalidateReflections?: boolean;
   flushNotesList?: boolean;
   action?: CacheAction;
 }): void => {
   const uniqueVerseKeys = verseKeys ? Array.from(new Set(verseKeys)) : [];
 
   if (invalidateCount) invalidateCountCaches(mutate, cache, uniqueVerseKeys);
-  if (invalidateReflections) invalidateReflectionsCaches(mutate, cache);
 
   updateVerseCaches(mutate, uniqueVerseKeys, note, action);
   updateNoteCaches(mutate, cache, note, action, flushNotesList);
@@ -187,20 +183,4 @@ const updatePaginatedNotes = (
 
   // Fallback for non-array data structure if any (shouldn't happen with useSWRInfinite)
   return undefined;
-};
-
-/**
- * Invalidates reflections caches for the given verse keys.
- */
-const invalidateReflectionsCaches = (
-  mutate: ScopedMutator<unknown>,
-  cache?: Cache<unknown>,
-): void => {
-  const cacheKeys = (cache as unknown as { keys?: () => string[] })?.keys?.();
-
-  if (cacheKeys) {
-    const urlKey = makeGetUserReflectionsUrl({ page: 1, limit: 10 }).split('?')[0];
-    const keys = [...cacheKeys].filter((key) => key.startsWith('$inf$') && key.includes(urlKey));
-    keys.forEach((key) => mutate(key, undefined, { revalidate: true }));
-  }
 };

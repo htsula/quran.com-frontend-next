@@ -1,14 +1,16 @@
 /**
- * The top -131.6px was calculated based on:
+ * The top -74px was calculated based on:
  *
- * 1. the height of emptySpacePlaceholder of navbar (3.6rem).
- * 2. the top padding of the QuranReader container (2rem).
- * 3. the top and bottom margin of the ReadingPreferenceSwitcher container (1.625rem).
- * 4. the top margin of the TranslationView container (1rem).
+ * 1. the top padding of the QuranReader container (2rem).
+ * 2. the top and bottom margin of the ReadingPreferenceSwitcher container (1.625rem).
+ * 3. the top margin of the TranslationView container (1rem).
  *
- * and the total is 8.225rem around 131.6 pixels.
+ * and the total is 4.625rem around 74 pixels.
+ *
+ * Note: the navbar is not rendered on reader routes (the ContextMenu is the top
+ * header), so the previous navbar term (3.6rem) is no longer included.
  */
-const DEFAULT_ROOT_MARGIN = '-131.6px 0px -68% 0px';
+const DEFAULT_ROOT_MARGIN = '-74px 0px -68% 0px';
 const OBSERVER_THRESHOLD = 0.1;
 export const QURAN_READER_OBSERVER_ID = 'quranReaderObserver';
 export const REFLECTIONS_OBSERVER_ID = 'reflectionsObserver';
@@ -19,10 +21,11 @@ export const REFLECTIONS_OBSERVER_ID = 'reflectionsObserver';
 export const READING_MODE_TOP_OFFSET = 60;
 /**
  * The top offset for the intersection observer in reading mode.
- * Based on navbar height (3.6rem) + container padding (2rem) +
- * ReadingPreferenceSwitcher margin (1.625rem) = 7.225rem ≈ 116px.
+ * Based on container padding (2rem) + ReadingPreferenceSwitcher margin (1.625rem)
+ * = 3.625rem ≈ 58px. The navbar is not rendered on reader routes, so its previous
+ * 3.6rem term is no longer included.
  */
-const READING_MODE_OBSERVER_OFFSET = 116;
+const READING_MODE_OBSERVER_OFFSET = 58;
 const READING_MODE_ROOT_MARGIN = `-${READING_MODE_OBSERVER_OFFSET}px 0px -70% 0px`;
 
 /**

@@ -144,28 +144,6 @@ test.describe('Navigation Sidebar Route Regressions', () => {
       await expect(sidebar).not.toBeAttached();
     },
   );
-
-  test(
-    'Sidebar hides after navigating from a reader page to the learning plans index',
-    { tag: ['@slow', '@navigation', '@sidebar'] },
-    async ({ page }) => {
-      await homePage.goTo('/1');
-      const sidebar = page.getByTestId(TestId.SIDEBAR_NAVIGATION);
-      await expect(sidebar).not.toBeAttached();
-
-      // Scroll down a little to make sure the chapter navigation button is visible
-      await page.evaluate(() => window.scrollBy(0, 500));
-      await page.evaluate(() => window.scrollBy(0, -300));
-
-      await page.getByTestId(TestId.CHAPTER_NAVIGATION).click({ position: { x: 5, y: 5 } });
-      await expect(sidebar).toBeVisible();
-
-      await homePage.goTo('/learning-plans');
-
-      await expect(page).toHaveURL(/\/learning-plans$/);
-      await expect(sidebar).not.toBeAttached();
-    },
-  );
 });
 
 test.describe('Chapter Navigation and Search', () => {

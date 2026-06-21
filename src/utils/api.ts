@@ -38,6 +38,41 @@ export const makeUrl = (path: string, parameters?: Record<string, unknown>): str
   return `${baseUrl}${queryParameters}`;
 };
 
+// Public open CDN host. CORS is `*`, so it can be fetched directly from the
+// browser without going through the local proxy.
+export const OPEN_CDN_API_HOST = PRODUCTION_API_HOST;
+
+// The QF authenticated public API gateway (apis.quran.foundation) does not serve
+// the legacy `/audio/reciters/*` endpoints (audio_files, reciter list, single
+// reciter) that this frontend depends on — they 404 there. When pointed at that
+// gateway (local dev), set NEXT_PUBLIC_AUDIO_OPEN_CDN=true to fetch those audio
+// reads straight from the open CDN instead. Left off in production, where the
+// internal gateway does serve them, so behaviour there is unchanged.
+const shouldUseOpenCdnForAudio = process.env.NEXT_PUBLIC_AUDIO_OPEN_CDN === 'true';
+
+/**
+ * Build a URL for an audio endpoint. Behaves like {@link makeUrl} by default,
+ * but when NEXT_PUBLIC_AUDIO_OPEN_CDN is enabled it targets the open CDN
+ * directly (bypassing the proxy/gateway) so audio works against gateways that
+ * don't expose these endpoints.
+ *
+ * @param {string} path the path for the call
+ * @param {Record<string, unknown>} parameters optional query params
+ * @returns {string}
+ */
+export const makeAudioUrl = (path: string, parameters?: Record<string, unknown>): string => {
+  if (!shouldUseOpenCdnForAudio) {
+    return makeUrl(path, parameters);
+  }
+
+  const baseUrl = `${OPEN_CDN_API_HOST}${API_ROOT_PATH}${path}`;
+  if (!parameters) {
+    return baseUrl;
+  }
+  const decamelizedParams = decamelizeKeys(parameters);
+  return `${baseUrl}?${stringify(decamelizedParams)}`;
+};
+
 /**
  * Get the default word fields that should exist in the response.
  * qpc_uthmani_hafs is added so that we can use it as a fallback

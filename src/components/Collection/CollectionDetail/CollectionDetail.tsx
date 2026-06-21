@@ -3,12 +3,9 @@ import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import { Virtuoso } from 'react-virtuoso';
 
-import { getMyQuranNavigationUrl } from '../../../utils/navigation';
-
 import styles from './CollectionDetail.module.scss';
 import CollectionVerseCell from './CollectionVerseCell';
 
-import MyQuranTab from '@/components/MyQuran/tabs';
 import ConfirmationModal from '@/dls/ConfirmationModal/ConfirmationModal';
 import { logButtonClick } from '@/utils/eventLogger';
 import Button from 'src/components/dls/Button/Button';
@@ -75,7 +72,7 @@ const CollectionDetail = ({
     if (onBack) {
       onBack();
     } else {
-      router.push(getMyQuranNavigationUrl(MyQuranTab.SAVED));
+      router.push('/collections/all');
     }
   };
 

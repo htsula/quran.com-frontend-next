@@ -16,7 +16,7 @@ interface StudyModeTabLayoutProps {
 }
 
 /**
- * Shared layout component for Study Mode tabs (Tafsir, Reflections, Lessons).
+ * Shared layout component for Study Mode tabs (Tafsir, Answers, Hadith).
  * Provides consistent container, header with FontSizeControl, and body layout.
  *
  * @returns {React.ReactElement} The tab layout component

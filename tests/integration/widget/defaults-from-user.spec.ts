@@ -54,8 +54,7 @@ test.describe('Widget defaults from user settings', () => {
       await homePage.goTo('/1');
 
       // 2. Switch the site language to French
-      await page.getByTestId('open-navigation-drawer').click();
-      await page.getByTestId('language-selector-button').click();
+      await page.getByTestId('open-language-drawer').first().click();
       await Promise.all([
         page.getByTestId('language-item-fr').click(),
         page.waitForURL((url) => url.pathname.startsWith('/fr')),

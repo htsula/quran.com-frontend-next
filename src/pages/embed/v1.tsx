@@ -130,14 +130,6 @@ export const getServerSideProps: GetServerSideProps<EmbedProps> = async (
       (query.tafsir ?? query.showTafsirs) as string | string[] | undefined,
       true,
     );
-    const showReflections = parseBool(
-      (query.reflections ?? query.showReflections) as string | string[] | undefined,
-      true,
-    );
-    const showLessons = parseBool(
-      (query.lessons ?? query.showLessons) as string | string[] | undefined,
-      true,
-    );
     const showAnswers = parseBool(
       (query.answers ?? query.showAnswers) as string | string[] | undefined,
       true,
@@ -162,8 +154,6 @@ export const getServerSideProps: GetServerSideProps<EmbedProps> = async (
       showTranslatorNames,
       showArabic,
       showTafsirs,
-      showReflections,
-      showLessons,
       showAnswers,
       locale: locale || undefined,
       rangeEnd,

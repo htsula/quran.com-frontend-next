@@ -8,14 +8,13 @@ import { StudyModeTabId } from './StudyModeBottomActions';
 import answerStyle from './tabs/StudyModeAnswersTab.module.scss';
 
 import TafsirSkeleton from '@/components/QuranReader/TafsirView/TafsirSkeleton';
+import { verseHasRelatedVerses } from '@/data/relatedVerses';
 import useBatchedCountRangeHadiths from '@/hooks/auth/useBatchedCountRangeHadiths';
 import useBatchedCountRangeLayeredTranslations from '@/hooks/auth/useBatchedCountRangeLayeredTranslations';
 import useBatchedCountRangeQiraat from '@/hooks/auth/useBatchedCountRangeQiraat';
 import useBatchedCountRangeQuestions from '@/hooks/auth/useBatchedCountRangeQuestions';
 import BookIcon from '@/icons/book-open.svg';
 import HadithIcon from '@/icons/bx-book.svg';
-import ChatIcon from '@/icons/chat.svg';
-import GraduationCapIcon from '@/icons/graduation-cap.svg';
 import LayerIcon from '@/icons/layer.svg';
 import LightbulbOnIcon from '@/icons/lightbulb-on.svg';
 import LightbulbIcon from '@/icons/lightbulb.svg';
@@ -33,14 +32,6 @@ const Loading = () => (
 );
 
 export const StudyModeTafsirTab = dynamic(() => import('./tabs/StudyModeTafsirTab'), {
-  loading: Loading,
-});
-
-export const StudyModeReflectionsTab = dynamic(() => import('./tabs/StudyModeReflectionsTab'), {
-  loading: Loading,
-});
-
-export const StudyModeLessonsTab = dynamic(() => import('./tabs/StudyModeLessonsTab'), {
   loading: Loading,
 });
 
@@ -80,8 +71,6 @@ interface TabProps {
 export const TAB_COMPONENTS: Partial<Record<StudyModeTabId, React.ComponentType<TabProps>>> = {
   [StudyModeTabId.TAFSIR]: StudyModeTafsirTab,
   [StudyModeTabId.LAYERS]: StudyModeLayersTab,
-  [StudyModeTabId.REFLECTIONS]: StudyModeReflectionsTab,
-  [StudyModeTabId.LESSONS]: StudyModeLessonsTab,
   [StudyModeTabId.ANSWERS]: StudyModeAnswersTab,
   [StudyModeTabId.QIRAAT]: StudyModeQiraatTab,
   [StudyModeTabId.RELATED_VERSES]: StudyModeRelatedVersesTab,
@@ -103,7 +92,6 @@ export type TabConfig = {
  * @param {StudyModeTabId | null | undefined} props.activeTab - Currently active tab
  * @param {string} props.verseKey - Current verse key
  * @param {Function} [props.onTabChange] - Callback when tab is clicked
- * @param {boolean} [props.hasRelatedVerses=false] - Whether the verse has related verses
  * @param {number | null} [props.relatedVersesCount] - Count of related verses
  * @returns {TabConfig[]} Array of tab configurations
  */
@@ -111,13 +99,11 @@ export const useStudyModeTabs = ({
   activeTab,
   verseKey,
   onTabChange,
-  hasRelatedVerses = false,
   relatedVersesCount,
 }: {
   activeTab: StudyModeTabId | null | undefined;
   verseKey: string;
   onTabChange?: (tabId: StudyModeTabId | null) => void;
-  hasRelatedVerses: boolean;
   relatedVersesCount?: number | null;
 }): TabConfig[] => {
   const { t, lang } = useTranslation('common');
@@ -164,20 +150,6 @@ export const useStudyModeTabs = ({
       condition: hasLayers,
     },
     {
-      id: StudyModeTabId.LESSONS,
-      label: t('lessons'),
-      icon: <GraduationCapIcon />,
-      onClick: () => handleTabClick(StudyModeTabId.LESSONS),
-      condition: true,
-    },
-    {
-      id: StudyModeTabId.REFLECTIONS,
-      label: t('reflections'),
-      icon: <ChatIcon />,
-      onClick: () => handleTabClick(StudyModeTabId.REFLECTIONS),
-      condition: true,
-    },
-    {
       id: StudyModeTabId.ANSWERS,
       label: t('answers'),
       icon: isClarificationQuestion ? <LightbulbOnIcon /> : <LightbulbIcon />,
@@ -205,7 +177,7 @@ export const useStudyModeTabs = ({
         : t('related-verses'),
       icon: <RelatedVerseIcon />,
       onClick: () => handleTabClick(StudyModeTabId.RELATED_VERSES),
-      condition: hasRelatedVerses,
+      condition: verseHasRelatedVerses(verseKey),
     },
   ];
 };

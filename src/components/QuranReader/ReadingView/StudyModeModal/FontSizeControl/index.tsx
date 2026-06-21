@@ -14,18 +14,12 @@ import MinusIcon from '@/icons/minus.svg';
 import PlusIcon from '@/icons/plus.svg';
 import {
   MAXIMUM_TAFSIR_FONT_STEP,
-  MAXIMUM_REFLECTION_FONT_STEP,
-  MAXIMUM_LESSON_FONT_STEP,
   MINIMUM_FONT_STEP,
   selectQuranReaderStyles,
   increaseTafsirFontScale,
   decreaseTafsirFontScale,
-  increaseReflectionFontScale,
-  decreaseReflectionFontScale,
   increaseQnaFontScale,
   decreaseQnaFontScale,
-  increaseLessonFontScale,
-  decreaseLessonFontScale,
   increaseHadithFontScale,
   decreaseHadithFontScale,
   MAXIMUM_QURAN_FONT_STEP,
@@ -38,14 +32,7 @@ import { logButtonClick, logValueChange } from '@/utils/eventLogger';
 import { toLocalizedNumber } from '@/utils/locale';
 import PreferenceGroup from 'types/auth/PreferenceGroup';
 
-export type FontSizeType =
-  | 'tafsir'
-  | 'reflection'
-  | 'lesson'
-  | 'qna'
-  | 'surahInfo'
-  | 'hadith'
-  | 'layers';
+export type FontSizeType = 'tafsir' | 'qna' | 'surahInfo' | 'hadith' | 'layers';
 
 interface FontSizeControlProps {
   className?: string;
@@ -61,28 +48,12 @@ const FONT_TYPE_CONFIG = {
     logKey: 'tafsir_font_scale',
     defaultValue: 3,
   },
-  reflection: {
-    key: 'reflectionFontScale' as const,
-    maxStep: MAXIMUM_REFLECTION_FONT_STEP,
-    increaseAction: increaseReflectionFontScale,
-    decreaseAction: decreaseReflectionFontScale,
-    logKey: 'reflection_font_scale',
-    defaultValue: 3,
-  },
   qna: {
     key: 'qnaFontScale' as const,
     maxStep: MAXIMUM_QURAN_FONT_STEP,
     increaseAction: increaseQnaFontScale,
     decreaseAction: decreaseQnaFontScale,
     logKey: 'qna_font_scale',
-    defaultValue: 3,
-  },
-  lesson: {
-    key: 'lessonFontScale' as const,
-    maxStep: MAXIMUM_LESSON_FONT_STEP,
-    increaseAction: increaseLessonFontScale,
-    decreaseAction: decreaseLessonFontScale,
-    logKey: 'lesson_font_scale',
     defaultValue: 3,
   },
   surahInfo: {

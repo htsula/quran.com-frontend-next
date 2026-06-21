@@ -363,21 +363,6 @@ export const WIDGET_FIELDS: Record<string, WidgetFieldConfig> = {
     preferenceKey: 'showTafsirs',
   },
 
-  showReflections: {
-    id: 'showReflections',
-    type: 'checkbox',
-    labelKey: 'checkboxes.reflections',
-    controlId: 'reflections-toggle',
-    preferenceKey: 'showReflections',
-  },
-  showLessons: {
-    id: 'showLessons',
-    type: 'checkbox',
-    labelKey: 'checkboxes.lessons',
-    controlId: 'lessons-toggle',
-    preferenceKey: 'showLessons',
-  },
-
   showAnswers: {
     id: 'showAnswers',
     type: 'checkbox',
@@ -439,7 +424,5 @@ export const WIDGET_FORM_BLOCKS: WidgetFormBlock[] = [
   { kind: 'field', field: WIDGET_FIELDS.enableWbwTransliteration },
   { kind: 'field', field: WIDGET_FIELDS.showTranslatorName },
   { kind: 'field', field: WIDGET_FIELDS.showTafsirs },
-  { kind: 'field', field: WIDGET_FIELDS.showLessons },
-  { kind: 'field', field: WIDGET_FIELDS.showReflections },
   { kind: 'field', field: WIDGET_FIELDS.showAnswers },
 ];

@@ -110,11 +110,7 @@ const VerseDisplay: React.FC<VerseDisplayProps> = ({ chapterId, verseNumber }) =
       </div>
 
       <BottomActionsExpandProvider>
-        <BottomActions
-          className={styles.bottomActionsContainer}
-          verseKey={verse.verseKey}
-          hasRelatedVerses={verse.hasRelatedVerses}
-        />
+        <BottomActions className={styles.bottomActionsContainer} verseKey={verse.verseKey} />
       </BottomActionsExpandProvider>
     </>
   );

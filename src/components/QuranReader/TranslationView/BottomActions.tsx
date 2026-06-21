@@ -6,14 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import BottomActionsTabs, { TabId } from './BottomActionsTabs';
 
 import { StudyModeTabId } from '@/components/QuranReader/ReadingView/StudyModeModal/StudyModeBottomActions';
+import { verseHasRelatedVerses } from '@/data/relatedVerses';
 import useBatchedCountRangeHadiths from '@/hooks/auth/useBatchedCountRangeHadiths';
 import useBatchedCountRangeLayeredTranslations from '@/hooks/auth/useBatchedCountRangeLayeredTranslations';
 import useBatchedCountRangeQiraat from '@/hooks/auth/useBatchedCountRangeQiraat';
 import useBatchedCountRangeQuestions from '@/hooks/auth/useBatchedCountRangeQuestions';
 import BookIcon from '@/icons/book-open.svg';
 import HadithIcon from '@/icons/bx-book.svg';
-import ChatIcon from '@/icons/chat.svg';
-import GraduationCapIcon from '@/icons/graduation-cap.svg';
 import LayerIcon from '@/icons/layer.svg';
 import LightbulbOnIcon from '@/icons/lightbulb-on.svg';
 import LightbulbIcon from '@/icons/lightbulb.svg';
@@ -27,10 +26,8 @@ import {
   fakeNavigate,
   getVerseAnswersNavigationUrl,
   getVerseHadithsNavigationUrl,
-  getVerseLessonNavigationUrl,
   getVerseLayersNavigationUrl,
   getVerseQiraatNavigationUrl,
-  getVerseReflectionNavigationUrl,
   getVerseRelatedVersesNavigationUrl,
   getVerseSelectedTafsirNavigationUrl,
 } from '@/utils/navigation';
@@ -49,10 +46,6 @@ interface BottomActionsProps {
    */
   isTranslationView?: boolean;
   /**
-   * Whether this verse has related verses
-   */
-  hasRelatedVerses?: boolean;
-  /**
    * The class name to apply to the bottom actions container
    */
   className?: string;
@@ -66,7 +59,6 @@ interface BottomActionsProps {
 const BottomActions = ({
   verseKey,
   isTranslationView = true,
-  hasRelatedVerses = false,
   className,
 }: BottomActionsProps): JSX.Element => {
   const { t, lang } = useTranslation('common');
@@ -96,8 +88,6 @@ const BottomActions = ({
       const tabIdMap: Record<TabId, StudyModeTabId> = {
         [TabId.TAFSIR]: StudyModeTabId.TAFSIR,
         [TabId.LAYERS]: StudyModeTabId.LAYERS,
-        [TabId.REFLECTIONS]: StudyModeTabId.REFLECTIONS,
-        [TabId.LESSONS]: StudyModeTabId.LESSONS,
         [TabId.RELATED_VERSES]: StudyModeTabId.RELATED_VERSES,
         [TabId.ANSWERS]: StudyModeTabId.ANSWERS,
         [TabId.QIRAAT]: StudyModeTabId.QIRAAT,
@@ -122,6 +112,15 @@ const BottomActions = ({
   // Define tab configurations
   const tabs = [
     {
+      id: TabId.RELATED_VERSES,
+      label: t('related-verses'),
+      icon: <RelatedVersesIcon />,
+      onClick: createTabHandler(TabId.RELATED_VERSES, () =>
+        getVerseRelatedVersesNavigationUrl(verseKey),
+      ),
+      condition: verseHasRelatedVerses(verseKey),
+    },
+    {
       id: TabId.TAFSIR,
       label: t('quran-reader:tafsirs'),
       icon: <BookIcon />,
@@ -136,20 +135,6 @@ const BottomActions = ({
       icon: <LayerIcon color="var(--color-blue-buttons-and-icons)" />,
       onClick: createTabHandler(TabId.LAYERS, () => getVerseLayersNavigationUrl(verseKey)),
       condition: hasLayersData,
-    },
-    {
-      id: TabId.LESSONS,
-      label: t('lessons'),
-      icon: <GraduationCapIcon />,
-      onClick: createTabHandler(TabId.LESSONS, () => getVerseLessonNavigationUrl(verseKey)),
-      condition: true,
-    },
-    {
-      id: TabId.REFLECTIONS,
-      label: t('reflections'),
-      icon: <ChatIcon />,
-      onClick: createTabHandler(TabId.REFLECTIONS, () => getVerseReflectionNavigationUrl(verseKey)),
-      condition: true,
     },
     {
       id: TabId.ANSWERS,
@@ -171,15 +156,6 @@ const BottomActions = ({
       icon: <HadithIcon color="var(--color-blue-buttons-and-icons)" />,
       onClick: createTabHandler(TabId.HADITH, () => getVerseHadithsNavigationUrl(verseKey)),
       condition: hasHadiths,
-    },
-    {
-      id: TabId.RELATED_VERSES,
-      label: t('related-verses'),
-      icon: <RelatedVersesIcon />,
-      onClick: createTabHandler(TabId.RELATED_VERSES, () =>
-        getVerseRelatedVersesNavigationUrl(verseKey),
-      ),
-      condition: hasRelatedVerses,
     },
   ];
 

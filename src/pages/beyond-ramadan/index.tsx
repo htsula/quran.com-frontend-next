@@ -9,24 +9,18 @@ import useTranslation from 'next-translate/useTranslation';
 
 import NextSeoWrapper from '@/components/NextSeoWrapper';
 import PageContainer from '@/components/PageContainer';
-import InlineLink from '@/components/RamadanActivity/InlineLink';
 import PlainVerseText from '@/components/Verse/PlainVerseText';
 import Button, { ButtonVariant } from '@/dls/Button/Button';
 import Link, { LinkVariant } from '@/dls/Link/Link';
 import { getBeyondRamadanOgImageUrl } from '@/lib/og';
 import styles from '@/pages/contentPage.module.scss';
-import pageStyles from '@/pages/ramadan/RamadanActivities.module.scss';
-import { makeDonatePageUrl } from '@/utils/apiPaths';
-import { isLoggedIn } from '@/utils/auth/login';
+import pageStyles from '@/styles/RamadanActivities.module.scss';
 import { logButtonClick } from '@/utils/eventLogger';
 import { getLanguageAlternates } from '@/utils/locale';
 import {
   getBeyondRamadanNavigationUrl,
   getCanonicalUrl,
-  getCourseNavigationUrl,
-  getLoginNavigationUrl,
   getQuranicCalendarNavigationUrl,
-  getReadingGoalNavigationUrl,
 } from '@/utils/navigation';
 import verse3829 from 'src/data/verses/verse3829';
 
@@ -128,7 +122,10 @@ const BeyondRamadanPage: NextPage = (): JSX.Element => {
             </p>
             <p>
               Learn more:{' '}
-              <Link href={getCourseNavigationUrl('avoiding-the-post-ramadan-slump')} isNewTab>
+              <Link
+                href="https://quran.com/learning-plans/avoiding-the-post-ramadan-slump"
+                isNewTab
+              >
                 Maintaining Your Momentum: Avoiding the Post-Ramadan Slump - Quran.com
               </Link>
             </p>
@@ -138,7 +135,7 @@ const BeyondRamadanPage: NextPage = (): JSX.Element => {
                   onButtonClicked('maintain_momentum');
                 }}
                 variant={ButtonVariant.Shadow}
-                href={getCourseNavigationUrl('avoiding-the-post-ramadan-slump')}
+                href="https://quran.com/learning-plans/avoiding-the-post-ramadan-slump"
                 isNewTab
               >
                 Enroll Now
@@ -224,30 +221,6 @@ const BeyondRamadanPage: NextPage = (): JSX.Element => {
           </div>
           <hr />
           <div className={styles.subSection}>
-            <h1>Set a Custom Goal - Stay Consistent</h1>
-            <div>
-              Stay consistent on your Quran journey with custom goals and reading streaks! Set your
-              targets, track your progress, and build a daily habit of connection with the Quran.
-            </div>
-            <div className={styles.ctaContainer}>
-              <Button
-                onClick={() => {
-                  onButtonClicked('create_goal');
-                }}
-                variant={ButtonVariant.Shadow}
-                href={
-                  isLoggedIn()
-                    ? getReadingGoalNavigationUrl()
-                    : getLoginNavigationUrl(getReadingGoalNavigationUrl())
-                }
-                isNewTab
-              >
-                Create Goal
-              </Button>
-            </div>
-          </div>
-          <hr />
-          <div className={styles.subSection}>
             <h1>Explore Features to Keep You Engaged</h1>
             <div>
               We've designed tools to help you <b>stay consistent and deepen your understanding</b>{' '}
@@ -271,34 +244,6 @@ const BeyondRamadanPage: NextPage = (): JSX.Element => {
               Ramadan was just the beginning. The next step is yours to take. Whether it's reading,
               reflecting, memorizing, or understanding—commit to keeping the words of your Lord
               close to your heart year round.
-            </div>
-          </div>
-          <hr />
-          <div className={styles.subSection}>
-            <h1>Support Quran.Foundation ❤️</h1>
-            <div>
-              We remain committed to our mission to empower every human being to benefit from the
-              Quran. The modern technology and human talent needed to accomplish our mission
-              requires resources. Monthly donations help us retain top talent and sustain operations
-              so we focus less on fundraising and more on creating impact. To learn more and donate,
-              visit:{' '}
-              <InlineLink
-                text="donate.quran.foundation"
-                href="https://donate.quran.foundation"
-                isNewTab
-              />
-            </div>
-            <div className={styles.ctaContainer}>
-              <Button
-                onClick={() => {
-                  onButtonClicked('become_a_monthly_donor');
-                }}
-                variant={ButtonVariant.Shadow}
-                href={makeDonatePageUrl(false, true)}
-                isNewTab
-              >
-                Become a Monthly Donor
-              </Button>
             </div>
           </div>
         </div>

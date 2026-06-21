@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import InlineLink from '@/components/RamadanActivity/InlineLink';
 import Button, { ButtonVariant } from '@/dls/Button/Button';
 import styles from '@/pages/contentPage.module.scss';
-import pageStyles from '@/pages/ramadan/RamadanActivities.module.scss';
+import pageStyles from '@/styles/RamadanActivities.module.scss';
 import { logButtonClick } from '@/utils/eventLogger';
 
 const WhatIsRamadanSwahili = (): JSX.Element => {

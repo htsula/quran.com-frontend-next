@@ -101,8 +101,6 @@ const sanitizeVerse = (verse: Verse): Verse => ({
  * @param {MushafType} params.mushaf - Mushaf style.
  * @param {boolean} params.showTranslatorNames - Show translator names.
  * @param {boolean} params.showTafsirs - Show tafsirs CTA.
- * @param {boolean} params.showReflections - Show reflections CTA.
- * @param {boolean} params.showLessons - Show lessons CTA.
  * @param {boolean} params.showAnswers - Show answers CTA.
  * @param {string} params.locale - Locale code.
  * @param {WidgetLabels} params.labels - Localized widget labels.
@@ -129,8 +127,6 @@ const buildWidgetOptions = (
     mushaf: MushafType;
     showTranslatorNames: boolean;
     showTafsirs: boolean;
-    showReflections: boolean;
-    showLessons: boolean;
     showAnswers: boolean;
     locale: string;
     labels: WidgetLabels;
@@ -158,8 +154,6 @@ const buildWidgetOptions = (
   showTranslatorNames: params.showTranslatorNames,
   showArabic: params.showArabic,
   showTafsirs: params.showTafsirs,
-  showReflections: params.showReflections,
-  showLessons: params.showLessons,
   showAnswers: params.showAnswers,
   locale: params.locale,
   labels: params.labels,
@@ -228,8 +222,6 @@ type WidgetTracking = {
   enableWbwTransliteration?: boolean;
   showArabic?: boolean;
   showTafsirs?: boolean;
-  showReflections?: boolean;
-  showLessons?: boolean;
   showAnswers?: boolean;
   mergeVerses?: boolean;
   locale?: string;
@@ -302,10 +294,6 @@ const buildVerseParams = (
   }
   if (typeof tracking?.showArabic === 'boolean') params.showArabic = tracking.showArabic;
   if (typeof tracking?.showTafsirs === 'boolean') params.showTafsirs = tracking.showTafsirs;
-  if (typeof tracking?.showReflections === 'boolean') {
-    params.showReflections = tracking.showReflections;
-  }
-  if (typeof tracking?.showLessons === 'boolean') params.showLessons = tracking.showLessons;
   if (typeof tracking?.showAnswers === 'boolean') params.showAnswers = tracking.showAnswers;
   if (typeof tracking?.mergeVerses === 'boolean') params.mergeVerses = tracking.mergeVerses;
   if (tracking?.locale) params.locale = tracking.locale;
@@ -332,8 +320,6 @@ export type AyahWidgetDataInput = {
   showTranslatorNames?: boolean;
   showArabic?: boolean;
   showTafsirs?: boolean;
-  showReflections?: boolean;
-  showLessons?: boolean;
   showAnswers?: boolean;
   locale?: string;
   rangeEnd?: number;
@@ -526,8 +512,6 @@ const loadWidgetLabels = async (locale: string): Promise<WidgetLabels> => {
     surah: tCommon('surah'),
     verse: tCommon('verse'),
     tafsirs: tQuranReader('tafsirs'),
-    reflections: tCommon('reflections'),
-    lessons: tCommon('lessons'),
     answers: tCommon('answers'),
   };
 };
@@ -736,8 +720,6 @@ export const getAyahWidgetData = async (input: AyahWidgetDataInput): Promise<Aya
   const showTranslatorNames: boolean = input.showTranslatorNames ?? false;
   const showArabic: boolean = input.showArabic ?? true;
   const showTafsirs: boolean = input.showTafsirs ?? true;
-  const showReflections: boolean = input.showReflections ?? true;
-  const showLessons: boolean = input.showLessons ?? true;
   const showAnswers: boolean = input.showAnswers ?? true;
   const mergeVerses: boolean = input.mergeVerses ?? false;
 
@@ -793,8 +775,6 @@ export const getAyahWidgetData = async (input: AyahWidgetDataInput): Promise<Aya
     enableWbwTransliteration,
     showArabic,
     showTafsirs,
-    showReflections,
-    showLessons,
     showAnswers,
     mergeVerses,
     locale,
@@ -844,8 +824,6 @@ export const getAyahWidgetData = async (input: AyahWidgetDataInput): Promise<Aya
       showTranslatorNames,
       showArabic,
       showTafsirs,
-      showReflections,
-      showLessons,
       showAnswers,
       locale,
       labels,

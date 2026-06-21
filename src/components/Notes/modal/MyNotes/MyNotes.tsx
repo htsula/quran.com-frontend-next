@@ -6,7 +6,6 @@ import useSWR from 'swr';
 import styles from './MyNotes.module.scss';
 
 import { DEFAULT_DEDUPING_INTERVAL } from '@/components/Notes/modal/constant';
-import useNotesWithRecentReflection from '@/components/Notes/modal/hooks/useNotesWithRecentReflection';
 import NoteCard from '@/components/Notes/modal/MyNotes/Card/NoteCard';
 import Button, { ButtonSize } from '@/dls/Button/Button';
 import Spinner, { SpinnerSize } from '@/dls/Spinner/Spinner';
@@ -21,7 +20,6 @@ interface MyNotesProps {
   verseKey: string;
   deletingNoteId: string | undefined;
   processingNoteId: string | undefined;
-  onPostToQrClick: (note: Note) => void;
   onDeleteNoteClick: (note: Note) => void;
 }
 
@@ -31,7 +29,6 @@ const MyNotes: React.FC<MyNotesProps> = ({
   verseKey,
   deletingNoteId,
   processingNoteId,
-  onPostToQrClick,
   onDeleteNoteClick,
 }) => {
   const { t } = useTranslation('notes');
@@ -48,7 +45,7 @@ const MyNotes: React.FC<MyNotesProps> = ({
 
   const isLoading = !data && !error;
 
-  const notes = useNotesWithRecentReflection(data);
+  const notes = Array.isArray(data) ? data : [];
 
   const showEmptyState = !isLoading && !error && notes.length === 0;
   const showStatus = isLoading || error || showEmptyState;
@@ -75,7 +72,6 @@ const MyNotes: React.FC<MyNotesProps> = ({
               key={note.id}
               note={note}
               onEdit={onEditNote}
-              onPostToQr={onPostToQrClick}
               onDelete={onDeleteNoteClick}
               isDeletingNote={note.id === deletingNoteId}
             />

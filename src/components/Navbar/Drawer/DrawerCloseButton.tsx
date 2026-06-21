@@ -19,7 +19,7 @@ const DrawerCloseButton: React.FC<Props> = ({ onClick }) => {
       variant={ButtonVariant.Ghost}
       onClick={onClick}
       ariaLabel={t('aria.drawer-close')}
-      data-testid={TestId.NAVIGATION_DRAWER_CLOSE_BUTTON}
+      data-testid={TestId.DRAWER_CLOSE_BUTTON}
     >
       <IconClose />
     </Button>

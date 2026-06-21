@@ -2,7 +2,6 @@
 import initialState, { DEFAULT_TAFSIRS } from './defaultSettings/defaultSettings';
 import { migrateRecentReadingSessions } from './migration-scripts/migrating-recent-reading-sessions';
 import { initialSidebarIsVisible } from './slices/QuranReader/sidebarNavigation';
-import { initialState as welcomeMessageInitialState } from './slices/welcomeMessage';
 
 import { consolidateWordByWordState, getDefaultWordByWordDisplay } from '@/utils/wordByWord';
 import { MushafLines, QuranFont, WordClickFunctionality } from 'types/QuranReader';
@@ -76,7 +75,7 @@ export default {
   }),
   12: (state) => ({
     ...state,
-    welcomeMessage: welcomeMessageInitialState,
+    welcomeMessage: { isVisible: true },
   }),
   13: (state) => ({
     ...state,
@@ -298,26 +297,10 @@ export default {
       selectedReadingTranslation: initialState.readingPreferences.selectedReadingTranslation,
     },
   }),
-  39: (state) => ({
-    ...state,
-    quranReaderStyles: {
-      ...state.quranReaderStyles,
-      reflectionFontScale:
-        state.quranReaderStyles.reflectionFontScale ??
-        initialState.quranReaderStyles.reflectionFontScale,
-      lessonFontScale:
-        state.quranReaderStyles.lessonFontScale ?? initialState.quranReaderStyles.lessonFontScale,
-    },
-    readingPreferences: {
-      ...state.readingPreferences,
-      selectedReflectionLanguages:
-        state.readingPreferences.selectedReflectionLanguages ??
-        initialState.readingPreferences.selectedReflectionLanguages,
-      selectedLessonLanguages:
-        state.readingPreferences.selectedLessonLanguages ??
-        initialState.readingPreferences.selectedLessonLanguages,
-    },
-  }),
+  // Migration 39 previously seeded reflection/lesson font scales and languages.
+  // Those settings were removed with the lessons/reflections feature; kept as a
+  // no-op so subsequent migration numbers are not renumbered.
+  39: (state) => ({ ...state }),
   40: (state) => ({
     ...state,
     quranReaderStyles: {

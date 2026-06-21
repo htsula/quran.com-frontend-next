@@ -76,20 +76,6 @@ test(
   },
 );
 
-test(
-  'Learning Plans section appears with at least 3 items',
-  { tag: ['@homepage', '@learning-plans', '@smoke'] },
-  async ({ page }) => {
-    await homePage.goTo();
-
-    const learningPlansSection = page.getByTestId(TestId.COURSES_LIST);
-    await expect(learningPlansSection).toBeVisible();
-
-    const items = learningPlansSection.getByRole('link');
-    expect(await items.count()).toBeGreaterThanOrEqual(3);
-  },
-);
-
 test('Community section appears with at least 1 item', async ({ page }) => {
   await homePage.goTo();
 

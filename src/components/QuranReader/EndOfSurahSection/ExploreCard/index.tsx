@@ -10,13 +10,11 @@ import styles from './ExploreCard.module.scss';
 import Card from '@/components/HomePage/Card';
 import { StudyModeTabId } from '@/components/QuranReader/ReadingView/StudyModeModal/StudyModeBottomActions';
 import Button, { ButtonShape, ButtonSize, ButtonType, ButtonVariant } from '@/dls/Button/Button';
-import Link from '@/dls/Link/Link';
-import BookmarkRemoveIcon from '@/icons/bookmark_remove.svg';
 import LightbulbOnIcon from '@/icons/lightbulb-on.svg';
 import { selectSelectedTafsirs } from '@/redux/slices/QuranReader/tafsirs';
 import { pickRandom } from '@/utils/array';
 import { logButtonClick } from '@/utils/eventLogger';
-import { fakeNavigate, MY_QURAN_URL } from '@/utils/navigation';
+import { fakeNavigate } from '@/utils/navigation';
 import { ChapterContent } from 'types/ApiResponses';
 
 interface ExploreCardProps {
@@ -44,10 +42,6 @@ const ExploreCard: React.FC<ExploreCardProps> = ({
   const selectedTafsirs = useSelector(selectSelectedTafsirs);
   const randomSuggestion = useMemo(() => pickRandom(suggestions), [suggestions]);
 
-  const handleMyQuranClick = () => {
-    logButtonClick('end_of_surah_my_quran');
-  };
-
   const getButtonLabel = (button: ActionButton): string => {
     const namespace = button.namespace ?? 'quran-reader';
     return t(`${namespace}:${button.key}`);
@@ -68,15 +62,6 @@ const ExploreCard: React.FC<ExploreCardProps> = ({
     <Card className={classNames(styles.endOfSurahCard, cardClassName)} data-testid="explore-card">
       <div className={styles.header}>
         <span className={styles.title}>{t('quran-reader:end-of-surah.explore')}</span>
-        <Link
-          href={MY_QURAN_URL}
-          className={styles.myQuranContainer}
-          onClick={handleMyQuranClick}
-          aria-label={t('quran-reader:end-of-surah.my-quran')}
-        >
-          <BookmarkRemoveIcon />
-          <span className={styles.myQuranLink}>{t('quran-reader:end-of-surah.my-quran')}</span>
-        </Link>
       </div>
 
       <div className={styles.content}>

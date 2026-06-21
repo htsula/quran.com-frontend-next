@@ -101,7 +101,7 @@ $isNavbarVisible: var(--isNavbarVisible);
   position: fixed;
   inset-block-start: 0;
   inset-inline-start: 0;
-  padding-block-start: calc(1.5 * var(--spacing-mega));
+  padding-block-start: var(--spacing-large);
   background-color: var(--color-background-elevated);
   overflow-x: hidden;
   z-index: var(--z-index-sticky);
@@ -112,6 +112,25 @@ $isNavbarVisible: var(--isNavbarVisible);
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
+
+  // The sidebar's translateY offset includes `--navbar-container-height`, but that
+  // height should never push the sidebar down:
+  //   - On reader routes the navbar bar is not rendered (the ContextMenu is the top
+  //     header). SidebarNavigation lives in the Navbar subtree, outside AppContent's
+  //     .readerRoute container, so it never inherits that container's
+  //     `--navbar-container-height: 0` override.
+  //   - On the homepage the navbar is a transparent, pointer-events:none overlay
+  //     whose only buttons float top-right, while this sidebar is opaque and anchored
+  //     top-left — so it never needs to clear the navbar vertically.
+  // Zero it here for both cases so the sidebar sits flush with the top instead of
+  // leaving a phantom navbar-height gap.
+  --navbar-container-height: 0px;
+
+  // On the homepage this sidebar renders inside the transparent navbar <nav>, which
+  // sets `pointer-events: none` (only its own buttons re-enable it). Since
+  // pointer-events inherits, the sidebar would otherwise be entirely unclickable.
+  // Re-enable it here; this is a no-op on reader routes (no such ancestor).
+  pointer-events: auto;
 }
 
 .inVisibleContainer {
