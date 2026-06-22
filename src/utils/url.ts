@@ -67,12 +67,35 @@ export const getBasePath = (): string =>
     process.env.NEXT_PUBLIC_VERCEL_URL
   }`;
 
+/**
+ * Absolute origin used for server-side (SSR/ISR) proxy calls, which can't use a
+ * relative URL. Prefer Vercel's per-deployment `VERCEL_URL` (auto-injected on
+ * every deployment, incl. previews) so the app works on any domain without
+ * reconfiguring `NEXT_PUBLIC_VERCEL_URL`; fall back to the configured public
+ * host, then localhost for local dev. Protocol is inferred from the host so a
+ * misconfigured `NEXT_PUBLIC_VERCEL_ENV` can't force http on a real domain.
+ *
+ * @returns {string}
+ */
+const getServerProxyOrigin = (): string => {
+  const host = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
+  const protocol = host.startsWith('localhost') ? 'http' : 'https';
+  return `${protocol}://${host}`;
+};
+
 export const getProxiedServiceUrl = (service: QuranFoundationService, path: string): string => {
   const PROXY_PATH = `/api/proxy/${service}`;
-  const BASE_PATH = isStaticBuild
-    ? `${process.env.API_GATEWAY_URL}/${service}`
-    : `${getBasePath()}${PROXY_PATH}`;
-  return `${BASE_PATH}${path}`;
+  if (isStaticBuild) {
+    return `${process.env.API_GATEWAY_URL}/${service}${path}`;
+  }
+  // In the browser a same-origin relative URL works on whatever domain the app
+  // is served from (production, preview deploys, custom domains, localhost), so
+  // it never depends on a hardcoded host env var.
+  if (typeof window !== 'undefined') {
+    return `${PROXY_PATH}${path}`;
+  }
+  // Server-side rendering needs an absolute URL.
+  return `${getServerProxyOrigin()}${PROXY_PATH}${path}`;
 };
 
 /**

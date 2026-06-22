@@ -85,10 +85,18 @@ const getQfAccessToken = async (): Promise<string> => {
   return cachedQfToken.token;
 };
 
-const isOriginAllowed = (origin: string | undefined): boolean => {
+const isOriginAllowed = (origin: string | undefined, req: NextApiRequest): boolean => {
   if (!origin) return false;
-  const url = new URL(origin);
-  const { hostname } = url;
+  const { hostname } = new URL(origin);
+  // Always allow first-party (same-origin) requests: when the browser Origin
+  // matches the host the app is being served from, it's the app calling its own
+  // proxy. This makes the deployment work on any domain (production, preview,
+  // custom) without having to list it in ALLOWED_ORIGINS.
+  const requestHost = ((req.headers['x-forwarded-host'] || req.headers.host || '') as string)
+    .split(',')[0]
+    .trim()
+    .split(':')[0];
+  if (requestHost && hostname === requestHost) return true;
   return ALLOWED_DOMAINS.includes(hostname);
 };
 
@@ -98,7 +106,7 @@ const handleProxyReq = (proxyReq, req, res) => {
   const skipProxySignature = stripServicePrefix || QF_PUBLIC_API;
   const origin = req.headers.origin || req.headers.referer || '';
   if (origin) {
-    if (!isOriginAllowed(origin)) {
+    if (!isOriginAllowed(origin, req)) {
       res.status(403).send({ error: ERROR_MESSAGES.FORBIDDEN });
       return;
     }
