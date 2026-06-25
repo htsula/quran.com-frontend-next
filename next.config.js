@@ -183,10 +183,7 @@ const nextConfig = {
     },
   ],
   compiler: {
-    // TEMP: keep console.* in production so the chapter getStaticProps diagnostics
-    // (DIAG_CHAPTER_*) actually print to the Vercel runtime log. Restore to
-    // `removeConsole: !isDev` once captured.
-    removeConsole: false,
+    removeConsole: !isDev,
   },
 };
 
