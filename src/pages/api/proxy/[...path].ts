@@ -6,6 +6,7 @@ import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { getRelatedVerseKeys } from '@/data/relatedVerses';
+import { getQfAccessToken } from '@/utils/auth/qfToken';
 import generateSignature from '@/utils/auth/signature';
 import {
   X_AUTH_SIGNATURE,
@@ -52,38 +53,6 @@ const STRIPPED_FORWARD_HEADERS = [
   'x-invoke-output',
   'x-middleware-invoke',
 ];
-
-// Cache the client-credentials access token in memory (valid ~3600s, no refresh
-// token) and renew shortly before expiry.
-let cachedQfToken: { token: string; expiresAt: number } | null = null;
-
-const getQfAccessToken = async (): Promise<string> => {
-  const now = Date.now();
-  if (cachedQfToken && cachedQfToken.expiresAt > now + 60_000) {
-    return cachedQfToken.token;
-  }
-  const basic = Buffer.from(`${process.env.QF_CLIENT_ID}:${process.env.QF_CLIENT_SECRET}`).toString(
-    'base64',
-  );
-  const res = await fetch(`${process.env.QF_OAUTH_BASE_URL}/oauth2/token`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${basic}`,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'grant_type=client_credentials&scope=content',
-  });
-  if (!res.ok) {
-    throw new Error(`QF token request failed with status ${res.status}`);
-  }
-  const data = await res.json();
-  cachedQfToken = {
-    token: data.access_token,
-    expiresAt: now + Number(data.expires_in || 3600) * 1000,
-  };
-  return cachedQfToken.token;
-};
 
 const isOriginAllowed = (origin: string | undefined, req: NextApiRequest): boolean => {
   if (!origin) return false;

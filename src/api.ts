@@ -73,6 +73,35 @@ import AudioData from 'types/AudioData';
 
 export const OFFLINE_ERROR = 'OFFLINE';
 
+/**
+ * Server-side requests in QF public-API mode call the gateway directly
+ * (see getProxiedServiceUrl) rather than self-calling the proxy, so the OAuth
+ * bearer token + client id the proxy would otherwise attach must be added here.
+ * Returns no headers in the browser, in non-QF mode, or for non-gateway URLs.
+ * The token module is server-only and imported dynamically so it never reaches
+ * the client bundle.
+ *
+ * @param {string} requestUrl
+ * @returns {Promise<Record<string, string>>}
+ */
+const getServerQfAuthHeaders = async (requestUrl: string): Promise<Record<string, string>> => {
+  if (
+    typeof window !== 'undefined' ||
+    process.env.USE_QF_PUBLIC_API !== 'true' ||
+    !process.env.API_GATEWAY_URL ||
+    !requestUrl.startsWith(process.env.API_GATEWAY_URL)
+  ) {
+    return {};
+  }
+  const { getQfAccessToken } = await import('@/utils/auth/qfToken');
+  /* eslint-disable @typescript-eslint/naming-convention */
+  return {
+    'x-auth-token': await getQfAccessToken(),
+    'x-client-id': process.env.QF_CLIENT_ID as string,
+  };
+  /* eslint-enable @typescript-eslint/naming-convention */
+};
+
 export const fetcher = async function fetcher<T>(
   input: RequestInfo,
   init: RequestInit = {},
@@ -91,12 +120,14 @@ export const fetcher = async function fetcher<T>(
   } as NextApiRequest;
 
   const additionalHeaders = getAdditionalHeaders(req);
+  const qfAuthHeaders = await getServerQfAuthHeaders(typeof input === 'string' ? input : input.url);
 
   const reqInit = {
     ...init,
     headers: {
       ...init.headers,
       ...additionalHeaders,
+      ...qfAuthHeaders,
     },
   };
 
