@@ -69,18 +69,27 @@ export const getBasePath = (): string =>
 
 /**
  * Absolute origin used for server-side (SSR/ISR) proxy calls, which can't use a
- * relative URL. Prefer Vercel's per-deployment `VERCEL_URL` (auto-injected on
- * every deployment, incl. previews) so the app works on any domain without
- * reconfiguring `NEXT_PUBLIC_VERCEL_URL`; fall back to the configured public
- * host, then localhost for local dev. Protocol is inferred from the host so a
- * misconfigured `NEXT_PUBLIC_VERCEL_ENV` can't force http on a real domain.
+ * relative URL. This must be a PUBLIC origin: Vercel's per-deployment
+ * `VERCEL_URL` sits behind Deployment Protection (SSO), so self-calling it
+ * returns an auth redirect instead of JSON and breaks getStaticProps. Prefer
+ * `VERCEL_PROJECT_PRODUCTION_URL` (auto-injected public production domain, e.g.
+ * the custom domain), allowing an explicit `NEXT_PUBLIC_SITE_URL` override and
+ * falling back to the configured host, then localhost for local dev. Accepts a
+ * bare host or a full URL; protocol is inferred from the host otherwise.
  *
  * @returns {string}
  */
 const getServerProxyOrigin = (): string => {
-  const host = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
-  const protocol = host.startsWith('localhost') ? 'http' : 'https';
-  return `${protocol}://${host}`;
+  const configured =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+    process.env.NEXT_PUBLIC_VERCEL_URL ||
+    'localhost:3000';
+  if (/^https?:\/\//.test(configured)) {
+    return configured.replace(/\/+$/, '');
+  }
+  const protocol = configured.startsWith('localhost') ? 'http' : 'https';
+  return `${protocol}://${configured}`;
 };
 
 export const getProxiedServiceUrl = (service: QuranFoundationService, path: string): string => {
