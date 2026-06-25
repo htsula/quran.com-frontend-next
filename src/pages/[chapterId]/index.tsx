@@ -196,6 +196,22 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   let isValidChapter = isValidChapterId(chapterIdOrVerseKeyOrSlug);
   const chaptersData = await getAllChaptersData(locale);
   const isValidRanges = isRangesStringValid(chaptersData, chapterIdOrVerseKeyOrSlug);
+  // TEMP DIAGNOSTIC (single info-level line; remove after capturing). Shows the
+  // decision inputs BEFORE any network call + whether the gateway env is visible
+  // to this runtime, to explain "no outgoing requests" 404s.
+  // eslint-disable-next-line no-console
+  console.log(
+    `DIAG_CHAPTER_START ${JSON.stringify({
+      chapter: chapterIdOrVerseKeyOrSlug,
+      locale,
+      isValidChapter,
+      isValidRanges,
+      isValidVerseKey: isValidVerseKey(chaptersData, chapterIdOrVerseKeyOrSlug),
+      chaptersDataCount: chaptersData ? Object.keys(chaptersData).length : -1,
+      qfMode: process.env.USE_QF_PUBLIC_API || null,
+      hasGateway: Boolean(process.env.API_GATEWAY_URL),
+    })}`,
+  );
   // initialize the value as if it's chapter
   let chapterId = chapterIdOrVerseKeyOrSlug;
   if (
@@ -327,15 +343,16 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
     // `fetcher` throws the Response object on a bad status, so status/url tell us
     // which QF call failed and why.
     // eslint-disable-next-line no-console
-    console.error('[getStaticProps-ChapterPage]', {
-      chapter: String(params.chapterId),
-      locale,
-      name: (error as Error)?.name,
-      message: (error as Error)?.message,
-      status: (error as { status?: number })?.status,
-      url: (error as { url?: string })?.url,
-      stack: (error as Error)?.stack,
-    });
+    console.log(
+      `DIAG_CHAPTER_CATCH ${JSON.stringify({
+        chapter: String(params.chapterId),
+        name: (error as Error)?.name,
+        message: (error as Error)?.message,
+        status: (error as { status?: number })?.status,
+        url: (error as { url?: string })?.url,
+        stack: ((error as Error)?.stack || '').split('\n').slice(0, 5).join(' || '),
+      })}`,
+    );
     logErrorToSentry(error, {
       transactionName: 'getStaticProps-ChapterPage',
       metadata: {
