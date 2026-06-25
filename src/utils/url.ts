@@ -113,11 +113,30 @@ const isQfPublicApi = process.env.USE_QF_PUBLIC_API === 'true';
  * @returns {string}
  */
 const getQfDirectUrl = (service: QuranFoundationService, path: string): string => {
-  let upstreamPath = `/${service}${path}`.replace('/content/api/qdc', '/content/api/v4');
-  if (upstreamPath.includes('/verses/by_chapter/')) {
-    upstreamPath = upstreamPath.replace(/([?&](?:from|to)=)\d+(?::|%3A)(\d+)/gi, '$1$2');
-  }
+  // NOTE: `path` here has NO query string yet — makeUrl appends it after this
+  // runs. The `by_chapter` from/to verse-key→number rewrite therefore can't be
+  // applied here (there's no from/to to rewrite); it's applied to the final URL
+  // by finalizeServerContentUrl instead.
+  const upstreamPath = `/${service}${path}`.replace('/content/api/qdc', '/content/api/v4');
   return `${process.env.API_GATEWAY_URL}${upstreamPath}`;
+};
+
+/**
+ * Final rewrite applied by makeUrl to a fully-built content URL (query string
+ * included), for server-side QF direct calls only. QF's `verses/by_chapter`
+ * expects from/to as verse NUMBERS (from=1&to=5), but the app builds them as
+ * verse KEYS (from=2:1&to=2:5); with keys QF returns ZERO verses. The proxy
+ * applies this to browser calls; getQfDirectUrl runs before the query is
+ * appended, so server-side direct calls must be fixed here. No-op in the
+ * browser, in non-QF mode, or for non-by_chapter URLs.
+ *
+ * @param {string} url the fully-built content URL
+ * @returns {string}
+ */
+export const finalizeServerContentUrl = (url: string): string => {
+  if (typeof window !== 'undefined' || !isQfPublicApi) return url;
+  if (!url.includes('/verses/by_chapter/')) return url;
+  return url.replace(/([?&](?:from|to)=)\d+(?::|%3A)(\d+)/gi, '$1$2');
 };
 
 export const getProxiedServiceUrl = (service: QuranFoundationService, path: string): string => {

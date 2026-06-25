@@ -1,7 +1,7 @@
 import { decamelizeKeys } from 'humps';
 
 import stringify from './qs-stringify';
-import { getProxiedServiceUrl, QuranFoundationService } from './url';
+import { finalizeServerContentUrl, getProxiedServiceUrl, QuranFoundationService } from './url';
 
 import { Mushaf, MushafLines, QuranFont, QuranFontMushaf } from '@/types/QuranReader';
 
@@ -35,7 +35,10 @@ export const makeUrl = (path: string, parameters?: Record<string, unknown>): str
   // The following section parses the query params for convenience
   // E.g. parses {a: 1, b: 2} to "?a=1&b=2"
   const queryParameters = `?${stringify(decamelizedParams)}`;
-  return `${baseUrl}${queryParameters}`;
+  // finalizeServerContentUrl applies the QF by_chapter from/to fix to the full
+  // URL (the query string only exists at this point) for server-side direct
+  // calls; it's a no-op in the browser and in non-QF mode.
+  return finalizeServerContentUrl(`${baseUrl}${queryParameters}`);
 };
 
 // Public open CDN host. CORS is `*`, so it can be fetched directly from the
