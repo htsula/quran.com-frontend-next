@@ -44,6 +44,7 @@ import {
   makeLayeredTranslationByVerseUrl,
   makeLayeredTranslationCountWithinRangeUrl,
 } from '@/utils/apiPaths';
+import { getQfAccessToken } from '@/utils/auth/qfToken';
 import {
   makeHadithsByAyahUrl,
   makeHadithCountWithinRangeUrl,
@@ -78,8 +79,10 @@ export const OFFLINE_ERROR = 'OFFLINE';
  * (see getProxiedServiceUrl) rather than self-calling the proxy, so the OAuth
  * bearer token + client id the proxy would otherwise attach must be added here.
  * Returns no headers in the browser, in non-QF mode, or for non-gateway URLs.
- * The token module is server-only and imported dynamically so it never reaches
- * the client bundle.
+ * The token module reads server-only secrets but is statically imported: its
+ * top level has no side effects and the secrets are only read inside the
+ * function body (dead code in the client bundle), and a static import is needed
+ * so Vercel's file tracing always bundles it into the serverless function.
  *
  * @param {string} requestUrl
  * @returns {Promise<Record<string, string>>}
@@ -93,7 +96,6 @@ const getServerQfAuthHeaders = async (requestUrl: string): Promise<Record<string
   ) {
     return {};
   }
-  const { getQfAccessToken } = await import('@/utils/auth/qfToken');
   /* eslint-disable @typescript-eslint/naming-convention */
   return {
     'x-auth-token': await getQfAccessToken(),
