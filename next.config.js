@@ -20,6 +20,11 @@ const withPWAConfig = withPWA({
   dest: 'public',
   disable: !isProduction,
   mode: isProduction ? 'production' : 'development',
+  // Don't precache source maps: productionBrowserSourceMaps emits .js.map/.css.map,
+  // which Vercel serves as 403, and a 403 in the precache manifest makes the whole
+  // service worker install fail (bad-precaching-response) — leaving a stale SW in
+  // control. Excluding them keeps SW installation healthy.
+  buildExcludes: [/\.map$/],
   publicExcludes: [
     '!fonts/**/!(sura_names|Figtree)*', // exclude pre-caching all fonts that are not sura_names or Figtree
     '!icons/**', // exclude all icons

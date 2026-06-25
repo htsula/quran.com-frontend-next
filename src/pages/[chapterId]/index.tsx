@@ -322,6 +322,20 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
       revalidate: ONE_WEEK_REVALIDATION_PERIOD_SECONDS, // chapters will be generated at runtime if not found in the cache, then cached for subsequent requests for 7 days.
     };
   } catch (error) {
+    // TEMP DIAGNOSTIC (remove after capturing the Vercel runtime log): the catch
+    // otherwise only reports to Sentry, so surface the real failure to stdout.
+    // `fetcher` throws the Response object on a bad status, so status/url tell us
+    // which QF call failed and why.
+    // eslint-disable-next-line no-console
+    console.error('[getStaticProps-ChapterPage]', {
+      chapter: String(params.chapterId),
+      locale,
+      name: (error as Error)?.name,
+      message: (error as Error)?.message,
+      status: (error as { status?: number })?.status,
+      url: (error as { url?: string })?.url,
+      stack: (error as Error)?.stack,
+    });
     logErrorToSentry(error, {
       transactionName: 'getStaticProps-ChapterPage',
       metadata: {
