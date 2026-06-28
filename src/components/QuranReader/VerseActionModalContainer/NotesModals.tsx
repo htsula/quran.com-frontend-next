@@ -12,10 +12,8 @@ interface NotesModalsProps {
   notesCount: number;
   editingNote: Note | null;
   wasOpenedFromStudyMode: boolean;
-  previousModalType: ModalType | null;
   onClose: () => void;
   onBack?: () => void;
-  onBackToBookmark?: () => void;
   onOpenMyNotes: () => void;
   onOpenAddNote: () => void;
   onOpenEditNote: (note: Note) => void;
@@ -27,23 +25,15 @@ const NotesModals: React.FC<NotesModalsProps> = ({
   notesCount,
   editingNote,
   wasOpenedFromStudyMode,
-  previousModalType,
   onClose,
   onBack,
-  onBackToBookmark,
   onOpenMyNotes,
   onOpenAddNote,
   onOpenEditNote,
 }) => {
   const getBackHandler = () => {
-    if (previousModalType === ModalType.SAVE_BOOKMARK) return onBackToBookmark;
     if (wasOpenedFromStudyMode) return onBack;
     return undefined;
-  };
-
-  const getOnMyNotesHandler = () => {
-    if (previousModalType === ModalType.SAVE_BOOKMARK) return onBackToBookmark;
-    return onOpenMyNotes;
   };
 
   const verseKeys = useMemo(() => [verseKey], [verseKey]);
@@ -53,7 +43,7 @@ const NotesModals: React.FC<NotesModalsProps> = ({
       <AddNoteModal
         isModalOpen={modalType === ModalType.ADD_NOTE}
         onModalClose={onClose}
-        onMyNotes={getOnMyNotesHandler()}
+        onMyNotes={onOpenMyNotes}
         notesCount={notesCount}
         verseKeys={verseKeys}
         onBack={getBackHandler()}

@@ -5,7 +5,6 @@ import StudyModeSsrModalContent from './StudyModeSsrModalContent';
 
 import VerseActionModalContainer from '@/components/QuranReader/VerseActionModalContainer';
 import { AyahHadithsResponse } from '@/types/Hadith';
-import AyahQuestionsResponse from '@/types/QuestionsAndAnswers/AyahQuestionsResponse';
 import Verse from '@/types/Verse';
 import Word from '@/types/Word';
 
@@ -24,7 +23,6 @@ interface StudyModeSsrContainerViewProps {
   error: Error | undefined;
   onRetry: () => void;
   currentVerse: Verse | undefined;
-  bookmarksRangeUrl: string;
   selectedWord: Word | undefined;
   selectedWordLocation: string | undefined;
   showWordBox: boolean;
@@ -36,8 +34,6 @@ interface StudyModeSsrContainerViewProps {
   canNavigateWordNext: boolean;
   activeContentTab: StudyModeTabId | null;
   onTabChange: (tabId: StudyModeTabId | null) => void;
-  questionId?: string;
-  questionsInitialData?: AyahQuestionsResponse;
   isContentTabActive: boolean;
   tafsirIdOrSlug?: string;
   hadithsInitialData?: AyahHadithsResponse;

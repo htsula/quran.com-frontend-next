@@ -23,12 +23,10 @@
   "defaultLocale": "en",
   "pages": {
     "*": ["common", "error", "radio", "quick-links", "onboarding", "login"],
-    "/": ["home", "radio", "collection", "reading-goal", "reciter"],
+    "/": ["home", "radio", "reading-goal", "reciter"],
     "/reading-goal": ["reading-goal", "reciter"],
     "/reading-goal/progress": ["reading-goal", "reading-progress"],
     "/[chapterId]": ["quran-reader", "reading-goal", "notes", "chapter", "surah-info"],
-    "/[chapterId]/qiraat": ["quran-reader", "reading-goal", "notes", "qiraat", "surah-info"],
-    "/[chapterId]/layers": ["quran-reader", "reading-goal", "notes", "surah-info", "layers"],
     "/[chapterId]/related-verses": ["quran-reader", "reading-goal", "notes", "surah-info"],
     "/[chapterId]/tafsirs/[tafsirId]": ["quran-reader", "reading-goal", "notes", "surah-info"],
     "/[chapterId]/[verseId]": ["quran-reader", "reading-goal", "notes", "surah-info"],
@@ -40,52 +38,20 @@
       "quran-reader",
       "reading-goal",
       "notes",
-      "collection",
       "chapter",
       "surah-info"
     ],
-    "/collections/all": [
-      "collection",
-      "quran-reader",
-      "question",
-      "reading-goal",
-      "notes",
-      "my-quran"
-    ],
-    "/collections/[collectionId]": [
-      "collection",
-      "quran-reader",
-      "question",
-      "reading-goal",
-      "notes",
-      "my-quran"
-    ],
     "/search": ["search"],
-    "/privacy": ["privacy"],
     "/rub/[rubId]": ["quran-reader", "reading-goal", "notes", "surah-info"],
     "/radio": ["home", "radio"],
     "/reciters/[reciterId]": ["home", "radio", "reciter"],
     "/reciters/[reciterId]/[chapterId]": ["reciter"],
     "/reciters": ["reciter", "home"],
-    "/profile": ["home", "profile", "collection", "quran-reader"],
+    "/profile": ["home", "profile", "quran-reader"],
     "/login": ["login"],
     "/forgot-password": ["login"],
     "/reset-password": ["login"],
-    "/about-the-quran": ["about-quran"],
-    "/beyond-ramadan": ["ramadan-activities"],
-    "/calendar": ["quranic-calendar"],
     "/media": ["media"],
-    "/take-notes": ["take-notes"],
-    "/[chapterId]/answers": ["quran-reader", "question", "reading-goal", "notes", "surah-info"],
-    "/[chapterId]/answers/[questionId]": [
-      "quran-reader",
-      "question",
-      "reading-goal",
-      "notes",
-      "surah-info"
-    ],
-    "/[chapterId]/hadith": ["quran-reader", "reading-goal", "notes", "surah-info", "hadith"],
-    "/embed": ["embed"],
-    "/embed/v1": ["embed"]
+    "/[chapterId]/hadith": ["quran-reader", "reading-goal", "notes", "surah-info", "hadith"]
   }
 }

@@ -7,11 +7,9 @@ import VerseActionsMenuType from './types';
 
 import PopoverMenu from '@/components/dls/PopoverMenu/PopoverMenu';
 import WordByWordVerseAction from '@/components/QuranReader/ReadingView/WordByWordVerseAction';
-import SaveToCollectionAction from '@/components/Verse/SaveToCollectionAction';
 import TranslationFeedbackAction from '@/components/Verse/TranslationFeedback/TranslationFeedbackAction';
 import VerseActionAdvancedCopy from '@/components/Verse/VerseActionAdvancedCopy';
 import VerseActionRepeatAudio from '@/components/Verse/VerseActionRepeatAudio';
-import { isLoggedIn } from '@/utils/auth/login';
 import Verse from 'types/Verse';
 
 interface Props {
@@ -32,7 +30,6 @@ const MoreActionsMenu: React.FC<Props> = ({ verse, onActionTriggered, onMenuChan
       />
       <PopoverMenu.Divider />
 
-      {isLoggedIn() && <SaveToCollectionAction verse={verse} isTranslationView={false} />}
       <VerseActionAdvancedCopy
         onActionTriggered={onActionTriggered}
         verse={verse}

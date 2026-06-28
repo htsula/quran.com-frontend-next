@@ -22,8 +22,6 @@ interface PinnedVersesContentProps {
   onRemoveVerse: (verseKey: string) => void;
   onCompareClick?: () => void;
   onClear: () => void;
-  onSaveToCollection: () => void;
-  onLoadFromCollection: () => void;
   onCopy: () => void;
   onAddNote?: () => void;
 }
@@ -37,8 +35,6 @@ const PinnedVersesContent: React.FC<PinnedVersesContentProps> = ({
   onRemoveVerse,
   onCompareClick,
   onClear,
-  onSaveToCollection,
-  onLoadFromCollection,
   onCopy,
   onAddNote,
 }) => {
@@ -67,13 +63,7 @@ const PinnedVersesContent: React.FC<PinnedVersesContentProps> = ({
                 <CompareIcon />
               </Button>
             )}
-            <PinnedVersesMenu
-              onClear={onClear}
-              onSaveToCollection={onSaveToCollection}
-              onLoadFromCollection={onLoadFromCollection}
-              onCopy={onCopy}
-              onAddNote={onAddNote}
-            />
+            <PinnedVersesMenu onClear={onClear} onCopy={onCopy} onAddNote={onAddNote} />
           </div>
         </div>
         <Scrollable

@@ -28,12 +28,6 @@
         "action": "Shihni çfarë ka të re",
         "title": "Mirë se vini në llogarinë e përdoruesit <br></br> të Quran.com"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Jemi shumë të lumtur të njoftojmë se tani ju mund të gruponi faqerojtësit nën \"koleksione\"! <br/> <br/> <li> Shtoni sa më shumë koleksione që dëshironi </li> <li> Shtoni një faqeshënues në një ose më shumë koleksione </li> <li> Dhe më shumë! </li>",
-        "title": "Koleksionet e faqeshënuesve janë këtu!"
-      }
     }
   },
   "answers": "Përgjigjet",
@@ -98,15 +92,6 @@
   "back": "Mbrapa",
   "beta": "Beta",
   "beyond-ramadan": "Rrituni përtej Ramazanit!",
-  "bookmark": "Shënoni faqeshënues",
-  "bookmarked": "Shënuar si faqeshënues",
-  "bookmarks-migration": {
-    "body-1": "Faqeshënuesit tuaj tani do të bëhen <strong>Vargjet e Ruajtura</strong> në <strong>Koleksione</strong>Për të ruajtur faqeshënuesit tuaj aktualë, ju lutemi identifikohuni ose krijoni një llogari.",
-    "body-2": "Gjithashtu kemi shtuar një faqeshënues të ri për lexim për t'ju ndihmuar të vazhdoni pikërisht aty ku e keni lënë.",
-    "checkbox": "Mos e shfaq më këtë mesazh (Kujdes, do të humbasësh të gjitha faqeshënuesit e tu aktualë)",
-    "sign-in": "Hyr / Regjistrohu",
-    "title": "Njoftim: Faqeshënuesit po ndryshojnë"
-  },
   "both": "të dyja",
   "cancel": "Anullo",
   "change-theme": "Ndrysho temën",
@@ -144,7 +129,6 @@
   "copied": "E kopjuar",
   "copied-to-clipboard": "Kopjuar në kujtesën tuaj",
   "copy": "Kopjo",
-  "copy-embed": "Kopjo Vendos",
   "copylink": "Kopjo lidhjen",
   "counter": {
     "decrease": "Ulje",
@@ -170,8 +154,6 @@
     "resend-email-in": "Ridërgo email-in e verifikimit për {{remainingTime}} sek...",
     "verify-code": "Verifiko kodin"
   },
-  "embed-copied": "Embed Copyed",
-  "embed-widget": "Minuta e integrimit",
   "end-year-donate": "Përfundoni 2024 me Sadaka ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Mund të zgjidhni vetëm deri në {{limit}} vargje në të njëjtën kohë. Ju lutemi zgjidhni një gamë më të vogël.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Sinkronizimi i cilësimeve tuaja me renë kompjuterike dështoi.",
     "ranges-no-value": "Fillimi dhe mbarimi i diapazonit duhet të kenë një vlerë",
     "ranges-too-many-verses": "*Max {{maxNumberOfVerses}} Ajete",
-    "ranges-wrong-order": "Vargu fillestar duhet të jetë para vargut përfundimtar.",
-    "reading-bookmark-remove": "Dështoi në heqjen e faqeshënuesit për lexim",
-    "reading-bookmark-set": "Dështoi të vendoset faqeshënuesi për lexim",
-    "reading-bookmark-undo": "Dështoi në zhbërjen e faqeshënuesit të leximit."
+    "ranges-wrong-order": "Vargu fillestar duhet të jetë para vargut përfundimtar."
   },
   "errors": {
     "account-banned": "Na vjen keq, llogaria juaj është e ndaluar. Kontakto Kuran.Fondacioni",
@@ -374,7 +353,6 @@
   },
   "prev": "E mëparshme",
   "previous-ayah": "Ajeti i mëparshëm",
-  "privacy": "Privatësia",
   "product-updates": "Përditësimet e produktit",
   "profile": "Profili",
   "projects-desc": "Projektet jofitimprurëse të zotëruara, të menaxhuara ose të sponsorizuara nga <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "Urdhri i Zbulesës",
   "rub": "Rub el Hizb",
   "save": "Ruaj",
-  "save-to-collection": "Ruaje në Koleksion",
   "search-for": "Kërko për \"{{searchQuery}}\"",
   "search-results": "{{count}} rezultatet e  kërkimit",
   "search-results-no-count": "Rezultatet e Kërkimit",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Lexoni tefsire të ndryshme të Ajetit {{ayahNumber}} të sures {{surahName}} nga dijetarë të besuar të tefsirit",
     "title": "Tefsir"
   },
-  "terms-and-conditions": "Termat dhe Kushtet",
   "theme": "Tema",
   "themes": {
     "auto": "Auto",
@@ -523,8 +499,6 @@
     "required-field": "Kërkohet {{field}}"
   },
   "verse": "Vargu",
-  "verse-bookmark-removed": "Faqeruajtësi i vargut u hoq!",
-  "verse-bookmarked": "Vargu u shënua!",
   "verse-copied": "Vargu është kopjuar në kujtesën e fragmenteve!",
   "verses": "Vargjet",
   "view": "Pamje",

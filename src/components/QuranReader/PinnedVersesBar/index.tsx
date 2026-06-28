@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import LoadFromCollectionModal from '../PinnedVerses/LoadFromCollectionModal';
-import SavePinnedToCollectionModal from '../PinnedVerses/SavePinnedToCollectionModal';
 import copyPinnedVerses from '../PinnedVerses/utils/copyPinnedVerses';
 
 import styles from './PinnedVersesBar.module.scss';
@@ -38,8 +36,6 @@ const PinnedVersesBar: React.FC = () => {
   const isSidebarNavigationVisible = useSelector(selectIsSidebarNavigationVisible);
 
   const { unpinVerseWithSync, clearPinnedWithSync } = usePinnedVerseSync();
-  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
-  const [isLoadModalOpen, setIsLoadModalOpen] = useState(false);
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 
   const handleCompareClick = useCallback(() => {
@@ -49,15 +45,6 @@ const PinnedVersesBar: React.FC = () => {
       dispatch(openStudyMode({ verseKey: pinnedVerseKeys[0], showPinnedSection: true }));
     }
   }, [dispatch, pinnedVerseKeys]);
-
-  const handleLoadFromCollection = useCallback(() => {
-    logButtonClick('pinned_menu_load_from_collection');
-    if (!isLoggedIn()) {
-      router.push(getLoginNavigationUrl(router.asPath));
-      return;
-    }
-    setIsLoadModalOpen(true);
-  }, [router]);
 
   const handleCopy = useCallback(async () => {
     logButtonClick('pinned_menu_copy');
@@ -101,15 +88,6 @@ const PinnedVersesBar: React.FC = () => {
     [router],
   );
 
-  const handleSaveToCollection = useCallback(() => {
-    logButtonClick('pinned_menu_save_to_collection');
-    if (!isLoggedIn()) {
-      router.push(getLoginNavigationUrl(router.asPath));
-      return;
-    }
-    setIsSaveModalOpen(true);
-  }, [router]);
-
   const handleAddNote = useCallback(() => {
     logButtonClick('pinned_menu_add_note');
     if (!isLoggedIn()) {
@@ -137,8 +115,6 @@ const PinnedVersesBar: React.FC = () => {
           onRemoveVerse={handleRemoveVerse}
           onCompareClick={handleCompareClick}
           onClear={handleClear}
-          onSaveToCollection={handleSaveToCollection}
-          onLoadFromCollection={handleLoadFromCollection}
           onCopy={handleCopy}
           onAddNote={handleAddNote}
         />
@@ -146,14 +122,6 @@ const PinnedVersesBar: React.FC = () => {
 
       {isLoggedIn() && (
         <>
-          <SavePinnedToCollectionModal
-            isOpen={isSaveModalOpen}
-            onClose={() => setIsSaveModalOpen(false)}
-          />
-          <LoadFromCollectionModal
-            isOpen={isLoadModalOpen}
-            onClose={() => setIsLoadModalOpen(false)}
-          />
           <AddNoteModal
             showRanges
             isModalOpen={isNoteModalOpen}

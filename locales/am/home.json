@@ -27,11 +27,9 @@
     "title": "የቁርዓን መተግበሪያዎች"
   },
   "begin": "ይጀምሩ",
-  "calendar-cta": "የቀን መቁጠሪያ",
   "chapters-and-verses": "ምዕራፎች እና አንቀፆች",
   "continue-learning-plan": "መማርዎን ይቀጥሉ",
   "continue-read": "ማንበቡን ይቀጥሉ",
-  "explore-topics": "ርዕሶችን ያስሱ",
   "first-time-reading": "ለቁርዓን አዲስ ነዎት? <link> እዚህ ይጀምሩ</link>",
   "grow-beyond-ramadan": "<modalLink>ከረመዳንም ዉጭ</modalLink> (በዲንዎ) ከኛ ጋር ይደጉ!",
   "know-someone": "በዚህ <modalLink>ረመዳን</modalLink> ከእኛ ጋር እደጉ",
@@ -66,9 +64,6 @@
     "title": "የቁርዓን እድገት ጉዞ"
   },
   "qr-community": "የዛሬውን የቀረቡትን አያዎች(አንቀፆች) እና ነጸብራቆች(ሀሳቦች) ያንብቡ",
-  "quran-in-year": "ቁርዓን በአንድ አመት",
-  "quran-in-year-cta": "የዚህ ሳምንት ንባብ",
-  "quran-in-year-verse-title": "ከዚህ ሳምንት ንባብ 1 አያህ",
   "ramadan-activities-cta": "<link>ተከተል <b>ዓለም አቀፍ የቁርዓን የቀን መቁጠሪያ</b> ለሳምንታዊ ንባቦች፣ አነቃቂ ፖድካስቶች እና ለማሰላሰል ጥሪ!</link>",
   "ramadan-challenge": "የረመዳንን ፈተና ይቀላቀሉ",
   "ramadan": {

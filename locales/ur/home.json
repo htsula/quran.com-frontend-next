@@ -27,11 +27,9 @@
     "title": "قرآن ایپس"
   },
   "begin": "شروع کریں",
-  "calendar-cta": "کیلنڈر",
   "chapters-and-verses": "سورتیں اور آیات",
   "continue-learning-plan": "جاری رکھیں",
   "continue-read": "پڑھنا جاری رکھیں",
-  "explore-topics": "موضوعات دریافت کریں۔",
   "first-time-reading": "کیا آپ قرآن میں نئے ہیں؟ <link>یہاں سے آغاز کریں</link>",
   "grow-beyond-ramadan": "ہمارے ساتھ بڑھیں <modalLink> رمضان سے آگے </modalLink>",
   "know-someone": "اس <modalLink>رمضان</modalLink> ہمارے ساتھ آگے بڑھیں۔",
@@ -66,9 +64,6 @@
     "title": "قرآن کی ترقی کا سفر"
   },
   "qr-community": "آج کی نمایاں آیات اور تدبرات پڑھیں",
-  "quran-in-year": "قرآن ایک سال میں",
-  "quran-in-year-cta": "اس ہفتے کا مطالعہ",
-  "quran-in-year-verse-title": "اس ہفتے کی تلاوت میں سے ایک آیت",
   "ramadan-activities-cta": "<link>ہفتہ وار تلاوت، متاثر کن پوڈکاسٹس، اور تدبر کی دعوت کے لیے <b>عالمی قرآنی کیلنڈر</b> کی پیروی کریں!</link>",
   "ramadan-challenge": "رمضان چیلنج میں شامل ہوں۔",
   "ramadan": {

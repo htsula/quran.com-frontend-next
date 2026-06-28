@@ -13,8 +13,6 @@ import { selectSelectedTranslations } from '@/redux/slices/QuranReader/translati
 import Verse from '@/types/Verse';
 import { getDefaultWordFields, getMushafId } from '@/utils/api';
 import { makeByVerseKeyUrl } from '@/utils/apiPaths';
-import { makeBookmarksRangeUrl } from '@/utils/auth/apiPaths';
-import { isLoggedIn } from '@/utils/auth/login';
 
 interface VerseResponse {
   verse: Verse;
@@ -34,7 +32,6 @@ interface UseStudyModeVerseDataReturn {
   isLoading: boolean;
   error: Error | undefined;
   retry: () => void;
-  bookmarksRangeUrl: string;
 }
 
 const useStudyModeVerseData = ({
@@ -85,11 +82,6 @@ const useStudyModeVerseData = ({
     };
   }, [effectiveVerse, selectedChapterId]);
 
-  const mushafId = getMushafId(quranReaderStyles.quranFont, quranReaderStyles.mushafLines).mushaf;
-  const bookmarksRangeUrl = isLoggedIn()
-    ? makeBookmarksRangeUrl(mushafId, Number(selectedChapterId), Number(selectedVerseNumber), 1)
-    : '';
-
   const versesForFont = useMemo(() => (currentVerse ? [currentVerse] : []), [currentVerse]);
   useQcfFont(quranReaderStyles.quranFont, versesForFont);
 
@@ -100,7 +92,6 @@ const useStudyModeVerseData = ({
     isLoading,
     error,
     retry: mutate,
-    bookmarksRangeUrl,
   };
 };
 

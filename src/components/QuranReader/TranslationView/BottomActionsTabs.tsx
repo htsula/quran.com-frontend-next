@@ -12,9 +12,6 @@ import { isRTLLocale } from '@/utils/locale';
 
 export enum TabId {
   TAFSIR = 'tafsir',
-  LAYERS = 'layers',
-  ANSWERS = 'answers',
-  QIRAAT = 'qiraat',
   HADITH = 'hadith',
   RELATED_VERSES = 'related-verses',
 }

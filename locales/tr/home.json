@@ -27,11 +27,9 @@
     "title": "Kuran Uygulamaları"
   },
   "begin": "Başla",
-  "calendar-cta": "Takvim",
   "chapters-and-verses": "Bölümler ve Ayetler",
   "continue-learning-plan": "Öğrenmeye devam edin",
   "continue-read": "Okumaya devam et",
-  "explore-topics": "Konuları Keşfedin",
   "first-time-reading": "Kuran'a yeni misiniz? <link> Buradan başlayın </link>",
   "grow-beyond-ramadan": "<modalLink> Ramazan'dan sonra da </modalLink> bizimle gelişin",
   "know-someone": "Bu <modalLink> Ramazan </modalLink> bizimle gelişin",
@@ -66,9 +64,6 @@
     "title": "Kuran gelişim Yolculuğu"
   },
   "qr-community": "Bugünün öne çıkan Ayetlerini ve Düşüncelerini okuyun",
-  "quran-in-year": "Bir yılda Kur’an",
-  "quran-in-year-cta": "Bu Haftanın Okuması",
-  "quran-in-year-verse-title": "Bu haftanın okumasından bir ayet",
   "ramadan-activities-cta": "<link> Haftalık okumalar, ilham verici podcast'ler ve düşünmeye yönelik bir çağrı için <b> Küresel Kuran Takvimi </b> 'ni takip edin! </link>",
   "ramadan-challenge": "Ramazan Meydan Okumasına Katılın",
   "ramadan": {

@@ -7,17 +7,8 @@ interface BaseOgOptions {
 export const getDefaultOgImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og?lang=${locale}`;
 
-export const getAboutTheQuranImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/about-the-quran?lang=${locale}`;
-
-export const getEmbedOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/embed?lang=${locale}`;
-
 export const getMediaGeneratorOgImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og/media?lang=${locale}`;
-
-export const getBeyondRamadanOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/beyond-ramadan?lang=${locale}`;
 
 export const getChapterOgImageUrl = ({
   chapterId,
@@ -32,12 +23,3 @@ export const getChapterOgImageUrl = ({
   if (!verseNumber) return url;
   return `${url}&verse=${verseNumber}`;
 };
-
-export const getWhatIsRamadanOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/what-is-ramadan?lang=${locale}`;
-
-export const getExploreAnswersOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/explore-answers?lang=${locale}`;
-
-export const getQuranicCalendarOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/calendar?lang=${locale}`;

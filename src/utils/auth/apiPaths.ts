@@ -1,38 +1,16 @@
 /* eslint-disable max-lines */
 import stringify from '../qs-stringify';
 
-import BookmarkByCollectionIdQueryParams from './types/BookmarkByCollectionIdQueryParams';
 import GetNoteByAttachedEntityParams from './types/GetNoteByAttachedEntityParams';
 import GetAllNotesQueryParams from './types/Note/GetAllNotesQueryParams';
 
 import { ActivityDayType, FilterActivityDaysParams } from '@/types/auth/ActivityDay';
 import { EstimateGoalRequest, GoalCategory } from '@/types/auth/Goal';
 import { StreakWithMetadataParams } from '@/types/auth/Streak';
-import Language from '@/types/Language';
 import { MediaType } from '@/types/Media/GenerateMediaFileRequest';
 import { Mushaf } from '@/types/QuranReader';
 import { getProxiedServiceUrl, QuranFoundationService } from '@/utils/url';
-import BookmarkType from 'types/BookmarkType';
 import { PinnedItemTargetType } from 'types/PinnedItem';
-
-/**
- * Cache key path patterns for bookmark-related API endpoints.
- * Used for pattern-based cache invalidation with SWR's globalMutate.
- */
-export const BOOKMARK_CACHE_PATHS = {
-  /** Bulk bookmark fetch for reader pages (e.g., bookmarks/ayahs-range?...) */
-  AYAHS_RANGE: 'bookmarks/ayahs-range?',
-  /** Single bookmark check (e.g., bookmarks/bookmark?...) */
-  BOOKMARK: 'bookmarks/bookmark?',
-  /** Bookmarks list (e.g., /bookmarks?...) */
-  BOOKMARKS_LIST: '/bookmarks?',
-  /** Collections list (e.g., /collections?...) */
-  COLLECTIONS: '/collections?',
-  /** Collections a bookmark belongs to (e.g., bookmarks/collections?...) */
-  BOOKMARK_COLLECTIONS: 'bookmarks/collections?',
-  /** Surah-level bookmarks (e.g., bookmarks/surah?...) */
-  SURAH_BOOKMARKS: 'bookmarks/surah?',
-} as const;
 
 export const makeUrl = (url: string, parameters?: Record<string, unknown>): string => {
   if (!parameters) {
@@ -81,85 +59,6 @@ export const makeSignInUrl = (): string => makeUrl('users/login');
 
 export const makeSignUpUrl = (): string => makeUrl('users/signup');
 
-export const makeBookmarksUrl = (
-  mushafId: number,
-  limit?: number,
-  type?: BookmarkType,
-  isReading?: boolean,
-  key?: number,
-  page?: number,
-): string =>
-  makeUrl('bookmarks', {
-    mushafId,
-    limit,
-    ...(type && { type }),
-    ...(isReading && { isReading }),
-    ...(key && { key }),
-    ...(page && { page }),
-  });
-
-export type CollectionsQueryParams = {
-  cursor?: string;
-  limit?: number;
-  sortBy?: string;
-  type?: BookmarkType;
-};
-export const makeCollectionsUrl = (queryParams: CollectionsQueryParams): string =>
-  makeUrl('collections', queryParams);
-
-export const makeAddCollectionUrl = () => makeUrl('collections');
-
-export const makeGetQuestionByIdUrl = (id: string) => makeUrl(`questions/${id}`);
-
-/**
- * As per the specs, either Arabic for Arabic or English for all non-Arabic languages.
- *
- * @param {Language} language - The language to get questions in
- * @returns {Language} - The language to get questions in
- */
-const getQuestionsLanguage = (language: Language) => {
-  return language === Language.AR ? language : Language.EN;
-};
-
-export const makeGetQuestionsByVerseKeyUrl = ({
-  verseKey,
-  page = 1,
-  pageSize = 10,
-  language = Language.EN,
-}: {
-  verseKey: string;
-  page?: number;
-  pageSize?: number;
-  language?: Language;
-}) =>
-  makeUrl(`questions/by-verse/${verseKey}`, {
-    pageSize,
-    page,
-    language: getQuestionsLanguage(language),
-  });
-
-export const makeGetQuestionsWithinRangeUrl = (
-  startVerseKey: string,
-  endVerseKey: string,
-  language: Language = Language.EN,
-) =>
-  makeUrl(`questions/by-range`, {
-    from: startVerseKey,
-    to: endVerseKey,
-    language: getQuestionsLanguage(language),
-  });
-
-export const makeCountQuestionsWithinRangeUrl = (
-  startVerseKey: string,
-  endVerseKey: string,
-  language: Language = Language.EN,
-) =>
-  makeUrl(`questions/count-within-range`, {
-    from: startVerseKey,
-    to: endVerseKey,
-    language: getQuestionsLanguage(language),
-  });
-
 export const makeGetNotesByVerseUrl = (verseKey: string) => makeUrl(`notes/by-verse/${verseKey}`);
 
 export const makeGetNoteByIdUrl = (id: string) => makeUrl(`notes/${id}`);
@@ -173,57 +72,6 @@ export const makeGetNoteByAttachedEntityUrl = (queryParams: GetNoteByAttachedEnt
   makeUrl(`notes`, queryParams);
 
 export const makeDeleteOrUpdateNoteUrl = (id: string) => makeUrl(`notes/${id}`);
-
-export const makeUpdateCollectionUrl = (collectionId: string) =>
-  makeUrl(`collections/${collectionId}`);
-
-export const makeDeleteCollectionUrl = (collectionId: string) =>
-  makeUrl(`collections/${collectionId}`);
-
-export const makeAddCollectionBookmarkUrl = (collectionId: string) =>
-  makeUrl(`collections/${collectionId}/bookmarks`);
-
-export const makeAddBulkCollectionBookmarksUrl = (collectionId: string) =>
-  makeUrl(`collections/${collectionId}/bookmarks/bulk`);
-
-export const makeDeleteCollectionBookmarkByIdUrl = (collectionId: string, bookmarkId: string) =>
-  makeUrl(`collections/${collectionId}/bookmarks/${bookmarkId}`);
-
-export const makeDeleteCollectionBookmarkByKeyUrl = (collectionId: string) =>
-  makeUrl(`collections/${collectionId}/bookmarks`);
-
-export const makeBookmarkCollectionsUrl = (
-  mushafId: number,
-  key: number,
-  type: BookmarkType,
-  verseNumber?: number,
-): string =>
-  makeUrl('bookmarks/collections', { mushafId, key, type, ...(verseNumber && { verseNumber }) });
-
-export const makeGetBookmarkByCollectionId = (
-  collectionId: string,
-  queryParams: BookmarkByCollectionIdQueryParams,
-) => makeUrl(`collections/${collectionId}`, queryParams);
-
-export const makeAllCollectionsItemsUrl = (queryParams: BookmarkByCollectionIdQueryParams) =>
-  makeUrl(`collections/all`, queryParams);
-
-export const makeDeleteBookmarkUrl = (bookmarkId: string) => makeUrl(`bookmarks/${bookmarkId}`);
-
-export const makeBookmarksRangeUrl = (
-  mushafId: number,
-  chapterNumber: number,
-  verseNumber: number,
-  perPage: number,
-): string => makeUrl('bookmarks/ayahs-range', { mushafId, chapterNumber, verseNumber, perPage });
-
-export const makeBookmarkUrl = (
-  mushafId: number,
-  key: number,
-  type: BookmarkType,
-  verseNumber?: number,
-): string =>
-  makeUrl('bookmarks/bookmark', { mushafId, key, type, ...(verseNumber && { verseNumber }) });
 
 export const makeReadingSessionsUrl = () => makeUrl('reading-sessions');
 

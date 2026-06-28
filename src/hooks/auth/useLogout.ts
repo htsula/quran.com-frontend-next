@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 import { useAuthContext } from '@/contexts/AuthContext';
 import { logErrorToSentry } from '@/lib/sentry';
-import { clearBookmarks } from '@/redux/slices/QuranReader/bookmarks';
 import { clearReadingTracker } from '@/redux/slices/QuranReader/readingTracker';
 import QueryParam from '@/types/QueryParam';
 import { removeUserIdCookie } from '@/utils/auth/login';
@@ -44,7 +43,6 @@ const useLogout = (): LogoutFunction => {
       try {
         authContextLogout();
         removeLastSyncAt();
-        dispatch(clearBookmarks());
         dispatch(clearReadingTracker());
 
         if (!redirectToLogin) {

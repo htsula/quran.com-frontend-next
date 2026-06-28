@@ -8,7 +8,6 @@ import StudyModeSkeleton from './StudyModeSkeleton';
 import Error from '@/components/Error';
 import { TestId } from '@/tests/test-ids';
 import { AyahHadithsResponse } from '@/types/Hadith';
-import AyahQuestionsResponse from '@/types/QuestionsAndAnswers/AyahQuestionsResponse';
 import Verse from '@/types/Verse';
 import Word from '@/types/Word';
 
@@ -30,8 +29,6 @@ interface StudyModeSsrContentProps {
   selectedVerseNumber: string;
   activeContentTab: StudyModeTabId | null;
   onTabChange: (tabId: StudyModeTabId | null) => void;
-  questionId?: string;
-  questionsInitialData?: AyahQuestionsResponse;
   tafsirIdOrSlug?: string;
   hadithsInitialData?: AyahHadithsResponse;
   onGoToVerse: (chapterId: string, verseNumber: string, previousVerseKey?: string) => void;
@@ -55,8 +52,6 @@ const StudyModeSsrContent: React.FC<StudyModeSsrContentProps> = ({
   selectedVerseNumber,
   activeContentTab,
   onTabChange,
-  questionId,
-  questionsInitialData,
   tafsirIdOrSlug,
   hadithsInitialData,
   onGoToVerse,
@@ -95,8 +90,6 @@ const StudyModeSsrContent: React.FC<StudyModeSsrContentProps> = ({
           selectedVerseNumber={selectedVerseNumber}
           activeTab={activeContentTab}
           onTabChange={onTabChange}
-          questionId={questionId}
-          questionsInitialData={questionsInitialData}
           tafsirIdOrSlug={tafsirIdOrSlug}
           hadithsInitialData={hadithsInitialData}
           onGoToVerse={onGoToVerse}

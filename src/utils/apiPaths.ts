@@ -337,7 +337,3 @@ export const makePageVersesUrl = (
  * @returns {string}
  */
 export const makeFootnoteUrl = (footnoteId: string): string => makeUrl(`/foot_notes/${footnoteId}`);
-
-// Qiraat API utilities
-export * from './qiraat';
-export * from './layeredTranslations';

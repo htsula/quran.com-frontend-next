@@ -27,11 +27,9 @@
     "title": "কুরআন অ্যাপস"
   },
   "begin": "শুরু করুন",
-  "calendar-cta": "ক্যালেন্ডার",
   "chapters-and-verses": "অধ্যায় এবং পদ",
   "continue-learning-plan": "শেখা চালিয়ে যান",
   "continue-read": "পড়া চালিয়ে যান",
-  "explore-topics": "বিষয়গুলি অন্বেষণ করুন",
   "first-time-reading": "কুরআনে নতুন? <link> এখান থেকে শুরু করুন </link>",
   "grow-beyond-ramadan": "🚀 আমাদের সাথে এগিয়ে চলুন রমজানের পরেও <modalLink> রমজানের বাইরে </modalLink>",
   "know-someone": "আমাদের সাথে এই <modalLink> রমজান </modalLink> বাড়ান",
@@ -66,9 +64,6 @@
     "title": "কুরআন বৃদ্ধির যাত্রা"
   },
   "qr-community": "আজকের আলোচিত পদ এবং প্রতিফলন পড়ুন",
-  "quran-in-year": "এক বছরে কুরআন",
-  "quran-in-year-cta": "এই সপ্তাহের পঠন",
-  "quran-in-year-verse-title": "এই সপ্তাহের পাঠের একটি পদ",
   "ramadan-activities-cta": "<link> সাপ্তাহিক পাঠ, অনুপ্রেরণামূলক পডকাস্ট এবং প্রতিফলনের জন্য একটি আহ্বানের জন্য <b> গ্লোবাল কোরানিক ক্যালেন্ডার </b> অনুসরণ করুন! </link>",
   "ramadan-challenge": "রমজান চ্যালেঞ্জে যোগ দিন",
   "ramadan": {

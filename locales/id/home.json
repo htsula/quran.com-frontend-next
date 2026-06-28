@@ -27,11 +27,9 @@
     "title": "Aplikasi Al-Quran"
   },
   "begin": "Mulai",
-  "calendar-cta": "Kalender",
   "chapters-and-verses": "Surah dan Ayat",
   "continue-learning-plan": "Lanjutkan belajar",
   "continue-read": "Lanjutkan Membaca",
-  "explore-topics": "Jelajahi Topik",
   "first-time-reading": "Baru mengenal Al-Quran? <link> Mulai di sini </link>",
   "grow-beyond-ramadan": "Mari terus bertumbuh <modalLink> Selepas Ramadhan </modalLink>",
   "know-someone": "Berkembang bersama kami <modalLink> Ramadhan </modalLink> ini",
@@ -66,9 +64,6 @@
     "title": "Perjalanan Kemajuan ber-Qur'an"
   },
   "qr-community": "Baca Ayat dan Renungan Pilihan Hari Ini",
-  "quran-in-year": "Al Quran dalam Setahun",
-  "quran-in-year-cta": "Bacaan Pekan Ini",
-  "quran-in-year-verse-title": "Sebuah ayat dari bacaan minggu ini",
   "ramadan-activities-cta": "<link> Ikuti <b> Kalender Al-Quran Global </b> untuk bacaan pekanan, podcast yang menginspirasi, dan ajakan untuk berefleksi! </link>",
   "ramadan-challenge": "Ikuti Tantangan Ramadan",
   "ramadan": {

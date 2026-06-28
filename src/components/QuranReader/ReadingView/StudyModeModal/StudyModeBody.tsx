@@ -9,7 +9,6 @@ import StudyModeBottomActions, { StudyModeTabId } from './StudyModeBottomActions
 import useStudyModeScroll from './useStudyModeScroll';
 
 import { AyahHadithsResponse } from 'types/Hadith';
-import AyahQuestionsResponse from 'types/QuestionsAndAnswers/AyahQuestionsResponse';
 import Verse from 'types/Verse';
 import Word from 'types/Word';
 
@@ -28,8 +27,6 @@ interface StudyModeBodyProps {
   selectedVerseNumber: string;
   activeTab?: StudyModeTabId | null;
   onTabChange?: (tabId: StudyModeTabId | null) => void;
-  questionId?: string;
-  questionsInitialData?: AyahQuestionsResponse;
   tafsirIdOrSlug?: string;
   hadithsInitialData?: AyahHadithsResponse;
   onGoToVerse?: (chapterId: string, verseNumber: string, previousVerseKey?: string) => void;
@@ -50,8 +47,6 @@ const StudyModeBody: React.FC<StudyModeBodyProps> = ({
   selectedVerseNumber,
   activeTab,
   onTabChange,
-  questionId,
-  questionsInitialData,
   tafsirIdOrSlug,
   hadithsInitialData,
   onGoToVerse,
@@ -113,8 +108,6 @@ const StudyModeBody: React.FC<StudyModeBodyProps> = ({
                 chapterId={selectedChapterId}
                 verseNumber={selectedVerseNumber}
                 switchTab={onTabChange}
-                questionId={questionId}
-                questionsInitialData={questionsInitialData}
                 tafsirIdOrSlug={tafsirIdOrSlug}
                 hadithsInitialData={hadithsInitialData}
                 onGoToVerse={onGoToVerse}

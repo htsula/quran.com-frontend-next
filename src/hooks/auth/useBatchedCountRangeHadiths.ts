@@ -20,7 +20,7 @@ const BATCH_SIZE = 20;
 /**
  * Hook that fetches hadith counts in batches of 20 verses to optimize API calls.
  * When asked for a verse, it fetches a predictable range of 20 verses.
- * Follows the same pattern as useBatchedCountRangeQiraat.
+ * Follows the same pattern as useBatchedCountRangeNotes.
  *
  * Examples:
  * - Request 1:1 → fetches 1:1 to 1:20

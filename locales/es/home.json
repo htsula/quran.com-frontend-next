@@ -27,11 +27,9 @@
     "title": "Aplicaciones del Corán"
   },
   "begin": "Comenzar",
-  "calendar-cta": "Calendario",
   "chapters-and-verses": "Capítulos y versículos",
   "continue-learning-plan": "Sigue aprendiendo",
   "continue-read": "Continuar leyendo",
-  "explore-topics": "Explorar temas",
   "first-time-reading": "¿Es nuevo en el Corán? <link> Comience aquí </link>",
   "grow-beyond-ramadan": "Crece con nosotros <modalLink> más allá del Ramadán </modalLink>",
   "know-someone": "Crece con nosotros este <modalLink> Ramadán </modalLink>",
@@ -66,9 +64,6 @@
     "title": "Viaje de crecimiento del Corán"
   },
   "qr-community": "Lee los versículos y reflexiones destacados de hoy",
-  "quran-in-year": "El Corán en un año",
-  "quran-in-year-cta": "Lectura de esta semana",
-  "quran-in-year-verse-title": "Un versículo de la lectura de esta semana",
   "ramadan-activities-cta": "<link> ¡Sigue el <b> Calendario Coránico Global </b> para obtener lecturas semanales, podcasts inspiradores y un llamado a la reflexión! </link>",
   "ramadan-challenge": "Únete al desafío del Ramadán",
   "ramadan": {

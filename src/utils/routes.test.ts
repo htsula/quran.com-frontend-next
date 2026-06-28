@@ -6,7 +6,7 @@ describe('isQuranReaderRoutePathname', () => {
   it('returns true for quran reader paths', () => {
     expect(isQuranReaderRoutePathname('/[chapterId]')).toBe(true);
     expect(isQuranReaderRoutePathname('/[chapterId]/[verseId]')).toBe(true);
-    expect(isQuranReaderRoutePathname('/[chapterId]/answers/[questionId]')).toBe(true);
+    expect(isQuranReaderRoutePathname('/[chapterId]/hadith')).toBe(true);
     expect(isQuranReaderRoutePathname('/surah/[chapterId]/[...info]')).toBe(true);
     expect(isQuranReaderRoutePathname('/juz/[juzId]')).toBe(true);
   });

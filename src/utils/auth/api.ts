@@ -8,7 +8,6 @@ import { prepareGenerateMediaFileRequestData } from '../media/utils';
 
 import { BANNED_USER_ERROR_ID } from './constants';
 import { AuthErrorCodes } from './errors';
-import BookmarkByCollectionIdQueryParams from './types/BookmarkByCollectionIdQueryParams';
 import { MappedPage, MappedVerse, MapMushafParams } from './types/MushafMapping';
 import GetAllNotesQueryParams from './types/Note/GetAllNotesQueryParams';
 import { ShortenUrlResponse } from './types/ShortenUrl';
@@ -33,45 +32,25 @@ import QuranProgramWeekResponse from '@/types/auth/QuranProgramWeekResponse';
 import { Response } from '@/types/auth/Response';
 import { StreakWithMetadataParams, StreakWithUserMetadata } from '@/types/auth/Streak';
 import UserProgramResponse from '@/types/auth/UserProgramResponse';
-import Language from '@/types/Language';
 import GenerateMediaFileRequest, { MediaType } from '@/types/Media/GenerateMediaFileRequest';
 import MediaRenderError from '@/types/Media/MediaRenderError';
-import QuestionResponse from '@/types/QuestionsAndAnswers/QuestionResponse';
-import QuestionType from '@/types/QuestionsAndAnswers/QuestionType';
 import { Mushaf } from '@/types/QuranReader';
 import {
-  CollectionsQueryParams,
   makeActivityDaysUrl,
-  makeAddBulkCollectionBookmarksUrl,
-  makeAddCollectionBookmarkUrl,
-  makeAddCollectionUrl,
-  makeBookmarkCollectionsUrl,
-  makeBookmarksRangeUrl,
-  makeBookmarkUrl,
-  makeBookmarksUrl,
-  makeCollectionsUrl,
   makeCompleteAnnouncementUrl,
   makeCompleteSignupUrl,
   makeCountNotesWithinRangeUrl,
-  makeCountQuestionsWithinRangeUrl,
   makeDeleteAccountUrl,
-  makeDeleteBookmarkUrl,
-  makeDeleteCollectionBookmarkByIdUrl,
-  makeDeleteCollectionBookmarkByKeyUrl,
-  makeDeleteCollectionUrl,
   makeDeleteOrUpdateNoteUrl,
   makeEnrollUserInQuranProgramUrl,
   makeEstimateRangesReadingTimeUrl,
   makeFilterActivityDaysUrl,
   makeFullUrlById,
   makeGenerateMediaFileUrl,
-  makeGetBookmarkByCollectionId,
   makeGetMediaFileProgressUrl,
   makeGetMonthlyMediaFilesCountUrl,
   makeGetNoteByIdUrl,
   makeGetNotesByVerseUrl,
-  makeGetQuestionByIdUrl,
-  makeGetQuestionsByVerseKeyUrl,
   makeGetQuranicWeekUrl,
   makeGetUserQuranProgramUrl,
   makeGoalUrl,
@@ -82,7 +61,6 @@ import {
   makeShortenUrlUrl,
   makeStreakUrl,
   makeSyncLocalDataUrl,
-  makeUpdateCollectionUrl,
   makeUserBulkPreferencesUrl,
   makeUserConsentsUrl,
   makeUserFeatureFlagsUrl,
@@ -100,17 +78,12 @@ import {
 } from '@/utils/auth/apiPaths';
 import { getAdditionalHeaders } from '@/utils/headers';
 import CompleteAnnouncementRequest from 'types/auth/CompleteAnnouncementRequest';
-import { GetBookmarkCollectionsIdResponse } from 'types/auth/GetBookmarksByCollectionId';
 import PreferenceGroup from 'types/auth/PreferenceGroup';
 import RefreshToken from 'types/auth/RefreshToken';
 import { SyncLocalDataPayload } from 'types/auth/SyncDataType';
 import SyncUserLocalDataResponse from 'types/auth/SyncUserLocalDataResponse';
 import UserPreferencesResponse from 'types/auth/UserPreferencesResponse';
 import UserProfile from 'types/auth/UserProfile';
-import Bookmark from 'types/Bookmark';
-import BookmarksMap from 'types/BookmarksMap';
-import BookmarkType from 'types/BookmarkType';
-import { Collection } from 'types/Collection';
 import CompleteSignupRequest from 'types/CompleteSignupRequest';
 import { PinnedItemDTO, PinnedItemTargetType, SyncPinnedItemPayload } from 'types/PinnedItem';
 
@@ -277,118 +250,6 @@ export const updateUserConsent = async (data: {
 
 export const deleteAccount = async (): Promise<void> => deleteRequest(makeDeleteAccountUrl());
 
-type AddBookmarkParams = {
-  key: number;
-  mushafId: number;
-  type: BookmarkType;
-  verseNumber?: number;
-  isReading?: boolean | null;
-};
-
-export const addBookmark = async ({
-  key,
-  mushafId,
-  type,
-  verseNumber,
-  isReading,
-}: AddBookmarkParams): Promise<Bookmark> => {
-  // Ensure all required fields are present
-  if (!key || !mushafId || !type) {
-    throw new Error('Missing required fields: key, mushafId, and type are required');
-  }
-
-  const payload: Record<string, any> = {
-    key,
-    mushaf: mushafId,
-    type,
-  };
-
-  // Include verseNumber if provided (required for ayah bookmarks)
-  if (verseNumber !== undefined) {
-    payload.verseNumber = verseNumber;
-  }
-
-  // Include isReading if provided
-  if (isReading !== undefined) {
-    payload.isReading = isReading;
-  }
-
-  return postRequest(makeBookmarksUrl(mushafId), payload);
-};
-
-export const getPageBookmarks = async (
-  mushafId: number,
-  chapterNumber: number,
-  verseNumber: number,
-  perPage: number,
-): Promise<BookmarksMap> =>
-  privateFetcher(makeBookmarksRangeUrl(mushafId, chapterNumber, verseNumber, perPage));
-
-export const getBookmark = async (
-  mushafId: number,
-  key: number,
-  type: BookmarkType,
-  verseNumber?: number,
-): Promise<Bookmark> => {
-  return privateFetcher(makeBookmarkUrl(mushafId, key, type, verseNumber));
-};
-
-export const getBookmarkCollections = async (
-  mushafId: number,
-  key: number,
-  type: BookmarkType,
-  verseNumber?: number,
-): Promise<string[]> =>
-  privateFetcher(makeBookmarkCollectionsUrl(mushafId, key, type, verseNumber));
-
-/**
- * Fetch all bookmarks for a surah.
- * Returns a map keyed by verseKey (e.g., "1:1", "1:2", etc.)
- * Backend handles mushaf mapping automatically.
- *
- * @param {number} mushafId - The mushaf ID
- * @param {number} surahNumber - The surah number (1-114)
- * @returns {Promise<BookmarksMap>} Map of verseKey -> Bookmark
- */
-export const getSurahBookmarks = async (
-  mushafId: number,
-  surahNumber: number,
-): Promise<BookmarksMap> => {
-  const limit = 20;
-  const bookmarks: Bookmark[] = [];
-  const seenIds = new Set<string>();
-  let page = 1;
-  let response: Bookmark[] = [];
-  let pagesFetched = 0;
-  const maxPages = 200;
-
-  while (pagesFetched < maxPages) {
-    // eslint-disable-next-line no-await-in-loop
-    response = (await privateFetcher(
-      makeBookmarksUrl(mushafId, limit, BookmarkType.Ayah, undefined, surahNumber, page),
-    )) as Bookmark[];
-
-    const newItems = response.filter((bookmark) => !seenIds.has(bookmark.id));
-    newItems.forEach((bookmark) => {
-      seenIds.add(bookmark.id);
-      bookmarks.push(bookmark);
-    });
-
-    if (response.length < limit || newItems.length === 0) break;
-
-    page += 1;
-    pagesFetched += 1;
-  }
-  const bookmarksMap: BookmarksMap = {};
-  bookmarks.forEach((bookmark) => {
-    const verseKey = bookmark.verseNumber
-      ? `${bookmark.key}:${bookmark.verseNumber}`
-      : `${bookmark.key}`;
-    bookmarksMap[verseKey] = bookmark;
-  });
-  return bookmarksMap;
-};
-
 export const addReadingGoal = async (data: CreateGoalRequest): Promise<{ data?: Goal }> => {
   const { category, mushafId, ...requestBody } = data;
   return postRequest(makeGoalUrl({ mushafId, type: category }), requestBody);
@@ -469,237 +330,12 @@ export const addOrUpdateUserPreference = async (
     group,
   });
 
-export const getCollectionsList = async (
-  queryParams: CollectionsQueryParams,
-): Promise<{ data: Collection[] }> => {
-  return privateFetcher(makeCollectionsUrl(queryParams));
-};
-
-export const updateCollection = async (
-  collectionId: string,
-  { name }: { name: string },
-): Promise<unknown> => {
-  // Some endpoints may return `200` with `{ success: false, ... }` on validation errors.
-  // Ensure callers get a rejected promise so `.catch`/try-catch paths run and optimistic updates roll back.
-  const response = await postRequest<unknown>(makeUpdateCollectionUrl(collectionId), { name });
-  throwIfResponseContainsError(response);
-  return response;
-};
-
-export const deleteCollection = async (collectionId: string) => {
-  return deleteRequest(makeDeleteCollectionUrl(collectionId));
-};
-
-interface CollectionBookmarkResponse {
-  message: string;
-  bookmark: Bookmark;
-}
-
-export const addCollectionBookmark = async ({
-  collectionId,
-  key,
-  mushafId,
-  type,
-  verseNumber,
-  bookmarkId,
-}: {
-  collectionId: string;
-  key: number;
-  mushafId: number;
-  type: BookmarkType;
-  verseNumber?: number;
-  bookmarkId?: string;
-}): Promise<CollectionBookmarkResponse> => {
-  return postRequest(makeAddCollectionBookmarkUrl(collectionId), {
-    collectionId,
-    key,
-    mushaf: mushafId,
-    type,
-    verseNumber,
-    ...(bookmarkId && { bookmarkId }),
-  });
-};
-
-export const addBulkCollectionBookmarks = async ({
-  collectionId,
-  bookmarks,
-  mushafId,
-}: {
-  collectionId: string;
-  bookmarks: Array<{
-    key: number;
-    type: BookmarkType;
-    verseNumber?: number;
-  }>;
-  mushafId: number;
-}): Promise<{ added: number; skipped: number }> => {
-  return postRequest(makeAddBulkCollectionBookmarksUrl(collectionId), {
-    collectionId,
-    bookmarks,
-    mushaf: mushafId,
-  });
-};
-
-export const deleteCollectionBookmarkById = async (collectionId: string, bookmarkId: string) => {
-  return deleteRequest(makeDeleteCollectionBookmarkByIdUrl(collectionId, bookmarkId));
-};
-
-interface DeleteCollectionBookmarkResponse {
-  message: string;
-  bookmark: Bookmark | null;
-  deleted: boolean;
-}
-
-export const deleteCollectionBookmarkByKey = async ({
-  collectionId,
-  key,
-  mushafId,
-  type,
-  verseNumber,
-}: {
-  collectionId: string;
-  key: number;
-  mushafId: number;
-  type: BookmarkType;
-  verseNumber?: number;
-}): Promise<DeleteCollectionBookmarkResponse> => {
-  return deleteRequest(makeDeleteCollectionBookmarkByKeyUrl(collectionId), {
-    collectionId,
-    key,
-    mushaf: mushafId,
-    type,
-    verseNumber,
-  });
-};
-
-export const deleteBookmarkById = async (bookmarkId: string) => {
-  return deleteRequest(makeDeleteBookmarkUrl(bookmarkId));
-};
-
-/**
- * Get the user's reading bookmark by querying bookmarks with isReading=true
- * Note: This requires a mushafId and type, so we query for both Ayah and Page types
- * and return the first one found (there should only be one reading bookmark)
- * @param {number} mushafId - The mushafId to get the reading bookmark for
- * @returns {Promise<Bookmark | null>} The reading bookmark
- */
-export const getReadingBookmark = async (mushafId: number): Promise<Bookmark | null> => {
-  try {
-    // Try to get reading bookmark
-    const bookmarks = await privateFetcher<Bookmark | Bookmark[]>(
-      `${makeBookmarksUrl(mushafId, 1, undefined, true)}`,
-    );
-    if (bookmarks && !Array.isArray(bookmarks) && bookmarks.key && bookmarks.type) {
-      return bookmarks;
-    }
-    if (bookmarks && Array.isArray(bookmarks) && bookmarks.length > 0) {
-      const bookmark = bookmarks[0];
-      if (bookmark && bookmark.key && bookmark.type) {
-        return bookmark;
-      }
-    }
-
-    return null;
-  } catch {
-    return null;
-  }
-};
-
-/**
- * Set a bookmark as reading bookmark by using addBookmark with isReading=true
- * @param {number} key - The key of the bookmark to set as reading bookmark
- * @param {number} mushafId - The mushafId of the bookmark to set as reading bookmark
- * @param {BookmarkType} type - The type of the bookmark to set as reading bookmark
- * @param {number} verseNumber - The verse number of the bookmark to set as reading bookmark
- * @returns {Promise<Bookmark>} The reading bookmark
- */
-export const setReadingBookmark = async (
-  key: number,
-  mushafId: number,
-  type: BookmarkType,
-  verseNumber?: number,
-): Promise<Bookmark> => {
-  return addBookmark({
-    key,
-    mushafId,
-    type,
-    verseNumber,
-    isReading: true,
-  });
-};
-
-/**
- * Unset the reading bookmark by using addBookmark with isReading=false
- * The backend will find and unset the bookmark with isReading=true
- * @param {number} key - The key of the bookmark (chapterId for ayah, pageNumber for page)
- * @param {number} mushafId - The mushafId
- * @param {BookmarkType} type - The type of the bookmark
- * @param {number} verseNumber - The verse number (for ayah type)
- * @returns {Promise<void>}
- * @deprecated Use addBookmark directly with isReading=false instead
- */
-export const unsetReadingBookmark = async (
-  key: number,
-  mushafId: number,
-  type: BookmarkType,
-  verseNumber?: number,
-): Promise<void> => {
-  await addBookmark({
-    key,
-    mushafId,
-    type,
-    verseNumber,
-    isReading: false,
-  });
-};
-
-export const getBookmarksByCollectionId = async (
-  collectionId: string,
-  queryParams: BookmarkByCollectionIdQueryParams,
-): Promise<GetBookmarkCollectionsIdResponse> => {
-  return privateFetcher(makeGetBookmarkByCollectionId(collectionId, queryParams));
-};
-
-export const addCollection = async (collectionName: string): Promise<Collection> => {
-  // Some endpoints may return `200` with `{ success: false, ... }` on validation errors.
-  const response = await postRequest<unknown>(makeAddCollectionUrl(), { name: collectionName });
-  throwIfResponseContainsError(response);
-  return response as Collection;
-};
-
-type QuestionTypes = {
-  [key in QuestionType]?: number;
-};
-
-export type QuestionsData = { total: number; types: QuestionTypes };
-
-export const countQuestionsWithinRange = async (
-  from: string,
-  to: string,
-  language: Language,
-): Promise<Record<string, QuestionsData>> => {
-  return privateFetcher(makeCountQuestionsWithinRangeUrl(from, to, language));
-};
-
 export const getAllNotes = async (params: GetAllNotesQueryParams) => {
   return privateFetcher(makeNotesUrl(params));
 };
 
 export const countNotesWithinRange = async (from: string, to: string) => {
   return privateFetcher(makeCountNotesWithinRangeUrl(from, to));
-};
-
-export const getAyahQuestions = async (ayahKey: string, language: Language) => {
-  return privateFetcher(
-    makeGetQuestionsByVerseKeyUrl({
-      verseKey: ayahKey,
-      language,
-    }),
-  );
-};
-
-export const getQuestionById = async (questionId: string): Promise<QuestionResponse> => {
-  return privateFetcher(makeGetQuestionByIdUrl(questionId));
 };
 
 export const addNote = async (payload: Pick<Note, 'body' | 'ranges'>) => {

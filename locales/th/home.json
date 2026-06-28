@@ -27,11 +27,9 @@
     "title": "แอปอัลกุรอาน"
   },
   "begin": "เริ่ม",
-  "calendar-cta": "ปฏิทิน",
   "chapters-and-verses": "บทและข้อพระคัมภีร์",
   "continue-learning-plan": "เรียนรู้ต่อไป",
   "continue-read": "อ่านต่อ",
-  "explore-topics": "สำรวจหัวข้อ",
   "first-time-reading": "ใหม่สำหรับอัลกุรอาน? <link> เริ่มต้นที่นี่ </link>",
   "grow-beyond-ramadan": "เติบโตไปพร้อมกับเรา <modalLink> ก้าวข้ามเดือนรอมฎอน </modalLink>",
   "know-someone": "เติบโตไปพร้อมกับเรา <modalLink> รอมฎอน </modalLink> นี้",
@@ -66,9 +64,6 @@
     "title": "การเดินทางการเติบโตของอัลกุรอาน"
   },
   "qr-community": "อ่านบทกวีและข้อคิดประจำวันนี้",
-  "quran-in-year": "อัลกุรอานในหนึ่งปี",
-  "quran-in-year-cta": "การอ่านประจำสัปดาห์นี้",
-  "quran-in-year-verse-title": "บทอ่านจากสัปดาห์นี้",
   "ramadan-activities-cta": "<link> ติดตาม <b> ปฏิทินอัลกุรอานโลก </b> เพื่ออ่านเนื้อหารายสัปดาห์ พอดแคสต์ที่สร้างแรงบันดาลใจ และเชิญชวนให้ไตร่ตรอง! </link>",
   "ramadan-challenge": "เข้าร่วมกิจกรรมท้าทายเดือนรอมฎอน",
   "ramadan": {

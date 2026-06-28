@@ -28,12 +28,6 @@
         "action": "Lihat apa yang baru",
         "title": "Selamat datang di Quran.com <br></br> Akun Pengguna"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Kami sangat senang mengumumkan bahwa sekarang Anda dapat mengelompokkan Penanda di bawah \"koleksi\"! <br/> <br/> <li> Tambahkan koleksi sebanyak yang Anda inginkan </li> <li> Tambahkan Penanda ke satu atau beberapa koleksi </li> <li> Dan banyak lagi! </li>",
-        "title": "Koleksi Penanda ada di sini!"
-      }
     }
   },
   "answers": "Jawaban",
@@ -98,15 +92,6 @@
   "back": "Kembali",
   "beta": "Beta",
   "beyond-ramadan": "Terus bertumbuh Selepas Ramadan!",
-  "bookmark": "Penanda",
-  "bookmarked": "Ditandai",
-  "bookmarks-migration": {
-    "body-1": "Bookmark Anda sekarang akan menjadi <strong>Ayat-ayat Tersimpan</strong> di dalam <strong>Koleksi</strong>Untuk menyimpan bookmark Anda saat ini, silakan masuk atau buat akun.",
-    "body-2": "Kami juga menambahkan Bookmark Bacaan baru untuk membantu Anda melanjutkan tepat di tempat Anda berhenti.",
-    "checkbox": "Jangan tampilkan pesan ini lagi (Peringatan: Anda akan kehilangan semua bookmark Anda saat ini)",
-    "sign-in": "Masuk / Daftar",
-    "title": "Pemberitahuan: Bookmark Sedang Berubah"
-  },
   "both": "Keduanya",
   "cancel": "Batal",
   "change-theme": "Ubah Tema",
@@ -144,7 +129,6 @@
   "copied": "disalin",
   "copied-to-clipboard": "Disalin ke papan klip",
   "copy": "Salinan",
-  "copy-embed": "Salin Sematkan",
   "copylink": "Salin tautan",
   "counter": {
     "decrease": "Mengurangi",
@@ -170,8 +154,6 @@
     "resend-email-in": "Kirim ulang email verifikasi dalam {{remainingTime}} detik...",
     "verify-code": "Kode verifikasi"
   },
-  "embed-copied": "Disematkan Disalin",
-  "embed-widget": "Sematkan widget",
   "end-year-donate": "Akhiri tahun 2024 dengan Sedekah ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Anda hanya dapat memilih hingga {{limit}} ayat dalam satu waktu. Harap pilih rentang yang lebih kecil.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Gagal menyinkronkan setelan Anda ke cloud.",
     "ranges-no-value": "Rentang awal dan akhir harus memiliki nilai",
     "ranges-too-many-verses": "*Jumlah ayat maksimum {{maxNumberOfVerses}}",
-    "ranges-wrong-order": "Ayat pembuka harus sebelum ayat penutup.",
-    "reading-bookmark-remove": "Gagal menghapus bookmark bacaan",
-    "reading-bookmark-set": "Gagal mengatur penanda bacaan",
-    "reading-bookmark-undo": "Gagal membatalkan bookmark bacaan"
+    "ranges-wrong-order": "Ayat pembuka harus sebelum ayat penutup."
   },
   "errors": {
     "account-banned": "Maaf, akun Anda diblokir. Hubungi Quran Foundation",
@@ -374,7 +353,6 @@
   },
   "prev": "Sebelumnya",
   "previous-ayah": "Ayat sebelumnya",
-  "privacy": "Kerahasiaan",
   "product-updates": "Pengkinian Produk",
   "profile": "Profil",
   "projects-desc": "Proyek nirlaba yang dimiliki, dikelola, atau disponsori oleh <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "Urutan Wahyu",
   "rub": "Rub el Hizb",
   "save": "Simpan",
-  "save-to-collection": "Simpan ke Koleksi",
   "search-for": "Cari '{{searchQuery}}'",
   "search-results": "{{count}} hasil penelusuran",
   "search-results-no-count": "Hasil Pencarian",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Baca berbagai Tafsir Ayat {{ayahNumber}} Surah {{SurahName}} oleh ulama Tafsir terpercaya",
     "title": "tafsir"
   },
-  "terms-and-conditions": "Syarat dan Ketentuan",
   "theme": "Tema",
   "themes": {
     "auto": "Otomatis",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} wajib diisi"
   },
   "verse": "Ayat",
-  "verse-bookmark-removed": "Penanda ayat telah dihapus!",
-  "verse-bookmarked": "Ayat telah ditandai",
   "verse-copied": "Ayat telah disalin ke clipboard!",
   "verses": "Ayat",
   "view": "Melihat",

@@ -16,7 +16,6 @@ import {
 } from '@/hooks/studyMode';
 import { closeStudyMode, openStudyModeSsr } from '@/redux/slices/QuranReader/studyMode';
 import { AyahHadithsResponse } from '@/types/Hadith';
-import AyahQuestionsResponse from '@/types/QuestionsAndAnswers/AyahQuestionsResponse';
 import Verse from '@/types/Verse';
 
 interface StudyModeSsrContainerProps {
@@ -25,8 +24,6 @@ interface StudyModeSsrContainerProps {
   verseNumber: string;
   verse?: Verse;
   tafsirIdOrSlug?: string;
-  questionId?: string;
-  questionsInitialData?: AyahQuestionsResponse;
   hadithsInitialData?: AyahHadithsResponse;
 }
 
@@ -36,8 +33,6 @@ const StudyModeSsrContainer: React.FC<StudyModeSsrContainerProps> = ({
   verseNumber: initialVerseNumber,
   verse: initialVerse,
   tafsirIdOrSlug,
-  questionId,
-  questionsInitialData,
   hadithsInitialData,
 }) => {
   const { t } = useTranslation('quran-reader');
@@ -101,18 +96,9 @@ const StudyModeSsrContainer: React.FC<StudyModeSsrContainerProps> = ({
 
   const isContentTabActive =
     activeContentTab &&
-    [
-      StudyModeTabId.TAFSIR,
-      StudyModeTabId.LAYERS,
-      StudyModeTabId.ANSWERS,
-      StudyModeTabId.QIRAAT,
-      StudyModeTabId.HADITH,
-      StudyModeTabId.RELATED_VERSES,
-    ].includes(activeContentTab);
-
-  const isInitialVerse =
-    verseNav.selectedChapterId === initialChapterId &&
-    verseNav.selectedVerseNumber === initialVerseNumber;
+    [StudyModeTabId.TAFSIR, StudyModeTabId.HADITH, StudyModeTabId.RELATED_VERSES].includes(
+      activeContentTab,
+    );
 
   if (!chaptersData || !initialChapterId || !initialVerseNumber) return null;
 
@@ -135,7 +121,6 @@ const StudyModeSsrContainer: React.FC<StudyModeSsrContainerProps> = ({
       error={verseData.error}
       onRetry={events.handleRetry}
       currentVerse={verseData.currentVerse}
-      bookmarksRangeUrl={verseData.bookmarksRangeUrl}
       selectedWord={wordNav.selectedWord}
       selectedWordLocation={wordNav.selectedWordLocation}
       showWordBox={wordNav.showWordBox}
@@ -147,8 +132,6 @@ const StudyModeSsrContainer: React.FC<StudyModeSsrContainerProps> = ({
       canNavigateWordNext={wordNav.canNavigateWordNext}
       activeContentTab={activeContentTab}
       onTabChange={events.handleTabChange}
-      questionId={isInitialVerse ? questionId : undefined}
-      questionsInitialData={isInitialVerse ? questionsInitialData : undefined}
       isContentTabActive={isContentTabActive}
       tafsirIdOrSlug={tafsirIdOrSlug}
       hadithsInitialData={hadithsInitialData}

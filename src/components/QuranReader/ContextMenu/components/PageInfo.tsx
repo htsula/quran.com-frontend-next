@@ -1,11 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import classNames from 'classnames';
 import useTranslation from 'next-translate/useTranslation';
 
 import styles from '../styles/ContextMenu.module.scss';
-
-import PageBookmarkAction from './PageBookmarkAction';
 
 import { toLocalizedNumber } from '@/utils/locale';
 
@@ -32,17 +30,12 @@ const PageInfo: React.FC<PageInfoProps> = ({
 
   const localizedPageNumber = toLocalizedNumber(Number(pageNumber), lang);
 
-  const bookmarkComponent = useMemo(() => {
-    return <PageBookmarkAction pageNumber={Number(pageNumber || 1)} />;
-  }, [pageNumber]);
-
   return (
     <div
       className={classNames(styles.pageInfoContainer, containerClassName)}
       data-testid="page-info"
     >
       <div className={styles.primaryInfo}>
-        {bookmarkComponent}
         <span>
           {t('page')} {localizedPageNumber}
         </span>

@@ -18,7 +18,6 @@ import {
 } from '@/redux/slices/QuranReader/verseActionModal';
 import { TestId } from '@/tests/test-ids';
 import { AyahHadithsResponse } from '@/types/Hadith';
-import AyahQuestionsResponse from '@/types/QuestionsAndAnswers/AyahQuestionsResponse';
 import Verse from '@/types/Verse';
 import Word from '@/types/Word';
 import { AudioPlayerMachineContext } from 'src/xstate/AudioPlayerMachineContext';
@@ -42,7 +41,6 @@ interface StudyModeSsrModalContentProps {
   error: Error | undefined;
   onRetry: () => void;
   currentVerse: Verse | undefined;
-  bookmarksRangeUrl: string;
   selectedWord: Word | undefined;
   selectedWordLocation: string | undefined;
   showWordBox: boolean;
@@ -54,8 +52,6 @@ interface StudyModeSsrModalContentProps {
   canNavigateWordNext: boolean;
   activeContentTab: StudyModeTabId | null;
   onTabChange: (tabId: StudyModeTabId | null) => void;
-  questionId?: string;
-  questionsInitialData?: AyahQuestionsResponse;
   isContentTabActive: boolean;
   tafsirIdOrSlug?: string;
   hadithsInitialData?: AyahHadithsResponse;

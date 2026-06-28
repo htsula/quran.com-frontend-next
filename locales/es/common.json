@@ -28,12 +28,6 @@
         "action": "Ver novedades",
         "title": "Bienvenido a Quran.com <br></br> Cuenta de usuario"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "¡Estamos muy contentos de anunciar que ahora puedes agrupar marcadores en \"colecciones\"! <br/> <br/> <li> Agrega tantas colecciones como quieras </li> <li> Agrega un marcador a una o más colecciones </li> <li> ¡Y más! </li>",
-        "title": "¡Las colecciones de marcadores están aquí!"
-      }
     }
   },
   "answers": "Respuestas",
@@ -98,15 +92,6 @@
   "back": "Atrás",
   "beta": "Beta",
   "beyond-ramadan": "¡Crece más allá del Ramadán!",
-  "bookmark": "Marcar",
-  "bookmarked": "Marcado como favorito",
-  "bookmarks-migration": {
-    "body-1": "Tus marcadores ahora se convertirán en <strong>Versos guardados</strong> en <strong>Colecciones</strong>Para mantener sus marcadores actuales, inicie sesión o cree una cuenta.",
-    "body-2": "También hemos agregado un nuevo marcador de lectura para ayudarte a continuar justo donde lo dejaste.",
-    "checkbox": "No volver a mostrar este mensaje (Advertencia: perderá todos sus marcadores actuales)",
-    "sign-in": "Iniciar sesión / Registrarse",
-    "title": "Aviso: Los marcadores están cambiando"
-  },
   "both": "Ambas",
   "cancel": "Cancelar",
   "change-theme": "Cambiar tema",
@@ -144,7 +129,6 @@
   "copied": "Copiado",
   "copied-to-clipboard": "Copiado al portapapeles",
   "copy": "Copiar",
-  "copy-embed": "Copiar Incrustar",
   "copylink": "Copiar enlace",
   "counter": {
     "decrease": "Disminuir",
@@ -170,8 +154,6 @@
     "resend-email-in": "Reenviar correo electrónico de verificación en {{remainingTime}} segundos...",
     "verify-code": "Código de verificación"
   },
-  "embed-copied": "Incrustar Copiado",
-  "embed-widget": "Incrustar widget",
   "end-year-donate": "Termina el 2024 con Sadaqah ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Solo puedes seleccionar hasta {{limit}} aleyas a la vez. Selecciona una secuencia más pequeña.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "No se pudo sincronizar tu configuración a la nube.",
     "ranges-no-value": "La secuencia de inicio y final deben tener un valor",
     "ranges-too-many-verses": "\\n*Máximo {{maxNumberOfVerses}} aleyas",
-    "ranges-wrong-order": "El verso de inicio debe estar antes del verso final",
-    "reading-bookmark-remove": "No se pudo eliminar el marcador de lectura",
-    "reading-bookmark-set": "No se pudo establecer el marcador de lectura",
-    "reading-bookmark-undo": "No se pudo deshacer la lectura del marcador"
+    "ranges-wrong-order": "El verso de inicio debe estar antes del verso final"
   },
   "errors": {
     "account-banned": "Lo sentimos, tu cuenta está bloqueada. Contacta con Quran.Foundation",
@@ -374,7 +353,6 @@
   },
   "prev": "Anterior",
   "previous-ayah": "Aleya anterior",
-  "privacy": "Privacidad",
   "product-updates": "Actualizaciones de productos",
   "profile": "Perfil",
   "projects-desc": "Proyectos sin fines de lucro adquiridos, administrados o patrocinados por <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "Orden de revelación",
   "rub": "Rub el Hizb",
   "save": "Guardar",
-  "save-to-collection": "Guardar en la colección",
   "search-for": "Buscar ' {{searchQuery}} '",
   "search-results": "{{count}} resultados de búsqueda",
   "search-results-no-count": "Resultados de la búsqueda",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Lee varios Tafsirs de la aleya {{ayahNumber}} de Surah {{surahName}} por eruditos de Tafsir confiables",
     "title": "Tafsir"
   },
-  "terms-and-conditions": "Términos y condiciones",
   "theme": "Modo",
   "themes": {
     "auto": "Automático",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} es obligatorio"
   },
   "verse": "Versículo",
-  "verse-bookmark-removed": "¡Marcador de verso eliminado!",
-  "verse-bookmarked": "¡Verso marcado!",
   "verse-copied": "¡El versículo ha sido copiado al portapapeles!",
   "verses": "Versos",
   "view": "Ver",

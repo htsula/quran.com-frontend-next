@@ -28,12 +28,6 @@
         "action": "Yeniliklere bakın",
         "title": "Quran.com'a Hoş Geldiniz <br></br> Kullanıcı Hesabı"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Artık yer imlerini \"koleksiyonlar\" altında gruplayabileceğinizi duyurmaktan çok mutluyuz! <br/> <br/> <li> İstediğiniz kadar koleksiyon ekleyin </li> <li> Bir veya daha fazla koleksiyona yer imi ekleyin </li> <li> Ve daha fazlası! </li>",
-        "title": "Yer imi koleksiyonları burada!"
-      }
     }
   },
   "answers": "Cevaplar",
@@ -98,15 +92,6 @@
   "back": "Geri",
   "beta": "Beta",
   "beyond-ramadan": "Ramazan'dan sonra da gelişin!",
-  "bookmark": "Yer imi",
-  "bookmarked": "İşaretli",
-  "bookmarks-migration": {
-    "body-1": "Yer işaretleriniz artık şu şekilde görünecek: <strong>Kaydedilen Ayetler</strong> içinde <strong>Koleksiyonlar</strong>Mevcut yer işaretlerinizi korumak için lütfen oturum açın veya bir hesap oluşturun.",
-    "body-2": "Ayrıca, kaldığınız yerden devam etmenize yardımcı olmak için yeni bir Okuma Yer İşareti de ekledik.",
-    "checkbox": "Bu mesajı bir daha gösterme (Uyarı: Mevcut tüm yer işaretlerinizi kaybedeceksiniz)",
-    "sign-in": "Giriş Yap / Kayıt Ol",
-    "title": "Uyarı: Yer işaretleri değişiyor."
-  },
   "both": "Her ikisi de",
   "cancel": "İptal",
   "change-theme": "Temayı Değiştir",
@@ -144,7 +129,6 @@
   "copied": "kopyalandı",
   "copied-to-clipboard": "Panoya kopyalandı",
   "copy": "Kopyala",
-  "copy-embed": "Kopyala Göm",
   "copylink": "Linki Kopyala",
   "counter": {
     "decrease": "Azalt",
@@ -170,8 +154,6 @@
     "resend-email-in": "Doğrulama e-postasını {{remainingTime}} saniye içinde yeniden gönderin...",
     "verify-code": "Doğrulama kodu"
   },
-  "embed-copied": "Kopyalanan Gömme",
-  "embed-widget": "Widget'ı yerleştir",
   "end-year-donate": "2024'ü sadaka ile bitirin ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Bir seferde en fazla {{limit}} ayet seçebilirsiniz. Lütfen daha küçük bir aralık seçin.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Ayarlarınız bulutla eşitlenemedi.",
     "ranges-no-value": "Aralık başlangıcı ve bitişi bir değere sahip olmalıdır",
     "ranges-too-many-verses": "*Maksimum {{maxNumberOfVerses}} Ayet",
-    "ranges-wrong-order": "Başlangıç ayeti bitiş ayetinden önce olmalıdır.",
-    "reading-bookmark-remove": "Okuma yer imini kaldırma işlemi başarısız oldu.",
-    "reading-bookmark-set": "Okuma yer imi ayarlanamadı.",
-    "reading-bookmark-undo": "Okuma yer imini geri alma işlemi başarısız oldu."
+    "ranges-wrong-order": "Başlangıç ayeti bitiş ayetinden önce olmalıdır."
   },
   "errors": {
     "account-banned": "Maalesef, hesabınız engellendi. Quran.Foundation ile irtibata geçin",
@@ -374,7 +353,6 @@
   },
   "prev": "Önceki",
   "previous-ayah": "Önceki Ayet",
-  "privacy": "Gizlilik",
   "product-updates": "Ürün Güncellemeleri",
   "profile": "Profil",
   "projects-desc": "<link>Quran.Foundation</link> tarafından sahip olunan, yönetilen veya desteklenen kar amacı gütmeyen projeler",
@@ -411,7 +389,6 @@
   "revelation_order": "Vahiy Düzeni",
   "rub": "El Hizb'i ovmak",
   "save": "Kaydetmek",
-  "save-to-collection": "Koleksiyona Kaydet",
   "search-for": "'{{searchQuery}}' için arama yapın",
   "search-results": "{{count}} arama sonucu",
   "search-results-no-count": "Arama Sonuçları",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "{{ayahNumber}} {{surahName}} tefsirlerini güvenilir tefsir alimleri tarafından okuyun",
     "title": "Tefsir"
   },
-  "terms-and-conditions": "Şartlar ve koşullar",
   "theme": "Tema",
   "themes": {
     "auto": "Oto",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} gerekli"
   },
   "verse": "Ayet",
-  "verse-bookmark-removed": "Ayet imi kaldırıldı!",
-  "verse-bookmarked": "Ayet işaretlendi!",
   "verse-copied": "Ayet panoya kopyalandı!",
   "verses": "Ayetler",
   "view": "Görüş",

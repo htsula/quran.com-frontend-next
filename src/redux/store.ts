@@ -16,18 +16,15 @@ import DefaultSettingsMiddleware from './middleware/defaultSettingsMiddleware';
 import migrations from './migrations';
 import audioPlayerPersistConfig from './slices/AudioPlayer/persistConfig';
 import audioPlayerState from './slices/AudioPlayer/state';
-import ayahWidget from './slices/ayahWidget';
 import commandBarPersistConfig from './slices/CommandBar/persistConfig';
 import commandBar from './slices/CommandBar/state';
 import defaultSettings from './slices/defaultSettings';
-import guestBookmark from './slices/guestBookmark';
 import mediaMaker from './slices/mediaMaker';
 import microphone from './slices/microphone';
 import navbar from './slices/navbar';
 import notifications from './slices/notifications';
 import onboarding from './slices/onboarding';
 import persistGateHydration from './slices/persistGateHydration';
-import bookmarks from './slices/QuranReader/bookmarks';
 import contextMenu from './slices/QuranReader/contextMenu';
 import fontFaces from './slices/QuranReader/font-faces';
 import notes from './slices/QuranReader/notes';
@@ -50,7 +47,7 @@ import getPersistedTheme from './utils/getPersistedTheme';
 
 const persistConfig = {
   key: 'root',
-  version: 48,
+  version: 49,
   storage,
   migrate: createMigrate(migrations, {
     debug: process.env.NEXT_PUBLIC_VERCEL_ENV === 'development',
@@ -66,15 +63,12 @@ const persistConfig = {
     SliceName.DEFAULT_SETTINGS,
     SliceName.SIDEBAR_NAVIGATION,
     SliceName.SESSION,
-    SliceName.BOOKMARKS,
     SliceName.USER_DATA_SYNC,
     SliceName.REVELATION_ORDER,
     SliceName.ONBOARDING,
     SliceName.MEDIA_MAKER,
-    SliceName.AYAH_WIDGET,
     SliceName.PINNED_VERSES,
     SliceName.GUEST_ENROLLMENT,
-    SliceName.GUEST_BOOKMARK,
   ], // Reducers defined here will be have their values saved in local storage and persist across sessions. See: https://github.com/rt2zz/redux-persist#blacklist--whitelist
 };
 
@@ -88,7 +82,6 @@ export const rootReducer = combineReducers({
   translations,
   theme,
   tafsirs,
-  bookmarks,
   search,
   readingTracker,
   commandBar: persistReducer(commandBarPersistConfig, commandBar),
@@ -101,10 +94,8 @@ export const rootReducer = combineReducers({
   revelationOrder,
   notifications,
   onboarding,
-  ayahWidget,
   mediaMaker,
   microphone,
-  guestBookmark,
   studyMode,
   verseActionModal,
   pinnedVerses,

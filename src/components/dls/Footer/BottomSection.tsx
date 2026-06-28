@@ -31,12 +31,6 @@ const BottomSection = () => {
           <Link href={ROUTES.SITEMAP} shouldPrefetch={false} isNewTab>
             {t('sitemap')}
           </Link>
-          <Link href={ROUTES.PRIVACY} shouldPrefetch={false} isNewTab>
-            {t('privacy')}
-          </Link>
-          <Link href={ROUTES.TERMS} shouldPrefetch={false} isNewTab>
-            {t('terms-and-conditions')}
-          </Link>
         </div>
         <div className={styles.copyright}>
           © {localizedCurrentYear}{' '}

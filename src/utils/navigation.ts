@@ -7,7 +7,6 @@ import { getBasePath } from './url';
 import { getVerseAndChapterNumbersFromKey, getVerseNumberRangeFromKey } from './verse';
 
 import QueryParam from '@/types/QueryParam';
-import { QuranReaderFlow } from '@/types/QuranReader';
 import { SearchNavigationType } from 'types/Search/SearchNavigationResult';
 
 /**
@@ -22,11 +21,8 @@ export const ROUTES = {
   FORGET_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
   COMPLETE_SIGNUP: '/complete-signup',
-  PRIVACY: '/privacy',
-  TERMS: '/terms-and-conditions',
   SITEMAP: '/sitemap.xml',
   READING_GOAL_PROGRESS: '/reading-goal/progress',
-  COLLECTIONS_ALL: '/collections/all',
   // TODO: add all static routes here for incremental adoption
 };
 
@@ -43,11 +39,7 @@ export const AUTH_ROUTES = [
 /**
  * routes that require authentication
  */
-export const PROTECTED_ROUTES = [
-  ROUTES.READING_GOAL_PROGRESS,
-  ROUTES.COLLECTIONS_ALL,
-  ROUTES.COMPLETE_SIGNUP,
-];
+export const PROTECTED_ROUTES = [ROUTES.READING_GOAL_PROGRESS, ROUTES.COMPLETE_SIGNUP];
 
 export const EXTERNAL_ROUTES = {
   QURAN_REFLECT_ANDROID:
@@ -173,14 +165,6 @@ export const getVerseSelectedTafsirNavigationUrl = (
 ): string => `/${chapterId}:${verseNumber}/tafsirs/${tafsirId}`;
 
 /**
- * Get the href link to questions of Ayah.
- *
- * @param {string} verseKey
- * @returns {string}
- */
-export const getVerseAnswersNavigationUrl = (verseKey: string): string => `/${verseKey}/answers`;
-
-/**
  * Get the href link to related verse of Ayah.
  *
  * @param {string} verseKey
@@ -188,14 +172,6 @@ export const getVerseAnswersNavigationUrl = (verseKey: string): string => `/${ve
  */
 export const getVerseRelatedVersesNavigationUrl = (verseKey: string): string =>
   `/${verseKey}/related-verses`;
-
-/**
- * Get the href link to Qiraat of Ayah.
- *
- * @param {string} verseKey
- * @returns {string}
- */
-export const getVerseQiraatNavigationUrl = (verseKey: string): string => `/${verseKey}/qiraat`;
 
 /**
  * Get the href link to Hadith of Ayah.
@@ -206,25 +182,6 @@ export const getVerseQiraatNavigationUrl = (verseKey: string): string => `/${ver
 export const getVerseHadithsNavigationUrl = (verseKey: string): string => `/${verseKey}/hadith`;
 
 /**
- * Get the href link to Layers of Ayah.
- *
- * @param {string} verseKey
- * @returns {string}
- */
-export const getVerseLayersNavigationUrl = (verseKey: string): string => `/${verseKey}/layers`;
-
-/**
- * Get the href link to a specific answer with its associated verse key.
- *
- * @param {string} questionId - The ID of the question
- * @param {string} verseKey - The verse key associated with the question (e.g. "2:6")
- * @returns {string} - The URL to the answer page
- */
-export const getAnswerNavigationUrl = (questionId: string, verseKey: string): string => {
-  return `/${verseKey}/answers/${questionId}`;
-};
-
-/**
  * Get the href link to a surah.
  *
  * @param {string | number} surahIdOrSlug
@@ -232,30 +189,6 @@ export const getAnswerNavigationUrl = (questionId: string, verseKey: string): st
  */
 export const getSurahNavigationUrl = (surahIdOrSlug: string | number): string =>
   `/${surahIdOrSlug}`;
-
-export enum QuranicCalendarRangesNavigationSettings {
-  EnglishOnly = 'englishOnly',
-  EnglishAndArabic = 'englishAndArabic',
-  DefaultSettings = 'defaultSettings',
-}
-
-export const getQuranicCalendarRangesNavigationUrl = (
-  ranges: string,
-  settings: QuranicCalendarRangesNavigationSettings,
-): string => {
-  const params = {
-    [QueryParam.FLOW]: QuranReaderFlow.QURANIC_CALENDER,
-  };
-
-  if (settings !== QuranicCalendarRangesNavigationSettings.DefaultSettings) {
-    params[QueryParam.TRANSLATIONS] = 85;
-    if (settings === QuranicCalendarRangesNavigationSettings.EnglishOnly) {
-      params[QueryParam.HIDE_ARABIC] = 'true';
-    }
-  }
-
-  return `${ranges}?${stringify(params)}`;
-};
 
 /**
  * Get the href link to the previous surah.
@@ -405,17 +338,10 @@ export const getProfileNavigationUrl = () => {
   return '/profile';
 };
 
-export const getCollectionNavigationUrl = (collectionId: string) => {
-  return `/collections/${collectionId}`;
-};
-
 export const getReadingGoalNavigationUrl = (example?: string) =>
   example && example.trim() !== ''
     ? `/reading-goal?example=${encodeURIComponent(example)}`
     : '/reading-goal';
-export const getBeyondRamadanNavigationUrl = () => '/beyond-ramadan';
-export const getWhatIsRamadanNavigationUrl = () => '/what-is-ramadan';
-export const getTakeNotesNavigationUrl = () => '/take-notes';
 export const getLoginNavigationUrl = (redirectTo?: string) =>
   `/login${redirectTo ? `?${QueryParam.REDIRECT_TO}=${encodeURIComponent(redirectTo)}` : ''}`;
 
@@ -432,7 +358,6 @@ export const getResetPasswordNavigationUrl = () => `/reset-password`;
 export const getVerifyEmailNavigationUrl = (email?: string) =>
   `/verify-email${email ? `?${QueryParam.EMAIL}=${email}` : ''}`;
 
-export const getQuranicCalendarNavigationUrl = () => '/calendar';
 export const getQuranMediaMakerNavigationUrl = (params?: ParsedUrlQuery) => {
   const baseUrl = '/media';
   return params ? `${baseUrl}?${stringify(params)}` : baseUrl;

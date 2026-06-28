@@ -49,9 +49,6 @@ import { toLocalizedVerseKeyAuto } from '@/utils/locale';
 import {
   fakeNavigate,
   getVerseSelectedTafsirNavigationUrl,
-  getVerseAnswersNavigationUrl,
-  getVerseQiraatNavigationUrl,
-  getVerseLayersNavigationUrl,
   getVerseHadithsNavigationUrl,
 } from '@/utils/navigation';
 import { getChapterNumberFromKey, getVerseNumberFromKey } from '@/utils/verse';
@@ -151,10 +148,6 @@ const StudyModeModal: React.FC<Props> = ({
           getVerseSelectedTafsirNavigationUrl(chapterId, Number(verseNumber), tafsirs[0]),
           router.locale || Language.EN,
         );
-      } else if (tab === StudyModeTabId.LAYERS) {
-        fakeNavigate(getVerseLayersNavigationUrl(newVerseKey), router.locale || Language.EN);
-      } else if (tab === StudyModeTabId.QIRAAT) {
-        fakeNavigate(getVerseQiraatNavigationUrl(newVerseKey), router.locale || Language.EN);
       } else if (tab === StudyModeTabId.HADITH) {
         fakeNavigate(getVerseHadithsNavigationUrl(newVerseKey), router.locale || Language.EN);
       }
@@ -341,12 +334,6 @@ const StudyModeModal: React.FC<Props> = ({
           ),
           router.locale,
         );
-      } else if (tabId === StudyModeTabId.LAYERS) {
-        fakeNavigate(getVerseLayersNavigationUrl(currentVerseKey), router.locale);
-      } else if (tabId === StudyModeTabId.ANSWERS) {
-        fakeNavigate(getVerseAnswersNavigationUrl(currentVerseKey), router.locale);
-      } else if (tabId === StudyModeTabId.QIRAAT) {
-        fakeNavigate(getVerseQiraatNavigationUrl(currentVerseKey), router.locale);
       } else if (tabId === StudyModeTabId.HADITH) {
         fakeNavigate(getVerseHadithsNavigationUrl(currentVerseKey), router.locale);
       } else if (tabId === null) {
@@ -400,14 +387,9 @@ const StudyModeModal: React.FC<Props> = ({
 
   const isContentTabActive =
     activeContentTab &&
-    [
-      StudyModeTabId.TAFSIR,
-      StudyModeTabId.LAYERS,
-      StudyModeTabId.ANSWERS,
-      StudyModeTabId.QIRAAT,
-      StudyModeTabId.RELATED_VERSES,
-      StudyModeTabId.HADITH,
-    ].includes(activeContentTab);
+    [StudyModeTabId.TAFSIR, StudyModeTabId.RELATED_VERSES, StudyModeTabId.HADITH].includes(
+      activeContentTab,
+    );
 
   const header = (
     <div className={styles.headerContainer}>

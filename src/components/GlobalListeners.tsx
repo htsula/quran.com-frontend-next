@@ -4,7 +4,6 @@ import DisableAnimationsUntilHydration from './DisableAnimationsUntilHydration';
 import GlobalPersistGateHydrationListener from './GlobalPersistGateHydrationListener';
 
 import GlobalScrollListener from '@/components/GlobalScrollListener';
-import GuestBookmarksMigrationModal from '@/components/GuestBookmarksMigrationModal';
 
 const GlobalListeners = () => {
   return (
@@ -12,7 +11,6 @@ const GlobalListeners = () => {
       <GlobalScrollListener />
       <GlobalPersistGateHydrationListener />
       <DisableAnimationsUntilHydration />
-      <GuestBookmarksMigrationModal />
     </>
   );
 };

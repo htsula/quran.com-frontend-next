@@ -27,11 +27,9 @@
     "title": "Aplicativos do Alcorão"
   },
   "begin": "Começar",
-  "calendar-cta": "Calendário",
   "chapters-and-verses": "Capítulos e Versículos",
   "continue-learning-plan": "Continue aprendendo",
   "continue-read": "Continuar lendo",
-  "explore-topics": "Explorar tópicos",
   "first-time-reading": "Novo no Quran? <link> Comece aqui </link>",
   "grow-beyond-ramadan": "Cresça connosco <modalLink> Além do Ramadan </modalLink>",
   "know-someone": "Cresça connosco neste <modalLink> Ramadan </modalLink>",
@@ -66,9 +64,6 @@
     "title": "Jornada de Crescimento do Quran"
   },
   "qr-community": "Leia os versículos e reflexões em destaque de hoje",
-  "quran-in-year": "Quran em um Ano",
-  "quran-in-year-cta": "Leitura desta semana",
-  "quran-in-year-verse-title": "Um versículo da leitura desta semana.",
   "ramadan-activities-cta": "<link> Siga o <b> Calendário Qurânico Global </b> para leituras semanais, podcasts inspiradores e um chamado para refletir! </link>",
   "ramadan-challenge": "Participe do Desafio do Ramadã",
   "ramadan": {

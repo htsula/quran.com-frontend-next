@@ -27,11 +27,9 @@
     "title": "Programu za Quran"
   },
   "begin": "Anza",
-  "calendar-cta": "Kalenda",
   "chapters-and-verses": "Surah na Aya",
   "continue-learning-plan": "Endelea kujifunza",
   "continue-read": "Endelea Kusoma",
-  "explore-topics": "Chunguza Mada",
   "first-time-reading": "Mgeni kwa Qur'ani? <link> Anzia hapa </link>",
   "grow-beyond-ramadan": "Kua nasi <modalLink>Baada ya Ramadhani </modalLink>",
   "know-someone": "Kua nasi <modalLink> Ramadhani </modalLink> hii",
@@ -66,9 +64,6 @@
     "title": "Kuza safari yako na Qur'ani"
   },
   "qr-community": "Soma Aya na Tafakari za leo",
-  "quran-in-year": "Qur'ani kwa Mwaka",
-  "quran-in-year-cta": "Usomaji wa Wiki Hii",
-  "quran-in-year-verse-title": "Aya kutoka usomaji wa juma hili",
   "ramadan-activities-cta": "<link> Fuata <b> Global Quranic Calendar </b> kwa usomaji wa kila wiki, podikasti za kusisimua, na wito wa kutafakari! </link>",
   "ramadan-challenge": "Jiunge na Changamoto ya Ramadhani",
   "ramadan": {

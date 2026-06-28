@@ -28,12 +28,6 @@
         "action": "ምን አዲስ ነገር እንዳለ ይመልከቱ",
         "title": "ወደ Quran.com እንኳን በደህና መጡ <br></br> የተጠቃሚ መለያ"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "አሁን \"ስብስቦች\" በሚለው ስር ዕልባቶችን (ቡክማርኮችን) በቡድን ማሰባሰብ እንደሚችሉ በማሳወቃችን በጣም ደስተኞች ነን! <br/><br/> <li>የፈለጉትን ያህል ስብስቦችን ያክሉ</li><li>አንድ ወይም ከዚያ በላይ ስብስቦች ላይ ለማካተት ዕልባት ያክሉ</li><li>እና ከዛም በላይ እንደፍላጎትዎ!</li>",
-        "title": "የዕልባቶች(ቡክማርኮች) ስብስቦች እዚህ አሉ!"
-      }
     }
   },
   "answers": "መልሶች",
@@ -98,15 +92,6 @@
   "back": "ተመለስ",
   "beta": "ቤታ",
   "beyond-ramadan": "ከረመዳንም ዉጭ ራስዎን ያሳድጉ!",
-  "bookmark": "ዕልባት ያድርጉ",
-  "bookmarked": "ዕልባት የተደረገበት",
-  "bookmarks-migration": {
-    "body-1": "የእርስዎ ዕልባቶች አሁን ይሆናሉ <strong>የተቀመጡ ጥቅሶች</strong> ውስጥ <strong>ስብስቦች</strong>. የአሁኑን ዕልባቶችዎን ለማቆየት፣ እባክዎ ይግቡ ወይም መለያ ይፍጠሩ።",
-    "body-2": "እንዲሁም ካቆሙበት እንዲቀጥሉ የሚያግዝዎትን አዲስ የንባብ ዕልባት አክለናል።",
-    "checkbox": "ይህንን መልእክት ዳግመኛ አታሳይ (አሁን ያሉትን ሁሉንም ዕልባቶችህን ታጣለህ የሚል ማስጠንቀቂያ)",
-    "sign-in": "ይግቡ / ይመዝገቡ",
-    "title": "ማሳሰቢያ፡ ዕልባቶች እየተለወጡ ነው"
-  },
   "both": "ሁለቱም",
   "cancel": "ሰርዝ",
   "change-theme": "ገጽታ ቀይር",
@@ -144,7 +129,6 @@
   "copied": "ተቀድቷል",
   "copied-to-clipboard": "ወደ ቅንጥብ ሰሌዳ ተቀድቷል",
   "copy": "ቅዳ",
-  "copy-embed": "ክተትን ቅዳ",
   "copylink": "አገናኝ(ማስፈንጠሪያ) ይቅዱ",
   "counter": {
     "decrease": "ቀንስ",
@@ -170,8 +154,6 @@
     "resend-email-in": "የማረጋገጫ ኢሜይልን እንደገና ላክ በ {{remainingTime}} ሰከንድ...",
     "verify-code": "ኮድ አረጋግጥ"
   },
-  "embed-copied": "ክተት ተቀድቷል",
-  "embed-widget": "መግብርን ክተት",
   "end-year-donate": "2024ን በሶደቃ ❤️ ጨርስ",
   "error": {
     "MediaVersesRangeLimitExceeded": "እስከ ምዕራፎች ድረስ ብቻ መምረጥ ይችላሉ {{limit}} በአንድ ጊዜ ጥቅሶች። እባክዎ አነስ ያለ ክልል ይምረጡ።",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "ቅንብሮችዎን ከኢንተርኔት ማስቀመጫ ቋት ጋር ማመሳሰል አልተሳካም።",
     "ranges-no-value": "የክልል መጀመሪያ እና መጨረሻ እሴት ሊኖራቸው ይገባል",
     "ranges-too-many-verses": "* ቢበዛ {{maxNumberOfVerses}} አያቶች(አንቀፆች)",
-    "ranges-wrong-order": "የመነሻው አንቀፅ ከማለቂያው በፊት መሆን አለበት.",
-    "reading-bookmark-remove": "የንባብ ዕልባት ማስወገድ አልተሳካም",
-    "reading-bookmark-set": "የንባብ ዕልባት ማዘጋጀት አልተሳካም",
-    "reading-bookmark-undo": "የንባብ ዕልባት መቀልበስ አልተሳካም"
+    "ranges-wrong-order": "የመነሻው አንቀፅ ከማለቂያው በፊት መሆን አለበት."
   },
   "errors": {
     "account-banned": "ይቅርታ፣ መለያዎ ታግዷል። Quran.Foundationን ያግኙ",
@@ -374,7 +353,6 @@
   },
   "prev": "ቀዳሚ",
   "previous-ayah": "ቀዳሚ አያህ",
-  "privacy": "ግላዊነት",
   "product-updates": "የምርት ዝማኔዎች",
   "profile": "መገለጫ",
   "projects-desc": "በባለቤትነት የተያዙ፣ የሚተዳደሩ ወይም በውጤቶች የተደገፉ ለትርፍ ያልተቋቋሙ የ <link>Quran.Foundation</link> ፕሮጀክቶች",
@@ -411,7 +389,6 @@
   "revelation_order": "የአወራረድ ቅደም ተከተል",
   "rub": "ሩብ ሂዝብ",
   "save": "አስቀምጥ",
-  "save-to-collection": "ወደ ስብስብ ያስቀምጡ",
   "search-for": "ፈልግ '{{searchQuery}}'",
   "search-results": "{{count}} የፍለጋ ውጤቶች",
   "search-results-no-count": "የፍለጋ ውጤቶች",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "የሱራህ {{surahName}} የአያህ(አንቀፅ) {{ayahNumber}} በታመኑ የተፍሲር ምሁራን የተዘጋጁ የተለያዩ ተፍሲሮችን ያንብቡ",
     "title": "ተፍሲር"
   },
-  "terms-and-conditions": "ውሎች እና ሁኔታዎች",
   "theme": "ገጽታ",
   "themes": {
     "auto": "ራስ-ሰር",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} ያስፈልጋል"
   },
   "verse": "አያህ(አንቀፅ)",
-  "verse-bookmark-removed": "የጥቅስ ዕልባት ተወግዷል!",
-  "verse-bookmarked": "አንቀፁ ዕልባት ተደርጎበታል!",
   "verse-copied": "አንቀፁ ወደ ቅንጥብ ሰሌዳው ተቀድቷል!",
   "verses": "አንቀጾች(አያቶች)",
   "view": "ይመልከቱ",

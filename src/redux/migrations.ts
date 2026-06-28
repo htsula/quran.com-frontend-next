@@ -370,4 +370,13 @@ export default {
       isQuranReaderFloatingBannerVisible: true,
     },
   }),
+  49: (state) => {
+    // Drop persisted slices removed in the bookmarks/collections + embed widget teardown
+    // so combineReducers doesn't warn about unexpected keys on rehydrate.
+    const next = { ...state };
+    delete next.bookmarks;
+    delete next.ayahWidget;
+    delete next.guestBookmark;
+    return next;
+  },
 };

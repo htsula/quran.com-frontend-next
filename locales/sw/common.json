@@ -28,12 +28,6 @@
         "action": "Tazama kilicho kipya",
         "title": "Karibu kwenye Quran.com <br></br> Akaunti ya Mtumiaji"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Tuna furaha sana kutangaza kwamba sasa unaweza kuweka alamisho chini ya \"mikusanyiko\"! <br/> <br/> <li> Ongeza mikusanyiko kadiri utakavyo </li> <li> Ongeza alamisho kwenye mkusanyiko mmoja au zaidi </li> <li> Na zaidi! </li>",
-        "title": "Mikusanyiko ya vialamisho iko hapa!"
-      }
     }
   },
   "answers": "Majibu",
@@ -98,15 +92,6 @@
   "back": "Nyuma",
   "beta": "Beta",
   "beyond-ramadan": "Jiendeleze Baada ya Ramadhani!",
-  "bookmark": "Alamisha",
-  "bookmarked": "Zilizoalamishwa",
-  "bookmarks-migration": {
-    "body-1": "Alamisho zako sasa zitakuwa <strong>Aya zilizohifadhiwa</strong> katika <strong>Mikusanyiko</strong>. Ili kuhifadhi alamisho zako za sasa, tafadhali ingia au jisajili nasi.",
-    "body-2": "Pia tumeongeza Alamisho mpya ya Kusoma ili kukusaidia kuendelea pale ulipoishia.",
-    "checkbox": "Usionyeshe ujumbe huu tena (Onyo: utapoteza alamisho zako zote za sasa)",
-    "sign-in": "Ingia / Jisajili",
-    "title": "Taarifa: Alamisho Zinabadilika"
-  },
   "both": "Zote mbili",
   "cancel": "Batilisha",
   "change-theme": "Badilisha Mandhari",
@@ -144,7 +129,6 @@
   "copied": "Imenakiliwa",
   "copied-to-clipboard": "Imenakiliwa kwenye ubao wa kunakili",
   "copy": "Nakili",
-  "copy-embed": "Nakili Kipachiko",
   "copylink": "Nakili kiungo",
   "counter": {
     "decrease": "Punguza",
@@ -170,8 +154,6 @@
     "resend-email-in": "Tuma tena barua pepe ya uthibitishaji baada ya sekunde {{remainingTime}}...",
     "verify-code": "Thibitisha Msimbo"
   },
-  "embed-copied": "Kipachiko Kimenakiliwa",
-  "embed-widget": "Pachika wijeti",
   "end-year-donate": "Kamilisha 2024 kwa Sadaka ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Unaweza tu kuchagua hadi aya {{limit}} kwa wakati mmoja. Tafadhali chagua msururu mdogo.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Imeshindikana kusawazisha mipangilio yako kwenye cloud.",
     "ranges-no-value": "Msururu wa mwanzo na wa mwisho lazima iwe na tarakimu",
     "ranges-too-many-verses": "*Upeo wa Aya {{maxNumberOfVerses}}",
-    "ranges-wrong-order": "Mstari wa kuanzia lazima uwe kabla ya mstari wa kumalizia.",
-    "reading-bookmark-remove": "Imeshindikana kuondoa alamisho ya kusoma",
-    "reading-bookmark-set": "Imeshindikana kuweka alamisho ya kusoma",
-    "reading-bookmark-undo": "Imeshindikana kutendua alamisho ya kusoma"
+    "ranges-wrong-order": "Mstari wa kuanzia lazima uwe kabla ya mstari wa kumalizia."
   },
   "errors": {
     "account-banned": "Samahani, Akaunti yako imepigwa marufuku. Wasiliana na Quran.Foundation",
@@ -374,7 +353,6 @@
   },
   "prev": "Iliyotangulia",
   "previous-ayah": "Aya Iliyotangulia",
-  "privacy": "Faragha",
   "product-updates": "Sasisho za Bidhaa",
   "profile": "Wasifu",
   "projects-desc": "Miradi isiyo ya faida inayomilikiwa, kusimamiwa, au kufadhiliwa na <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "Taratibu ya Uteremshaji",
   "rub": "Rub el Hizb",
   "save": "Hifadhi",
-  "save-to-collection": "Hifadhi kwenye Mkusanyiko",
   "search-for": "Tafuta ' {{searchQuery}} '",
   "search-results": "{{count}} matokeo ya utafutaji",
   "search-results-no-count": "Matokeo ya Utafutaji",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Soma Tafsir mbalimbali za Aya {{ayahNumber}} ya Sura {{surahName}} kutoka kwa wanazuoni wa Tafsir wanaoaminika.",
     "title": "Tafsir"
   },
-  "terms-and-conditions": "Sheria na Masharti",
   "theme": "Mandhari",
   "themes": {
     "auto": "Auto",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} inahitajika"
   },
   "verse": "Aya",
-  "verse-bookmark-removed": "Alamisho ya aya imeondolewa!",
-  "verse-bookmarked": "Aya imealamishwa!",
   "verse-copied": "Aya imenakiliwa kwenye ubao wa kunakili!",
   "verses": "Aya",
   "view": "Tazama",

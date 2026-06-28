@@ -12,8 +12,6 @@ import QuranReaderStyles from '@/redux/types/QuranReaderStyles';
 import { VersesResponse } from '@/types/ApiResponses';
 import { Mushaf, QuranReaderDataType } from '@/types/QuranReader';
 import Verse from '@/types/Verse';
-import { makeBookmarksRangeUrl } from '@/utils/auth/apiPaths';
-import { isLoggedIn } from '@/utils/auth/login';
 import { getPageNumberFromIndexAndPerPage } from '@/utils/number';
 
 interface QuranReaderParams {
@@ -32,7 +30,6 @@ interface QuranReaderParams {
 interface UseDedupedFetchVerseResult {
   verse: Verse | null;
   firstVerseInPage: Verse | null;
-  bookmarksRangeUrl: string | null;
 }
 
 /**
@@ -52,7 +49,6 @@ const useDedupedFetchVerse = ({
   selectedTranslations,
   initialData,
   setApiPageToVersesMap,
-  mushafId,
   verseIdx,
 }: QuranReaderParams): UseDedupedFetchVerseResult => {
   const router = useRouter();
@@ -156,22 +152,11 @@ const useDedupedFetchVerse = ({
     }
   }, [pageNumber, setApiPageToVersesMap, effectiveVerses]);
 
-  const bookmarksRangeUrl =
-    effectiveVerses && effectiveVerses.length && isLoggedIn()
-      ? makeBookmarksRangeUrl(
-          mushafId,
-          Number(effectiveVerses?.[0].chapterId),
-          Number(effectiveVerses?.[0].verseNumber),
-          initialData.pagination.perPage,
-        )
-      : null;
-
   const verse = effectiveVerses ? effectiveVerses[idxInPage] : null;
 
   return {
     verse,
     firstVerseInPage: effectiveVerses ? effectiveVerses[0] : null,
-    bookmarksRangeUrl,
   };
 };
 

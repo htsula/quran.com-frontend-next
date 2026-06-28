@@ -6,7 +6,6 @@ import useTranslation from 'next-translate/useTranslation';
 import styles from './ReadingModeWordHoverActions.module.scss';
 
 import ReadingViewNoteAction from '@/components/Notes/modal/ReadingViewNoteAction';
-import BookmarkAction from '@/components/Verse/BookmarkAction';
 import IconContainer, { IconColor, IconSize } from '@/dls/IconContainer/IconContainer';
 import PopoverMenu, { PopoverMenuAlign } from '@/dls/PopoverMenu/PopoverMenu';
 import useDirection from '@/hooks/useDirection';
@@ -96,17 +95,6 @@ const WordOptionsDropdown: React.FC<Props> = ({
       >
         {t('quran-reader:play-from-word')}
       </PopoverMenu.Item>
-
-      <BookmarkAction
-        verse={verse}
-        isTranslationView={false}
-        forceMenuItem
-        shouldCloseMenuAfterClick
-        unbookmarkedLabel={t('quran-reader:save-verse-short')}
-        onActionClick={() => {
-          logButtonClick('reading_word_3dots_save_verse', { verseKey: verse.verseKey });
-        }}
-      />
 
       <ReadingViewNoteAction
         verseKey={verse.verseKey}

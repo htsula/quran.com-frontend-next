@@ -16,7 +16,7 @@ type CountRangeHadithsResponse = {
 
 /**
  * Hook to fetch hadith counts for a verse range.
- * Follows the same pattern as useCountRangeQiraat.
+ * Follows the same pattern as useCountRangeNotes.
  *
  * @param {Range} hadithRange - The verse range object with from and to keys
  * @param {Language} language - The language of the hadiths

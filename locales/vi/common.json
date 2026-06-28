@@ -28,12 +28,6 @@
         "action": "Xem có gì mới nhé!",
         "title": "Chào mừng bạn đến với Quran.com <br></br> Tài khoản người dùng"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Chúng tôi rất vui mừng thông báo rằng giờ đây bạn có thể nhóm các dấu trang lại với nhau theo \"bộ sưu tập\"! <br/><br/> <li>Bạn có thể thêm bao nhiêu bộ sưu tập tùy thích.</li><li>Thêm đánh dấu trang vào một hoặc nhiều bộ sưu tập</li><li>Và còn nhiều hơn thế nữa!</li>",
-        "title": "Bộ sưu tập đánh dấu trang đã có mặt!"
-      }
     }
   },
   "answers": "Câu trả lời",
@@ -98,15 +92,6 @@
   "back": "Trở về",
   "beta": "Phiên bản Beta",
   "beyond-ramadan": "Vươn xa hơn sau Ramadan!",
-  "bookmark": "Đánh dấu trang",
-  "bookmarked": "Đã đánh dấu",
-  "bookmarks-migration": {
-    "body-1": "Dấu trang của bạn giờ sẽ trở thành <strong>Những câu thơ được lưu giữ</strong> TRONG <strong>Bộ sưu tập</strong>Để giữ lại các dấu trang hiện tại, vui lòng đăng nhập hoặc tạo tài khoản.",
-    "body-2": "Chúng tôi cũng đã thêm tính năng Đánh dấu trang đọc mới để giúp bạn tiếp tục đọc ngay từ chỗ bạn đã dừng lại.",
-    "checkbox": "Không hiển thị lại thông báo này nữa (Cảnh báo: Bạn sẽ mất tất cả dấu trang hiện tại)",
-    "sign-in": "Đăng nhập / Đăng ký",
-    "title": "Thông báo: Chức năng đánh dấu trang đang thay đổi."
-  },
   "both": "Cả hai",
   "cancel": "Hủy bỏ",
   "change-theme": "Thay đổi chủ đề",
@@ -144,7 +129,6 @@
   "copied": "Đã sao chép",
   "copied-to-clipboard": "Đã sao chép vào clipboard",
   "copy": "Sao chép",
-  "copy-embed": "Sao chép mã nhúng",
   "copylink": "Sao chép link",
   "counter": {
     "decrease": "Giảm",
@@ -170,8 +154,6 @@
     "resend-email-in": "Gửi lại email xác nhận trong {{remainingTime}} giây...",
     "verify-code": "Xác minh mã"
   },
-  "embed-copied": "Đã sao chép mã nhúng",
-  "embed-widget": "Nhúng tiện ích",
   "end-year-donate": "Kết thúc năm 2024 với Sadaqah ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Bạn chỉ có thể chọn tối đa {{limit}} từng câu một. Vui lòng chọn phạm vi nhỏ hơn.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Không thể đồng bộ cài đặt của bạn lên đám mây.",
     "ranges-no-value": "Điểm bắt đầu và điểm kết thúc của phạm vi phải có giá trị.",
     "ranges-too-many-verses": "*Tối đa {{maxNumberOfVerses}} Ayahs",
-    "ranges-wrong-order": "Câu bắt đầu phải trước câu kết thúc.",
-    "reading-bookmark-remove": "Không thể xóa dấu trang đang đọc",
-    "reading-bookmark-set": "Không thể đặt dấu trang đọc",
-    "reading-bookmark-undo": "Không thể hoàn tác dấu trang đang đọc"
+    "ranges-wrong-order": "Câu bắt đầu phải trước câu kết thúc."
   },
   "errors": {
     "account-banned": "Rất tiếc, tài khoản của bạn đã bị khóa. Vui lòng liên hệ với Quran.Foundation.",
@@ -374,7 +353,6 @@
   },
   "prev": "Trước",
   "previous-ayah": "Ayah trước",
-  "privacy": "Quyền riêng tư",
   "product-updates": "Cập nhật sản phẩm",
   "profile": "Hồ sơ",
   "projects-desc": "Dự án phi lợi nhuận do <link>Quran.Foundation</link> sở hữu, quản lý hoặc tài trợ",
@@ -411,7 +389,6 @@
   "revelation_order": "Trình tự mặc khải",
   "rub": "Rub el Hizb",
   "save": "Lưu",
-  "save-to-collection": "Lưu vào bộ sưu tập",
   "search-for": "Tìm kiếm '{{searchQuery}}'",
   "search-results": "{{count}} kết quả tìm kiếm",
   "search-results-no-count": "Kết quả tìm kiếm",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Đọc các bài giải thích (Tafsir) khác nhau về Ayah. {{ayahNumber}} của Surah {{surahName}} bởi các học giả Tafsir đáng tin cậy",
     "title": "Tafsir"
   },
-  "terms-and-conditions": "Điều khoản và điều kiện",
   "theme": "Chủ đề",
   "themes": {
     "auto": "Tự động",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} là bắt buộc"
   },
   "verse": "Câu",
-  "verse-bookmark-removed": "Dấu trang câu đã bị xóa!",
-  "verse-bookmarked": "Đã đánh dấu câu này!",
   "verse-copied": "Câu kinh đã được sao chép vào clipboard!",
   "verses": "Các câu",
   "view": "Xem",

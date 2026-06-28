@@ -28,12 +28,6 @@
         "action": "اكتشف ما هو جديد",
         "title": "مرحبًا بك في حسابك على Quran.com <br></br>"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "يسعدنا أن نعلن أنه يمكنك الآن تجميع الإشارات المرجعية (سجلات الحفظ) ضمن \"مجموعات\"! <br/> <br/> <li> أضف أي عدد تريده من المجموعات </li> <li> أضف إشارة مرجعية إلى مجموعة واحدة أو أكثر </li> <li> والمزيد! </li>",
-        "title": "هنا تجد مجموعاتك المحفوظة!"
-      }
     }
   },
   "answers": "الإجابات",
@@ -98,15 +92,6 @@
   "back": "رجوع",
   "beta": "تجريبي",
   "beyond-ramadan": "استمر في التقدم بعد رمضان!",
-  "bookmark": "حفظ",
-  "bookmarked": "تم الحفظ",
-  "bookmarks-migration": {
-    "body-1": "ستصبح إشاراتك المرجعية الآن <strong>آيات محفوظة</strong> في <strong>المجموعات</strong>للاحتفاظ بإشاراتك المرجعية الحالية، يرجى تسجيل الدخول أو إنشاء حساب.",
-    "body-2": "أضفنا أيضًا علامة مرجعية جديدة للقراءة لمساعدتك على المتابعة من حيث توقفت.",
-    "checkbox": "لا تعرض هذه الرسالة مرة أخرى (تحذير: ستفقد جميع إشاراتك المرجعية الحالية)",
-    "sign-in": "تسجيل الدخول أو إنشاء حساب",
-    "title": "تنبيه: تغييرات على العلامات المرجعية"
-  },
   "both": "كلاهما",
   "cancel": "إلغاء",
   "change-theme": "تغيير المظهر",
@@ -144,7 +129,6 @@
   "copied": "تم النسخ",
   "copied-to-clipboard": "تم النسخ إلى الحافظة",
   "copy": "نسخ",
-  "copy-embed": "نسخ التضمين",
   "copylink": "نسخ الرابط",
   "counter": {
     "decrease": "تصغير",
@@ -170,8 +154,6 @@
     "resend-email-in": "أعد إرسال رسالة التحقق بعد {{remainingTime}} ثانية ...",
     "verify-code": "التحقق من الرمز"
   },
-  "embed-copied": "تم تضمين النسخ",
-  "embed-widget": "أداة التضمين",
   "end-year-donate": "إختم عام ٢٠٢٤ بالصدقة ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "يمكنك تحديد {{limit}} آيات في المرة الواحدة. يرجى اختيار نطاق أصغر.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "فشل مزامنة إعداداتك مع جميع أجهزتك",
     "ranges-no-value": "يجب تحديد قيمة لكل من البداية والنهاية",
     "ranges-too-many-verses": "بحد أقصى {{maxNumberOfVerses}} آيات",
-    "ranges-wrong-order": "الآية الافتتاحية يجب أن تكون قبل الآية الختامية.",
-    "reading-bookmark-remove": "فشل إزالة الإشارة المرجعية للقراءة",
-    "reading-bookmark-set": "فشل تعيين إشارة مرجعية للقراءة",
-    "reading-bookmark-undo": "فشل التراجع عن الإشارة المرجعية للقراءة"
+    "ranges-wrong-order": "الآية الافتتاحية يجب أن تكون قبل الآية الختامية."
   },
   "errors": {
     "account-banned": "عذرًا، تم حظر حسابك. يُرجى التواصل مع  Quran.Foundation",
@@ -374,7 +353,6 @@
   },
   "prev": "السابق",
   "previous-ayah": "الآية السابقة",
-  "privacy": "الخصوصية",
   "product-updates": "تحديثات المنتج",
   "profile": "الملف الشخصي",
   "projects-desc": "المشاريع غير الربحية التي تملكها أو تديرها أو ترعاها  <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "ترتيب نزول الوحي",
   "rub": "ربع الحزب",
   "save": "إحفظ",
-  "save-to-collection": "حفظ في المجموعة",
   "search-for": "ابحث عن '{{searchQuery}}'",
   "search-results": "نتائج البحث: {{count}}",
   "search-results-no-count": "نتائج البحث",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "اقرأ تفاسير مختلفة للآية {{ayahNumber}} من السورة {{surahName}} لعلماء تفسير معتمدين",
     "title": "التفسير"
   },
-  "terms-and-conditions": "الشروط والأحكام",
   "theme": "المظهر",
   "themes": {
     "auto": "تلقائي",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} مطلوب"
   },
   "verse": "آية",
-  "verse-bookmark-removed": "تمت إزالة إشارة المرجعية من الآية!",
-  "verse-bookmarked": "تمت إضافة إشارة مرجعية إلى الآية!",
   "verse-copied": "تم نسخ الآية إلى الحافظة!",
   "verses": "آيات",
   "view": "عرض",

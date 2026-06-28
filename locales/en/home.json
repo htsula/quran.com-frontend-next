@@ -27,11 +27,9 @@
     "title": "Quran Apps"
   },
   "begin": "Begin",
-  "calendar-cta": "Calendar",
   "chapters-and-verses": "Chapters and Verses",
   "continue-learning-plan": "Continue Learning",
   "continue-read": "Continue Reading",
-  "explore-topics": "Explore Topics",
   "first-time-reading": "New to the Quran? <link>Start here</link>",
   "grow-beyond-ramadan": "Grow with us <modalLink>Beyond Ramadan</modalLink>",
   "know-someone": "Grow with us this <modalLink>Ramadan</modalLink>",
@@ -66,9 +64,6 @@
     "title": "Quran Growth Journey"
   },
   "qr-community": "Read today's featured Verses and Reflections",
-  "quran-in-year": "Quran in a Year",
-  "quran-in-year-cta": "This Week’s Reading",
-  "quran-in-year-verse-title": "A verse from this week's reading",
   "ramadan-activities-cta": "<link>Follow the <b>Global Quranic Calendar</b> for weekly readings, inspiring podcasts, and a call to reflect!</link>",
   "ramadan-challenge": "Join the Ramadan Challenge",
   "ramadan": {

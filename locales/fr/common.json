@@ -28,12 +28,6 @@
         "action": "Nouvelles fonctionnalités",
         "title": "Bienvenue sur Quran.com <br></br> Compte utilisateur"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Nous sommes très heureux de vous annoncer que vous pouvez désormais regrouper les favoris dans \"collections\" ! <br/> <br/> <li> Ajoutez autant de collections que vous le souhaitez</li><li>Ajoutez un favoris à une ou plusieurs collections</li><li>Et plus encore !</li>",
-        "title": "Les collections de favoris sont là !"
-      }
     }
   },
   "answers": "Réponses",
@@ -98,15 +92,6 @@
   "back": "Dos",
   "beta": "Bêta",
   "beyond-ramadan": "Progressez Au-Delà du Ramadan !",
-  "bookmark": "Favori",
-  "bookmarked": "Favori ajouté",
-  "bookmarks-migration": {
-    "body-1": "Vos favoris vont maintenant devenir des <strong>Ayahs enregistrées</strong> dans des <strong>Collections</strong>. Pour conserver vos favoris actuels, veuillez vous connecter ou créer un compte.",
-    "body-2": "Nous avons également ajouté un nouveau favori de lecture pour vous permettre de reprendre votre lecture là où vous l'aviez laissée.",
-    "checkbox": "Ne plus afficher ce message (Attention : vous perdrez tous vos favoris actuels)",
-    "sign-in": "Se connecter / S'inscrire",
-    "title": "Note : Les favoris sont en cours de modification"
-  },
   "both": "Tous",
   "cancel": "Annuler",
   "change-theme": "Changer de thème",
@@ -144,7 +129,6 @@
   "copied": "Copié",
   "copied-to-clipboard": "Copié dans le presse-papier",
   "copy": "Copier",
-  "copy-embed": "Copier Intégrer",
   "copylink": "Copier le lien",
   "counter": {
     "decrease": "Diminuer",
@@ -170,8 +154,6 @@
     "resend-email-in": "Renvoyer l'e-mail de vérification dans {{remainingTime}}s...",
     "verify-code": "Vérifier le code"
   },
-  "embed-copied": "Intégrer copié",
-  "embed-widget": "widget intégré",
   "end-year-donate": "Terminez 2024 avec une Sadaqah ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Vous ne pouvez uniquement sélectionner {{limit}} Ayahs à la fois. Veuillez sélectionner une plage plus petite.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Échec de la synchronisation de vos paramètres avec le cloud.",
     "ranges-no-value": "Le début et la fin de la plage doivent avoir une valeur",
     "ranges-too-many-verses": "*Max {{maxNumberOfVerses}} Ayahs",
-    "ranges-wrong-order": "L'Ayah de départ doit être avant l'Ayah de fin.",
-    "reading-bookmark-remove": "Impossible de supprimer le favori de lecture",
-    "reading-bookmark-set": "Impossible de définir le favori de lecture",
-    "reading-bookmark-undo": "Impossible d'annuler le favori de lecture"
+    "ranges-wrong-order": "L'Ayah de départ doit être avant l'Ayah de fin."
   },
   "errors": {
     "account-banned": "Désolé, votre compte est banni. Veuillez contacter Quran.Foundation",
@@ -374,7 +353,6 @@
   },
   "prev": "Précédent",
   "previous-ayah": "Ayah Précédente",
-  "privacy": "Confidentialité",
   "product-updates": "Mises à jour du produit",
   "profile": "Profil",
   "projects-desc": "Projets à but non lucratif détenus, gérés ou sponsorisés par <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "Ordre de révélation",
   "rub": "Rub el Hizb",
   "save": "Sauvegarder",
-  "save-to-collection": "Enregistrer dans la collection",
   "search-for": "Rechercher '{{searchQuery}}'",
   "search-results": "{{count}} résultats de recherche",
   "search-results-no-count": "Résultats de la recherche",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Lisez divers Tafsirs de l'Ayah {{ayahNumber}} de la Sourate {{surahName}} par des savants du Tafsir de confiance",
     "title": "Tafsir"
   },
-  "terms-and-conditions": "Termes et conditions",
   "theme": "Thème",
   "themes": {
     "auto": "Auto",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} est requis"
   },
   "verse": "Ayah",
-  "verse-bookmark-removed": "Ayah supprimée des favoris !",
-  "verse-bookmarked": "Ayah ajoutée aux favoris !",
   "verse-copied": "L'Ayah a été copiée dans le presse-papiers !",
   "verses": "Ayahs",
   "view": "Vue",

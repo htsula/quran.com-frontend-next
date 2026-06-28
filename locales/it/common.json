@@ -28,12 +28,6 @@
         "action": "Guarda cosa c'è di nuovo",
         "title": "Benvenuto su Quran.com <br></br> Account utente"
       }
-    },
-    "collections-announcement": {
-      "slide-1": {
-        "description": "Siamo molto felici di annunciare che ora puoi raggruppare i segnalibri in \"raccolte\"! <br/> <br/> <li> Aggiungi tutte le raccolte che desideri </li> <li> Aggiungi un segnalibro a una o più raccolte </li> <li> E altro ancora! </li>",
-        "title": "Le raccolte di segnalibri sono qui!"
-      }
     }
   },
   "answers": "Risposte",
@@ -98,15 +92,6 @@
   "back": "Indietro",
   "beta": "Beta",
   "beyond-ramadan": "Cresci oltre il Ramadan!",
-  "bookmark": "Segnalibro",
-  "bookmarked": "Segnalibro",
-  "bookmarks-migration": {
-    "body-1": "I tuoi segnalibri ora diventeranno <strong>Versetti salvati</strong> In <strong>Collezioni</strong>Per conservare i tuoi segnalibri attuali, accedi o crea un account.",
-    "body-2": "Abbiamo anche aggiunto un nuovo segnalibro di lettura per aiutarti a riprendere da dove eri rimasto.",
-    "checkbox": "Non visualizzare più questo messaggio (attenzione: perderai tutti i tuoi segnalibri attuali)",
-    "sign-in": "Accedi / Registrati",
-    "title": "Avviso: i segnalibri stanno cambiando"
-  },
   "both": "Entrambi",
   "cancel": "Annulla",
   "change-theme": "Cambia tema",
@@ -144,7 +129,6 @@
   "copied": "copiato",
   "copied-to-clipboard": "Copiato negli appunti",
   "copy": "copia",
-  "copy-embed": "Copia Incorpora",
   "copylink": "Copia il collegamento",
   "counter": {
     "decrease": "Diminuire",
@@ -170,8 +154,6 @@
     "resend-email-in": "Invia nuovamente l'email di verifica tra {{remainingTime}} sec...",
     "verify-code": "Verificare il codice"
   },
-  "embed-copied": "Incorpora Copiato",
-  "embed-widget": "Incorpora widget",
   "end-year-donate": "Concludiamo il 2024 con Sadaqah ❤️",
   "error": {
     "MediaVersesRangeLimitExceeded": "Puoi selezionare solo fino a {{limit}} versi alla volta. Seleziona un intervallo più piccolo.",
@@ -183,10 +165,7 @@
     "pref-persist-fail": "Impossibile sincronizzare le impostazioni sul cloud.",
     "ranges-no-value": "L'inizio e la fine dell'intervallo devono avere un valore",
     "ranges-too-many-verses": "*Max {{maxNumberOfVerses}} versetti",
-    "ranges-wrong-order": "Il verso iniziale deve precedere quello finale.",
-    "reading-bookmark-remove": "Impossibile rimuovere il segnalibro di lettura",
-    "reading-bookmark-set": "Impossibile impostare il segnalibro di lettura",
-    "reading-bookmark-undo": "Impossibile annullare la lettura del segnalibro"
+    "ranges-wrong-order": "Il verso iniziale deve precedere quello finale."
   },
   "errors": {
     "account-banned": "Spiacenti, il tuo account è stato bannato. Contatta Quran.Foundation",
@@ -374,7 +353,6 @@
   },
   "prev": "Precedente",
   "previous-ayah": "Precedente Sì",
-  "privacy": "Privacy",
   "product-updates": "Aggiornamenti del prodotto",
   "profile": "Profilo",
   "projects-desc": "Progetti senza scopo di lucro posseduti, gestiti o sponsorizzati da <link>Quran.Foundation</link>",
@@ -411,7 +389,6 @@
   "revelation_order": "Ordine di rivelazione",
   "rub": "Rub el Hizb",
   "save": "Salva",
-  "save-to-collection": "Salva nella raccolta",
   "search-for": "Cerca '{{searchQuery}}'",
   "search-results": "{{count}} risultati di ricerca",
   "search-results-no-count": "Risultati della ricerca",
@@ -495,7 +472,6 @@
     "tafsirs-desc": "Leggi vari Tafsir di Ayah {{ayahNumber}} di Sura {{surahName}} da parte di fidati studiosi di Tafsir",
     "title": "Tafsir"
   },
-  "terms-and-conditions": "Termini e Condizioni",
   "theme": "Tema",
   "themes": {
     "auto": "Auto",
@@ -523,8 +499,6 @@
     "required-field": "{{field}} è obbligatorio"
   },
   "verse": "Versetto",
-  "verse-bookmark-removed": "Segnalibro versetto rimosso!",
-  "verse-bookmarked": "Versetto aggiunto ai segnalibri!",
   "verse-copied": "Il versetto è stato copiato negli appunti!",
   "verses": "versi",
   "view": "Visualizzazione",

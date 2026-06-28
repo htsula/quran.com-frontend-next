@@ -27,11 +27,9 @@
     "title": "اپلیکیشن‌های قرآن"
   },
   "begin": "شروع کنید",
-  "calendar-cta": "تقویم",
   "chapters-and-verses": "سوره ها و آیات",
   "continue-learning-plan": "ادامه یادگیری",
   "continue-read": "به خواندن ادامه دهید",
-  "explore-topics": "موضوعات را کاوش کنید",
   "first-time-reading": "تازه با قرآن؟ <link> از اینجا شروع کنید </link>",
   "grow-beyond-ramadan": "با ما رشد کنید <modalLink> فراتر از ماه رمضان </modalLink>",
   "know-someone": "با ما در این <modalLink> رمضان </modalLink> رشد کنید",
@@ -66,9 +64,6 @@
     "title": "سیر رشد قرآن"
   },
   "qr-community": "آیات و بازتاب های برجسته امروز را بخوانید",
-  "quran-in-year": "قرآن در یک سال",
-  "quran-in-year-cta": "خواندن این هفته",
-  "quran-in-year-verse-title": "آیه ای از تلاوت این هفته",
   "ramadan-activities-cta": "<link> برای خواندن هفتگی، پادکست های الهام بخش، و دعوت به تفکر، <b> تقویم جهانی قرآنی </b> را دنبال کنید! </link>",
   "ramadan-challenge": "به چالش رمضان بپیوندید",
   "ramadan": {
