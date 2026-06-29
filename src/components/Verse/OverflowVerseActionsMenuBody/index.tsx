@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import PinVerseAction from '../PinVerseAction';
-import TranslationFeedbackAction from '../TranslationFeedback/TranslationFeedbackAction';
 import VerseActionAdvancedCopy from '../VerseActionAdvancedCopy';
 import VerseActionRepeatAudio from '../VerseActionRepeatAudio';
 
@@ -49,12 +48,6 @@ const OverflowVerseActionsMenuBody: React.FC<Props> = ({
       {!isStudyModeOpen && (
         <VerseActionRepeatAudio isTranslationView={isTranslationView} verseKey={verse.verseKey} />
       )}
-      <TranslationFeedbackAction
-        verse={verse}
-        isTranslationView={isTranslationView}
-        onActionTriggered={onActionTriggered}
-        isInsideStudyMode={isInsideStudyMode}
-      />
     </div>
   ) : (
     <ShareVerseActionsMenu

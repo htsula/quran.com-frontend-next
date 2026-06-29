@@ -6,7 +6,6 @@ import ContextMenu from './ContextMenu';
 import { VerseTrackerContextProvider } from './contexts/VerseTrackerContext';
 import DebuggingObserverWindow from './DebuggingObserverWindow';
 import useSyncChapterPage from './hooks/useSyncChapterPage';
-import Notes from './Notes/Notes';
 import styles from './QuranReader.module.scss';
 import QuranReaderView from './QuranReaderView';
 import ReaderTopActions from './ReaderTopActions';
@@ -15,7 +14,6 @@ import FontPreLoader from '@/components/Fonts/FontPreLoader';
 import useGetMushaf from '@/hooks/useGetMushaf';
 import useIsMobile from '@/hooks/useIsMobile';
 import { selectIsExpanded } from '@/redux/slices/QuranReader/contextMenu';
-import { selectNotes } from '@/redux/slices/QuranReader/notes';
 import { selectPinnedVerseKeys } from '@/redux/slices/QuranReader/pinnedVerses';
 import { selectReadingPreference } from '@/redux/slices/QuranReader/readingPreferences';
 import { selectIsSidebarNavigationVisible } from '@/redux/slices/QuranReader/sidebarNavigation';
@@ -36,7 +34,6 @@ const QuranReader = ({
   quranReaderDataType = QuranReaderDataType.Chapter,
 }: QuranReaderProps) => {
   const { lang } = useTranslation();
-  const isSideBarVisible = useSelector(selectNotes, shallowEqual).isVisible;
   const quranReaderStyles = useSelector(selectQuranReaderStyles, shallowEqual);
   const isSidebarNavigationVisible = useSelector(selectIsSidebarNavigationVisible);
   const readingPreference = useSelector(selectReadingPreference) as ReadingPreference;
@@ -66,7 +63,6 @@ const QuranReader = ({
       <DebuggingObserverWindow isReadingMode={isReadingPreference} />
       <div
         className={classNames(styles.container, {
-          [styles.withVisibleSideBar]: isSideBarVisible,
           [styles.withSidebarNavigationOpenOrAuto]: isSidebarNavigationVisible,
           [styles.translationView]: !isReadingPreference,
           [styles.singleVerseView]: isSingleVerse,
@@ -96,8 +92,6 @@ const QuranReader = ({
           </VerseTrackerContextProvider>
         </div>
       </div>
-
-      <Notes />
     </>
   );
 };

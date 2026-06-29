@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import resetSettings from '@/redux/actions/reset-settings';
-import syncUserPreferences from '@/redux/actions/sync-user-preferences';
 import { getTranslationsInitialState } from '@/redux/defaultSettings/util';
 import { RootState } from '@/redux/RootState';
 import SliceName from '@/redux/types/SliceName';
-import TranslationsSettings from '@/redux/types/TranslationsSettings';
 import { areArraysEqual } from '@/utils/array';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 export const translationsSlice = createSlice({
   name: SliceName.TRANSLATIONS,
@@ -31,24 +28,6 @@ export const translationsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(resetSettings, (state, action) => {
       return getTranslationsInitialState(action.payload.locale);
-    });
-    builder.addCase(syncUserPreferences, (state, action) => {
-      const {
-        payload: { userPreferences, locale },
-      } = action;
-      const remotePreferences = userPreferences[
-        PreferenceGroup.TRANSLATIONS
-      ] as TranslationsSettings;
-      if (remotePreferences) {
-        const { selectedTranslations: defaultTranslations } = getTranslationsInitialState(locale);
-        const { selectedTranslations: remoteTranslations } = remotePreferences;
-        return {
-          ...state,
-          ...remotePreferences,
-          isUsingDefaultTranslations: areArraysEqual(defaultTranslations, remoteTranslations),
-        };
-      }
-      return state;
     });
   },
 });

@@ -1,5 +1,4 @@
 import AppEnv from '@/types/AppEnv';
-import { SsoPlatformConfig } from '@/utils/auth/types/Auth';
 
 /**
  * This function adds a suffix to the cookie name based on the environment.
@@ -22,29 +21,5 @@ const addEnvSuffixToAuthCookie = (cookieName: string) => {
 };
 
 // NOTE: IF THIS VALUE CHANGE, WE SHOULD CHANGE IT IN OUR AUTH REPO
+// eslint-disable-next-line import/prefer-default-export
 export const USER_ID_COOKIE_NAME = addEnvSuffixToAuthCookie('id');
-export const USER_DATA_SYNC_COOKIE_NAME = addEnvSuffixToAuthCookie('lastSyncAt');
-export const NOTIFICATION_SUBSCRIBER_COOKIE_NAME = addEnvSuffixToAuthCookie('notif_sub_id');
-
-export const DEFAULT_PHOTO_URL = `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y`;
-
-export const AUTH_ONBOARDING_ANNOUNCEMENT_TYPE = 'auth-onboarding';
-
-export const BANNED_USER_ERROR_ID = 'external.banned';
-
-export const SSO_ENABLED = process.env.NEXT_PUBLIC_SSO_ENABLED === 'true';
-
-/**
- * Configuration for all supported SSO platforms
- * Add new platforms here to make them available for SSO
- */
-export const SSO_PLATFORM_CONFIGS: readonly SsoPlatformConfig[] = [
-  {
-    id: 'QR',
-    envKey: 'NEXT_PUBLIC_QURAN_REFLECT_URL',
-    enabled: true,
-  },
-  // Add more platforms here as needed
-];
-
-export const DEFAULT_COLLECTION_ID = '__default__';

@@ -11,7 +11,6 @@ import { TooltipType } from '@/dls/Tooltip';
 import ArrowIcon from '@/icons/arrow.svg';
 import { logButtonClick } from '@/utils/eventLogger';
 import { getChapterNumberFromKey } from '@/utils/verse';
-import Verse from 'types/Verse';
 
 export type ReadingWordHoverActionSource = '3dots' | 'tooltip';
 
@@ -20,7 +19,6 @@ type Props = {
   isTooltipVisible: boolean;
   tooltipContent: ReactNode;
   tooltipDelay: number;
-  verse: Verse;
   onOpenStudyMode: (source: ReadingWordHoverActionSource) => void;
   onPlayFromWord: (source: ReadingWordHoverActionSource) => void;
   verseKey: string;
@@ -31,7 +29,6 @@ const ReadingModeWordHoverActions: React.FC<Props> = ({
   isTooltipVisible,
   tooltipContent,
   tooltipDelay,
-  verse,
   onOpenStudyMode,
   onPlayFromWord,
   verseKey,
@@ -74,7 +71,6 @@ const ReadingModeWordHoverActions: React.FC<Props> = ({
 
   const dropdown = (
     <WordOptionsDropdown
-      verse={verse}
       onOpenChange={handleDropdownOpenChange}
       onMore={handleMore}
       onPlayFromWord={handlePlayFromWord}

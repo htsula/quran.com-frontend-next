@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import useIsMobile from '@/hooks/useIsMobile';
 import useScrollDirection, { ScrollDirection } from '@/hooks/useScrollDirection';
 import { setIsVisible, selectNavbar } from '@/redux/slices/navbar';
@@ -10,20 +9,13 @@ import {
   setIsExpanded,
   setShowReadingPreferenceSwitcher,
 } from '@/redux/slices/QuranReader/contextMenu';
-import OnboardingGroup from '@/types/OnboardingGroup';
 
 const GlobalScrollListener = () => {
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
-  const { isActive, activeStepGroup } = useOnboarding();
   const { lockVisibilityState } = useSelector(selectNavbar);
   const onDirectionChange = useCallback(
     (direction: ScrollDirection, newYPosition: number) => {
-      // if we are in the Quran Reader, disable default scroll behavior to avoid having 2 preference switchers {@see: <ReadingPreferenceSwitcher}
-      if (isActive && activeStepGroup === OnboardingGroup.READING_EXPERIENCE) {
-        return;
-      }
-
       if (isMobile) {
         // MOBILE: Asymmetric thresholds for smooth navbar show/hide on scroll
         // - Hide early on scroll-down (10px) to prevent content jump
@@ -60,7 +52,7 @@ const GlobalScrollListener = () => {
         dispatch({ type: setShowReadingPreferenceSwitcher.type, payload: false });
       }
     },
-    [isMobile, activeStepGroup, dispatch, isActive, lockVisibilityState],
+    [isMobile, dispatch, lockVisibilityState],
   );
   useScrollDirection(onDirectionChange);
   return <></>;

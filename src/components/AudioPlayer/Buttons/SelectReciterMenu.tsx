@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import { useSelector } from '@xstate/react';
 import classNames from 'classnames';
@@ -7,13 +7,11 @@ import useTranslation from 'next-translate/useTranslation';
 import styles from './SelectReciterMenu.module.scss';
 
 import DataFetcher from '@/components/DataFetcher';
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import PopoverMenu from '@/dls/PopoverMenu/PopoverMenu';
 import Spinner from '@/dls/Spinner/Spinner';
 import usePersistPreferenceGroup from '@/hooks/auth/usePersistPreferenceGroup';
 import CheckIcon from '@/icons/check.svg';
 import ChevronLeftIcon from '@/icons/chevron-left.svg';
-import OnboardingGroup from '@/types/OnboardingGroup';
 import { makeAvailableRecitersUrl } from '@/utils/apiPaths';
 import { logButtonClick, logItemSelectionChange, logValueChange } from '@/utils/eventLogger';
 import { AudioPlayerMachineContext } from 'src/xstate/AudioPlayerMachineContext';
@@ -39,18 +37,6 @@ const SelectReciterMenu = ({
     actions: { onXstateSettingsChange },
     isLoading,
   } = usePersistPreferenceGroup();
-
-  const { isActive, activeStepGroup, activeStepIndex, nextStep } = useOnboarding();
-
-  useEffect(() => {
-    if (
-      isActive &&
-      activeStepGroup === OnboardingGroup.READING_EXPERIENCE &&
-      activeStepIndex === 3
-    ) {
-      nextStep();
-    }
-  }, [isActive, activeStepGroup, activeStepIndex, nextStep]);
 
   const onReciterSelected = useCallback(
     (reciter: Reciter) => {

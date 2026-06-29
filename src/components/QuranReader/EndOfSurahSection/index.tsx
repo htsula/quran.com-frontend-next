@@ -62,18 +62,6 @@ const EndOfSurahSection: React.FC<EndOfSurahSectionProps> = ({ chapterNumber }) 
           previousSummaries={chapterMetadata?.previousChapter?.summaries}
           onScrollToTop={scrollToTop}
         />
-
-        {/* <ExploreCard
-          cardClassName={styles.card}
-          chapterNumber={chapterNumber}
-          verseKey={verseKey}
-          suggestions={chapterMetadata?.suggestions}
-          hasQuestions={hasQuestions}
-          hasClarificationQuestion={hasClarificationQuestion}
-          onStudyModeOpen={handleStudyModeOpen}
-        />
-
-        <StreakGoalCard cardClassName={styles.card} /> */}
       </div>
     </div>
   );

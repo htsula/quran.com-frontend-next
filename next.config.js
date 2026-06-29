@@ -6,41 +6,18 @@ const path = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE_BUNDLE === 'true',
 });
-const { withSentryConfig } = require('@sentry/nextjs');
 const withFonts = require('next-fonts');
-const withPWA = require('next-pwa');
 const nextTranslate = require('next-translate-plugin');
 
 const securityHeaders = require('./configs/SecurityHeaders.js');
-const runtimeCaching = require('./pwa-runtime-config.js');
 
 const isDev = process.env.NEXT_PUBLIC_VERCEL_ENV === 'development';
-const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production';
-const withPWAConfig = withPWA({
-  dest: 'public',
-  disable: !isProduction,
-  mode: isProduction ? 'production' : 'development',
-  // Don't precache source maps: productionBrowserSourceMaps emits .js.map/.css.map,
-  // which Vercel serves as 403, and a 403 in the precache manifest makes the whole
-  // service worker install fail (bad-precaching-response) — leaving a stale SW in
-  // control. Excluding them keeps SW installation healthy.
-  buildExcludes: [/\.map$/],
-  publicExcludes: [
-    '!fonts/**/!(sura_names|Figtree)*', // exclude pre-caching all fonts that are not sura_names or Figtree
-    '!icons/**', // exclude all icons
-    '!images/**/!(background|homepage)*', // don't pre-cache except background.jpg and homepage.png
-  ],
-  runtimeCaching,
-});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   swcMinify: true,
-  experimental: {
-    instrumentationHook: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     domains: [
@@ -50,12 +27,6 @@ const nextConfig = {
       'now.sh',
       'quran.com',
       'images.quran.com',
-      // Google OAuth user avatars
-      'lh3.googleusercontent.com',
-      // S3-hosted avatars (generic domain required for OAuth providers)
-      's3.amazonaws.com',
-      // Facebook OAuth user avatars
-      'platform-lookaside.fbsbx.com',
     ],
   },
   webpack: (webpackConfig) => {
@@ -142,11 +113,6 @@ const nextConfig = {
   },
   redirects: async () => [
     {
-      source: '/apps-portal',
-      destination: '/apps',
-      permanent: true,
-    },
-    {
       source: '/surah-info/:identifier([\\w-]+)',
       destination: '/surah/:identifier/info',
       permanent: true,
@@ -188,38 +154,4 @@ const nextConfig = {
 };
 
 // Apply plugins
-const configWithPlugins = withBundleAnalyzer(withFonts(nextTranslate(withPWAConfig(nextConfig))));
-
-// Apply Sentry configuration
-module.exports = withSentryConfig(configWithPlugins, {
-  // For all available options, see:
-  // https://www.npmjs.com/package/@sentry/webpack-plugin#options
-
-  org: 'sentry',
-  project: process.env.NEXT_PUBLIC_SENTRY_PROJECT,
-  sentryUrl: process.env.NEXT_PUBLIC_SENTRY_URL,
-
-  // Only print logs for uploading source maps in CI
-  silent: !process.env.CI,
-
-  // For all available options, see:
-  // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-  // Upload a larger set of source maps for prettier stack traces (increases build time)
-  widenClientFileUpload: true,
-
-  // Uncomment to route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-  // This can increase your server load as well as your hosting bill.
-  // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-  // side errors will fail.
-  // tunnelRoute: "/monitoring",
-
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
-
-  // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-  // See the following for more information:
-  // https://docs.sentry.io/product/crons/
-  // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: false,
-});
+module.exports = withBundleAnalyzer(withFonts(nextTranslate(nextConfig)));

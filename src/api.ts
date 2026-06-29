@@ -14,12 +14,9 @@ import NewSearchResponse from '@/types/Search/SearchResponse';
 import { getMushafId } from '@/utils/api';
 import {
   makeAdvancedCopyUrl,
-  makeTafsirsUrl,
   makeLanguagesUrl,
-  makeAudioTimestampsUrl,
   makeChapterAudioDataUrl,
   makeAvailableRecitersUrl,
-  makeTranslationsInfoUrl,
   makeTranslationsUrl,
   makeVersesUrl,
   makeJuzVersesUrl,
@@ -30,11 +27,9 @@ import {
   makeFootnoteUrl,
   makeChapterUrl,
   makeReciterUrl,
-  makeTafsirContentUrl,
   makePagesLookupUrl,
   makeNewSearchResultsUrl,
   makeByRangeVersesUrl,
-  makeWordByWordTranslationsUrl,
   makeChapterMetadataUrl,
   makeVersesFilterUrl,
 } from '@/utils/apiPaths';
@@ -52,17 +47,13 @@ import {
   LanguagesResponse,
   RecitersResponse,
   AudioDataResponse,
-  AudioTimestampsResponse,
-  TafsirsResponse,
   VersesResponse,
   ChapterInfoResponse,
   ChapterMetadataResponse,
   FootnoteResponse,
   ChapterResponse,
   ReciterResponse,
-  TafsirContentResponse,
   PagesLookUpResponse,
-  WordByWordTranslationsResponse,
 } from 'types/ApiResponses';
 import AudioData from 'types/AudioData';
 
@@ -167,17 +158,6 @@ export const getAvailableTranslations = async (language: string): Promise<Transl
   fetcher(makeTranslationsUrl(language), {});
 
 /**
- * Get the current available wbw translations with the name translated in the current language.
- *
- * @param {string} language we use this to get translated names of authors in specific the current language.
- *
- * @returns {Promise<WordByWordTranslationsResponse>}
- */
-export const getAvailableWordByWordTranslations = async (
-  language: string,
-): Promise<WordByWordTranslationsResponse> => fetcher(makeWordByWordTranslationsUrl(language));
-
-/**
  * Get the current available languages with the name translated in the current language.
  *
  * @param {string} language we use this to get language names in specific the current language.
@@ -243,31 +223,6 @@ export const getChapterAudioData = async (
 };
 
 /**
- * Get the timestamps for a specific verseKey.
- * We need this to select to move the cursor in the audio player when we click "play" in a specific verse.
- *
- * @param {number} reciterId
- * @param {number} verseKey example "1:1", meaning chapter 1, verse 1
- * @returns {Promise<AudioTimestampsResponse>}
- */
-export const getVerseTimestamps = async (
-  reciterId: number,
-  verseKey: string,
-): Promise<AudioTimestampsResponse> => fetcher(makeAudioTimestampsUrl(reciterId, verseKey));
-
-/**
- * Get the information of translations by their IDs.
- *
- * @param {string} locale the current user locale.
- * @param {number[]} translations the ids of the translations selected.
- * @returns {Promise<TranslationsResponse>}
- */
-export const getTranslationsInfo = async (
-  locale: string,
-  translations: number[],
-): Promise<TranslationsResponse> => fetcher(makeTranslationsInfoUrl(locale, translations));
-
-/**
  * Get the advanced copy content that will be copied to clipboard and put in a file.
  *
  * @param {AdvancedCopyRequest} params
@@ -286,15 +241,6 @@ export const getAdvancedCopyRawResult = async (
 export const getNewSearchResults = async <T extends SearchMode>(
   params: SearchRequestParams<T>,
 ): Promise<NewSearchResponse> => fetcher(makeNewSearchResultsUrl(params));
-
-/**
- * Get the list of tafsirs.
- *
- * @param {string} language
- * @returns {Promise<TafsirsResponse>}
- */
-export const getTafsirs = async (language: string): Promise<TafsirsResponse> =>
-  fetcher(makeTafsirsUrl(language));
 
 /**
  * Get a chapter's info
@@ -430,31 +376,6 @@ export const getChapterIdBySlug = async (slug: string, locale: string): Promise<
   } catch (error) {
     return false;
   }
-};
-
-/**
- * Get the Tafsir content of a verse by the tafsir ID.
- *
- * @param {string} tafsirIdOrSlug
- * @param {string} verseKey
- * @param {QuranFont} quranFont
- * @param {MushafLines} mushafLines
- * @returns {Promise<TafsirContentResponse>}
- */
-export const getTafsirContent = (
-  tafsirIdOrSlug: string,
-  verseKey: string,
-  quranFont: QuranFont,
-  mushafLines: MushafLines,
-  locale: string,
-): Promise<TafsirContentResponse> => {
-  return fetcher(
-    makeTafsirContentUrl(tafsirIdOrSlug as string, verseKey, {
-      lang: locale,
-      quranFont,
-      mushafLines,
-    }),
-  );
 };
 
 /**

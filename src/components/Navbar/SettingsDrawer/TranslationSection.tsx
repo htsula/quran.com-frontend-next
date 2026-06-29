@@ -9,7 +9,6 @@ import Section from './Section';
 import styles from './TranslationSection.module.scss';
 
 import DataFetcher from '@/components/DataFetcher';
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import Counter from '@/dls/Counter/Counter';
 import SelectionCard from '@/dls/SelectionCard/SelectionCard';
 import Skeleton from '@/dls/Skeleton/Skeleton';
@@ -39,7 +38,6 @@ const TranslationSection = () => {
   const selectedTranslations = useSelector(selectSelectedTranslations, areArraysEqual) as number[];
   const quranReaderStyles = useSelector(selectQuranReaderStyles, shallowEqual);
   const { translationFontScale } = quranReaderStyles;
-  const { isActive, nextStep } = useOnboarding();
 
   const translationLoading = useCallback(
     () => (
@@ -61,10 +59,7 @@ const TranslationSection = () => {
     dispatch(setSettingsView(SettingsView.Translation));
     logEvent('translation_drawer_opened');
     logValueChange('settings_view', SettingsView.Translation, SettingsView.Body);
-    if (isActive) {
-      nextStep();
-    }
-  }, [dispatch, isActive, nextStep]);
+  }, [dispatch]);
 
   const renderTranslations = useCallback(
     (data: TranslationsResponse) => {

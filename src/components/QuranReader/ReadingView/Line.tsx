@@ -10,7 +10,6 @@ import { verseFontChanged } from '../utils/memoization';
 import styles from './Line.module.scss';
 
 import ChapterHeader from '@/components/chapters/ChapterHeader';
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import VerseText from '@/components/Verse/VerseText';
 import useNavbarAutoHide from '@/hooks/useNavbarAutoHide';
 import useIntersectionObserver from '@/hooks/useObserveElement';
@@ -71,10 +70,9 @@ const Line = ({
     },
     [selectedItemRef],
   );
-  const { isActive } = useOnboarding();
   const isStudyModeOpen = useSelector(selectStudyModeIsOpen);
   const enableAutoScrolling =
-    useSelector(selectEnableAutoScrolling, shallowEqual) && !isActive && !isStudyModeOpen;
+    useSelector(selectEnableAutoScrolling, shallowEqual) && !isStudyModeOpen;
   const { showWordByWordTranslation, showWordByWordTransliteration } = useSelector(
     selectInlineDisplayWordByWordPreferences,
     shallowEqual,

@@ -9,7 +9,6 @@ import TafsirMenuItem from './MenuItems/TafsirMenuItem';
 import TranslationsMenuItem from './MenuItems/TranslationsMenuItem';
 import VerseActionsMenuType from './types';
 
-import ReadingViewNoteAction from '@/components/Notes/modal/ReadingViewNoteAction';
 import Verse from 'types/Verse';
 
 interface Props {
@@ -43,8 +42,6 @@ const MainActionsMenu: React.FC<Props> = ({
       <TafsirMenuItem verse={verse} onActionTriggered={onActionTriggered} />
       <CopyMenuItem verse={verse} onActionTriggered={onActionTriggered} />
       <PinMenuItem verse={verse} onActionTriggered={onActionTriggered} />
-
-      <ReadingViewNoteAction verseKey={verse.verseKey} onActionTriggered={onActionTriggered} />
 
       {/* Submenu navigation items */}
       <ShareMenuItem onActionTriggered={onActionTriggered} openShareModal={openShareModal} />

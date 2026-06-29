@@ -3,10 +3,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AdvancedCopyModal from './AdvancedCopyModal';
-import FeedbackModal from './FeedbackModal';
-import NotesModals from './NotesModals';
 
-import useBatchedCountRangeNotes from '@/hooks/auth/useBatchedCountRangeNotes';
 import {
   closeStudyMode,
   openStudyMode,
@@ -14,7 +11,6 @@ import {
 } from '@/redux/slices/QuranReader/studyMode';
 import {
   closeVerseActionModal,
-  selectVerseActionModalEditingNote,
   selectVerseActionModalIsOpen,
   selectVerseActionModalIsTranslationView,
   selectVerseActionModalStudyModeRestoreState,
@@ -22,11 +18,8 @@ import {
   selectVerseActionModalVerse,
   selectVerseActionModalVerseKey,
   selectVerseActionModalWasOpenedFromStudyMode,
-  setEditingNote,
-  setModalType,
   VerseActionModalType,
 } from '@/redux/slices/QuranReader/verseActionModal';
-import { Note } from '@/types/auth/Note';
 import { logEvent } from '@/utils/eventLogger';
 
 const VerseActionModalContainer: React.FC = () => {
@@ -37,13 +30,10 @@ const VerseActionModalContainer: React.FC = () => {
   const modalType = useSelector(selectVerseActionModalType);
   const verseKey = useSelector(selectVerseActionModalVerseKey);
   const verse = useSelector(selectVerseActionModalVerse);
-  const editingNote = useSelector(selectVerseActionModalEditingNote);
   const isTranslationView = useSelector(selectVerseActionModalIsTranslationView);
   const wasOpenedFromStudyMode = useSelector(selectVerseActionModalWasOpenedFromStudyMode);
   const studyModeRestoreState = useSelector(selectVerseActionModalStudyModeRestoreState);
   const isStudyModeOpen = useSelector(selectStudyModeIsOpen);
-
-  const { data: notesCount } = useBatchedCountRangeNotes(isOpen && verseKey ? verseKey : null);
 
   useEffect(() => {
     if (isOpen && wasOpenedFromStudyMode && !hasClosedStudyModeRef.current) {
@@ -92,12 +82,6 @@ const VerseActionModalContainer: React.FC = () => {
     }
   }, [dispatch, wasOpenedFromStudyMode, handleBackToStudyMode]);
 
-  const handleFeedbackClose = useCallback(() => {
-    const view = isTranslationView ? 'translation_view' : 'reading_view';
-    logEvent(`${view}_translation_feedback_modal_close`);
-    handleClose();
-  }, [isTranslationView, handleClose]);
-
   const handleAdvancedCopyClose = useCallback(() => {
     const view = isTranslationView ? 'translation_view' : 'reading_view';
     logEvent(`${view}_advanced_copy_modal_close`);
@@ -106,43 +90,6 @@ const VerseActionModalContainer: React.FC = () => {
 
   if (!isOpen || !verseKey) {
     return null;
-  }
-
-  const count = notesCount ?? 0;
-  const isNotesModal =
-    modalType === VerseActionModalType.ADD_NOTE ||
-    modalType === VerseActionModalType.MY_NOTES ||
-    modalType === VerseActionModalType.EDIT_NOTE;
-
-  if (isNotesModal) {
-    return (
-      <NotesModals
-        modalType={modalType}
-        verseKey={verseKey}
-        notesCount={count}
-        editingNote={editingNote}
-        wasOpenedFromStudyMode={wasOpenedFromStudyMode}
-        onClose={handleClose}
-        onBack={handleBackToStudyMode}
-        onOpenMyNotes={() => dispatch(setModalType(VerseActionModalType.MY_NOTES))}
-        onOpenAddNote={() => dispatch(setModalType(VerseActionModalType.ADD_NOTE))}
-        onOpenEditNote={(note: Note) => {
-          dispatch(setEditingNote(note));
-          dispatch(setModalType(VerseActionModalType.EDIT_NOTE));
-        }}
-      />
-    );
-  }
-
-  if (modalType === VerseActionModalType.TRANSLATION_FEEDBACK) {
-    return (
-      <FeedbackModal
-        verseKey={verseKey}
-        wasOpenedFromStudyMode={wasOpenedFromStudyMode}
-        onClose={handleFeedbackClose}
-        onBack={handleBackToStudyMode}
-      />
-    );
   }
 
   if (modalType === VerseActionModalType.ADVANCED_COPY && verse) {

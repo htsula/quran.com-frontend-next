@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useRouter } from 'next/router';
 import { Translate } from 'next-translate';
@@ -9,11 +9,8 @@ import { useDispatch } from 'react-redux';
 import styles from './ChapterAndJuzList.module.scss';
 
 import SurahPreviewRow from '@/dls/SurahPreview/SurahPreviewRow';
-import usePersistPreferenceGroup from '@/hooks/auth/usePersistPreferenceGroup';
 import { setIsReadingByRevelationOrder } from '@/redux/slices/revelationOrder';
-import PreferenceGroup from '@/types/auth/PreferenceGroup';
 import Chapter from '@/types/Chapter';
-import { isLoggedIn } from '@/utils/auth/login';
 import { QURAN_CHAPTERS_COUNT } from '@/utils/chapter';
 import { logButtonClick } from '@/utils/eventLogger';
 import { shouldUseMinimalLayout, toLocalizedNumber } from '@/utils/locale';
@@ -30,30 +27,10 @@ const RevelationOrderView = ({ isDescending, chapters }: RevelationOrderViewProp
   const { t, lang } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
-  const {
-    actions: { onSettingsChange },
-    isLoading,
-  } = usePersistPreferenceGroup();
-  const [clickedSurahId, setClickedSurahId] = useState(null);
 
   const onSurahClicked = (surahId: string | number) => {
-    if (isLoggedIn()) {
-      setClickedSurahId(surahId);
-      onSettingsChange(
-        'isReadingByRevelationOrder',
-        true,
-        setIsReadingByRevelationOrder(true),
-        setIsReadingByRevelationOrder(false),
-        PreferenceGroup.READING,
-        () => {
-          // navigate to the selected Surah on success
-          router.push(getSurahNavigationUrl(surahId));
-        },
-      );
-    } else {
-      dispatch(setIsReadingByRevelationOrder(true));
-      router.push(getSurahNavigationUrl(surahId));
-    }
+    dispatch(setIsReadingByRevelationOrder(true));
+    router.push(getSurahNavigationUrl(surahId));
     logButtonClick('revelation_ordering_surah');
   };
 
@@ -97,7 +74,6 @@ const RevelationOrderView = ({ isDescending, chapters }: RevelationOrderViewProp
             } // Show the number based on the revelation order instead of the surah number.
             translatedSurahName={getTranslatedSurahName(chapter, t, lang)}
             isMinimalLayout={false}
-            isLoading={isLoading && clickedSurahId === chapter.id}
           />
         </div>
       ))}

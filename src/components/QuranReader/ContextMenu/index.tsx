@@ -33,7 +33,6 @@ const ContextMenu: React.FC = (): JSX.Element | null => {
     // State
     isSidebarNavigationVisible,
     showNavbar,
-    isSideBarVisible,
     mushaf,
     verseKey,
     isTranslationMode,
@@ -70,7 +69,6 @@ const ContextMenu: React.FC = (): JSX.Element | null => {
       className={classNames(styles.container, {
         [styles.visibleContainer]: showNavbar,
         [styles.withVisibleBanner]: showNavbar,
-        [styles.withVisibleSideBar]: isSideBarVisible,
       })}
     >
       {/* Page Information Section as its own row on mobile scrolled view */}

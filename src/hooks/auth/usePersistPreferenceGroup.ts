@@ -1,16 +1,8 @@
-/* eslint-disable max-lines */
-/* eslint-disable react-func/max-lines-per-function */
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { Action, AsyncThunkAction } from '@reduxjs/toolkit';
-import useTranslation from 'next-translate/useTranslation';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { ToastStatus, useToast } from '@/dls/Toast/Toast';
-import { selectQuranFont, selectQuranMushafLines } from '@/redux/slices/QuranReader/styles';
-import { getMushafId } from '@/utils/api';
-import { addOrUpdateUserPreference, throwIfResponseContainsError } from '@/utils/auth/api';
-import { isLoggedIn } from '@/utils/auth/login';
 import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 type ActionOrThunkAction = Action | AsyncThunkAction<any, any, any>;
@@ -44,190 +36,47 @@ type Actions = {
 type PersistPreferences = { actions: Actions; isLoading: boolean };
 
 /**
- * A hook that will be used to:
- * 1. If the user is logged in, we persist settings
- * to the DB then dispatch the redux action that
- * would apply the changes locally (and might also persist
- * it locally in the localStorage depending on the slice)
- * 2. If not, just dispatch the action.
+ * A hook to apply a settings change locally. Settings are persisted to
+ * localStorage via redux-persist (depending on the slice). There is no
+ * server-side account sync in this build, so the change is applied directly.
+ *
+ * The `preferenceGroup`/`undoAction` parameters are kept for call-site
+ * compatibility but are no longer used now that there is no remote persistence.
  *
  * @returns {PersistPreferences}
  */
 const usePersistPreferenceGroup = (): PersistPreferences => {
   const dispatch = useDispatch();
-  const toast = useToast();
-  const { t } = useTranslation('common');
-  const [isLoading, setIsLoading] = useState(false);
 
-  const quranFont = useSelector(selectQuranFont, shallowEqual);
-  const mushafLines = useSelector(selectQuranMushafLines, shallowEqual);
-
-  // this function is used to get the updated mushafId and pass it to addOrUpdateUserPreference
-  // if the preferenceGroup is not QURAN_READER_STYLES, it will return undefined
-  const getUpdatedMushafId = useCallback(
-    (
-      preferenceGroup: PreferenceGroup,
-      key: string,
-      value: string | number | boolean | Record<string, any>,
-    ) => {
-      if (preferenceGroup !== PreferenceGroup.QURAN_READER_STYLES) return undefined;
-
-      const font = key === 'quranFont' ? value : quranFont;
-      const lines = key === 'mushafLines' ? value : mushafLines;
-
-      return getMushafId(font, lines).mushaf;
-    },
-    [quranFont, mushafLines],
-  );
-
-  const actions = useMemo(
+  const actions = useMemo<Actions>(
     () => ({
-      onSettingsChangeWithoutDispatch: (
-        key: string,
-        value: string | number | boolean | Record<string, any>,
-        preferenceGroup: PreferenceGroup,
-        callback: () => void,
-      ) => {
-        if (isLoggedIn()) {
-          setIsLoading(true);
-          addOrUpdateUserPreference(
-            key,
-            value,
-            preferenceGroup,
-            getUpdatedMushafId(preferenceGroup, key, value),
-          )
-            .then((response) => {
-              throwIfResponseContainsError(response);
-              callback();
-            })
-            .catch(() => {
-              toast(t('error.pref-persist-fail'), {
-                status: ToastStatus.Warning,
-              });
-            })
-            .finally(() => {
-              setIsLoading(false);
-            });
-        } else {
-          callback();
-        }
+      onSettingsChangeWithoutDispatch: (key, value, preferenceGroup, callback) => {
+        callback();
       },
       onXstateSettingsChange: (
-        key: string,
-        value: string | number | boolean | Record<string, any>,
-        action: () => void,
-        undoAction: () => void,
-        preferenceGroup: PreferenceGroup,
-        successCallback?: () => void,
+        key,
+        value,
+        action,
+        undoAction,
+        preferenceGroup,
+        successCallback,
       ) => {
-        if (isLoggedIn()) {
-          action();
-          setIsLoading(true);
-          addOrUpdateUserPreference(
-            key,
-            value,
-            preferenceGroup,
-            getUpdatedMushafId(preferenceGroup, key, value),
-          )
-            .then((response) => {
-              throwIfResponseContainsError(response);
-              if (successCallback) {
-                successCallback();
-              }
-            })
-            .catch(() => {
-              toast(t('error.pref-persist-fail'), {
-                status: ToastStatus.Warning,
-                actions: [
-                  {
-                    text: t('undo'),
-                    primary: true,
-                    onClick: () => {
-                      undoAction();
-                    },
-                  },
-                  {
-                    text: t('continue'),
-                    primary: false,
-                    onClick: () => {
-                      if (successCallback) {
-                        successCallback();
-                      }
-                    },
-                  },
-                ],
-              });
-            })
-            .finally(() => {
-              setIsLoading(false);
-            });
-        } else {
-          action();
+        action();
+        if (successCallback) {
+          successCallback();
         }
       },
-      onSettingsChange: (
-        key: string,
-        value: string | number | boolean | Record<string, any>,
-        action: ActionOrThunkAction,
-        undoAction: ActionOrThunkAction,
-        preferenceGroup: PreferenceGroup,
-        successCallback?: () => void,
-      ) => {
-        if (isLoggedIn()) {
-          // 1. dispatch the action first
-          dispatch(action);
-          setIsLoading(true);
-          addOrUpdateUserPreference(
-            key,
-            value,
-            preferenceGroup,
-            getUpdatedMushafId(preferenceGroup, key, value),
-          )
-            .then((response) => {
-              throwIfResponseContainsError(response);
-              if (successCallback) {
-                successCallback();
-              }
-            })
-            .catch(() => {
-              toast(t('error.pref-persist-fail'), {
-                status: ToastStatus.Warning,
-                actions: [
-                  {
-                    text: t('undo'),
-                    primary: true,
-                    onClick: () => {
-                      dispatch(undoAction);
-                    },
-                  },
-                  {
-                    text: t('continue'),
-                    primary: false,
-                    onClick: () => {
-                      if (successCallback) {
-                        successCallback();
-                      }
-                    },
-                  },
-                ],
-              });
-            })
-            .finally(() => {
-              setIsLoading(false);
-            });
-        } else {
-          dispatch(action);
-
-          if (successCallback) {
-            successCallback();
-          }
+      onSettingsChange: (key, value, action, undoAction, preferenceGroup, successCallback) => {
+        dispatch(action);
+        if (successCallback) {
+          successCallback();
         }
       },
     }),
-    [dispatch, t, toast, getUpdatedMushafId],
+    [dispatch],
   );
 
-  return { actions, isLoading };
+  return { actions, isLoading: false };
 };
 
 export default usePersistPreferenceGroup;

@@ -1,10 +1,7 @@
-/* eslint-disable max-lines */
 /* eslint-disable i18next/no-literal-string */
 import React, { useEffect, useState } from 'react';
 
-import classNames from 'classnames';
 import clipboardCopy from 'clipboard-copy';
-import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import {
   FacebookShareButton,
@@ -18,33 +15,18 @@ import styles from './ShareButtons.module.scss';
 
 import CopyLinkIcon from '@/icons/copy-link-new.svg';
 import FacebookIcon from '@/icons/fb.svg';
-import VideoIcon from '@/public/icons/video-link-new.svg';
-import PreviewMode from '@/types/Media/PreviewMode';
-import QueryParam from '@/types/QueryParam';
 import { logButtonClick } from '@/utils/eventLogger';
-import { getQuranMediaMakerNavigationUrl } from '@/utils/navigation';
 
 interface Props {
   url: string;
   title: string;
   analyticsContext: string;
-  verse?: {
-    chapterId?: string;
-    verseNumber?: number;
-  };
-  hideVideoGeneration?: boolean;
 }
 
 const COPY_TIMEOUT_MS = 5000;
 const BG_STYLE = { fill: 'black' };
 
-const ShareButtons: React.FC<Props> = ({
-  url,
-  title,
-  analyticsContext,
-  verse,
-  hideVideoGeneration = false,
-}) => {
+const ShareButtons: React.FC<Props> = ({ url, title, analyticsContext }) => {
   const { t } = useTranslation('common');
   const [isCopied, setIsCopied] = useState(false);
 
@@ -75,24 +57,6 @@ const ShareButtons: React.FC<Props> = ({
 
   const onWhatsappShareButtonClicked = () => {
     logButtonClick(`${analyticsContext}_whatsapp_share`);
-  };
-
-  const router = useRouter();
-
-  const onGenerateClicked = () => {
-    logButtonClick(`${analyticsContext}_generate_media`);
-    if (verse?.chapterId && verse?.verseNumber) {
-      router.push(
-        getQuranMediaMakerNavigationUrl({
-          [QueryParam.SURAH]: verse.chapterId,
-          [QueryParam.VERSE_FROM]: String(verse.verseNumber),
-          [QueryParam.VERSE_TO]: String(verse.verseNumber),
-          [QueryParam.PREVIEW_MODE]: PreviewMode.DISABLED,
-        }),
-      );
-    } else {
-      router.push(getQuranMediaMakerNavigationUrl());
-    }
   };
 
   return (
@@ -127,19 +91,6 @@ const ShareButtons: React.FC<Props> = ({
         </div>
         <span>{isCopied ? `${t('copied')}!` : t('copylink')}</span>
       </button>
-
-      {!hideVideoGeneration && (
-        <button
-          type="button"
-          className={classNames(styles.shareOptionButton, styles.generateMediaButton)}
-          onClick={onGenerateClicked}
-        >
-          <div className={styles.utilityIconWrapper}>
-            <VideoIcon />
-          </div>
-          <span>{t('quran-reader:generate-media')}</span>
-        </button>
-      )}
     </div>
   );
 };

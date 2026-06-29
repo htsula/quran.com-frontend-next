@@ -11,7 +11,6 @@ import SettingsBodySkeleton from './SettingsBodySkeleton';
 import styles from './SettingsDrawer.module.scss';
 
 import Drawer, { DrawerType } from '@/components/Navbar/Drawer';
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import Button, { ButtonVariant } from '@/dls/Button/Button';
 import BackIcon from '@/icons/west.svg';
 import { selectNavbar, setSettingsView, SettingsView } from '@/redux/slices/navbar';
@@ -38,7 +37,6 @@ const SettingsDrawer = () => {
   const { t } = useTranslation('common');
   const dispatch = useDispatch();
   const { isSettingsDrawerOpen, settingsView } = useSelector(selectNavbar);
-  const { isActive } = useOnboarding();
 
   const onGoBackClicked = () => {
     dispatch(setSettingsView(SettingsView.Body));
@@ -76,7 +74,7 @@ const SettingsDrawer = () => {
       type={DrawerType.Settings}
       header={header}
       closeOnNavigation={false}
-      canCloseDrawer={!isActive}
+      canCloseDrawer
       bodyId="settings-drawer-body"
       removeHeaderWrapper={settingsView === SettingsView.Body}
       hideCloseButton={settingsView === SettingsView.Body}

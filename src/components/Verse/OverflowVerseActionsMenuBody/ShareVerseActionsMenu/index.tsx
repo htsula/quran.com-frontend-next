@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import clipboardCopy from 'clipboard-copy';
-import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 
 import VerseActionsMenuType from '@/components/QuranReader/ReadingView/WordActionsMenu/types';
@@ -9,12 +8,8 @@ import PopoverMenu from '@/dls/PopoverMenu/PopoverMenu';
 import { ToastStatus, useToast } from '@/dls/Toast/Toast';
 import ChevronLeftIcon from '@/icons/chevron-left.svg';
 import CopyLinkIcon from '@/icons/copy-link.svg';
-import VideoIcon from '@/icons/video.svg';
-import PreviewMode from '@/types/Media/PreviewMode';
-import QueryParam from '@/types/QueryParam';
 import Verse from '@/types/Verse';
 import { logButtonClick } from '@/utils/eventLogger';
-import { getQuranMediaMakerNavigationUrl } from '@/utils/navigation';
 import { getWindowOrigin } from '@/utils/url';
 import { getVerseAndChapterNumbersFromKey } from '@/utils/verse';
 
@@ -55,7 +50,6 @@ const ShareVerseActionsMenu: React.FC<Props> = ({
   const { t, lang } = useTranslation('common');
   const [isCopied, setIsCopied] = useState(false);
   const toast = useToast();
-  const router = useRouter();
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
@@ -89,20 +83,6 @@ const ShareVerseActionsMenu: React.FC<Props> = ({
     onActionTriggered?.();
   };
 
-  const onGenerateClicked = () => {
-    logButtonClick(
-      `${isTranslationView ? 'translation_view' : 'reading_view'}_generate_media_verse_action`,
-    );
-    router.push(
-      getQuranMediaMakerNavigationUrl({
-        [QueryParam.SURAH]: verse.chapterId as string,
-        [QueryParam.VERSE_FROM]: String(verse.verseNumber),
-        [QueryParam.VERSE_TO]: String(verse.verseNumber),
-        [QueryParam.PREVIEW_MODE]: PreviewMode.DISABLED,
-      }),
-    );
-    onActionTriggered?.();
-  };
   return (
     <div>
       {hasBackButton && (
@@ -112,9 +92,6 @@ const ShareVerseActionsMenu: React.FC<Props> = ({
       )}
       <PopoverMenu.Item onClick={onCopyLinkClicked} icon={<CopyLinkIcon />}>
         {t('quran-reader:cpy-link')}
-      </PopoverMenu.Item>
-      <PopoverMenu.Item onClick={onGenerateClicked} icon={<VideoIcon />}>
-        {t('quran-reader:generate-media')}
       </PopoverMenu.Item>
     </div>
   );

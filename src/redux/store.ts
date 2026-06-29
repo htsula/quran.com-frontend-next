@@ -19,15 +19,11 @@ import audioPlayerState from './slices/AudioPlayer/state';
 import commandBarPersistConfig from './slices/CommandBar/persistConfig';
 import commandBar from './slices/CommandBar/state';
 import defaultSettings from './slices/defaultSettings';
-import mediaMaker from './slices/mediaMaker';
 import microphone from './slices/microphone';
 import navbar from './slices/navbar';
-import notifications from './slices/notifications';
-import onboarding from './slices/onboarding';
 import persistGateHydration from './slices/persistGateHydration';
 import contextMenu from './slices/QuranReader/contextMenu';
 import fontFaces from './slices/QuranReader/font-faces';
-import notes from './slices/QuranReader/notes';
 import pinnedVerses from './slices/QuranReader/pinnedVerses';
 import readingPreferences from './slices/QuranReader/readingPreferences';
 import readingTracker from './slices/QuranReader/readingTracker';
@@ -63,10 +59,7 @@ const persistConfig = {
     SliceName.DEFAULT_SETTINGS,
     SliceName.SIDEBAR_NAVIGATION,
     SliceName.SESSION,
-    SliceName.USER_DATA_SYNC,
     SliceName.REVELATION_ORDER,
-    SliceName.ONBOARDING,
-    SliceName.MEDIA_MAKER,
     SliceName.PINNED_VERSES,
     SliceName.GUEST_ENROLLMENT,
   ], // Reducers defined here will be have their values saved in local storage and persist across sessions. See: https://github.com/rt2zz/redux-persist#blacklist--whitelist
@@ -76,7 +69,6 @@ export const rootReducer = combineReducers({
   audioPlayerState: persistReducer(audioPlayerPersistConfig, audioPlayerState),
   contextMenu,
   navbar,
-  notes,
   quranReaderStyles,
   readingPreferences,
   translations,
@@ -92,9 +84,6 @@ export const rootReducer = combineReducers({
   session,
   persistGateHydration,
   revelationOrder,
-  notifications,
-  onboarding,
-  mediaMaker,
   microphone,
   studyMode,
   verseActionModal,

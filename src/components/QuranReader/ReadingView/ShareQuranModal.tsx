@@ -51,22 +51,7 @@ const ShareQuranModal: React.FC<Props> = ({ isOpen, onClose, verse }) => {
           </p>
         </div>
 
-        <ShareButtons
-          url={shareURL}
-          title=""
-          analyticsContext="share_quran_reader"
-          verse={
-            verse
-              ? (() => {
-                  const [chapterId, verseNumber] = getVerseAndChapterNumbersFromKey(verse.verseKey);
-                  return {
-                    chapterId,
-                    verseNumber: Number(verseNumber),
-                  };
-                })()
-              : undefined
-          }
-        />
+        <ShareButtons url={shareURL} title="" analyticsContext="share_quran_reader" />
       </Modal.Body>
     </Modal>
   );

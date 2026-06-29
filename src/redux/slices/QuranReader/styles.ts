@@ -10,13 +10,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import resetSettings from '@/redux/actions/reset-settings';
-import syncUserPreferences from '@/redux/actions/sync-user-preferences';
 import { getQuranReaderStylesInitialState } from '@/redux/defaultSettings/util';
 import { RootState } from '@/redux/RootState';
 import QuranReaderStyles from '@/redux/types/QuranReaderStyles';
 import SliceName from '@/redux/types/SliceName';
 import { MushafLines, QuranFont } from '@/types/QuranReader';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 export const MAXIMUM_QURAN_FONT_STEP = 10;
 export const MAXIMUM_TRANSLATIONS_FONT_STEP = 10;
@@ -114,24 +112,6 @@ export const quranReaderStylesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(resetSettings, (state, action) => {
       return getQuranReaderStylesInitialState(action.payload.locale);
-    });
-    builder.addCase(syncUserPreferences, (state, action) => {
-      const { userPreferences, locale } = action.payload;
-      const remotePreferences = userPreferences[
-        PreferenceGroup.QURAN_READER_STYLES
-      ] as QuranReaderStyles;
-      if (remotePreferences) {
-        const { quranFont: defaultQuranFont, mushafLines: defaultMushafLines } =
-          getQuranReaderStylesInitialState(locale);
-        return {
-          ...state,
-          ...remotePreferences,
-          isUsingDefaultFont:
-            defaultQuranFont === remotePreferences.quranFont &&
-            defaultMushafLines === remotePreferences.mushafLines,
-        };
-      }
-      return state;
     });
   },
 });

@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import * as Sentry from '@sentry/nextjs';
 import classNames from 'classnames';
 import type { NextPageContext } from 'next';
 import NextErrorComponent from 'next/error';
@@ -51,9 +50,7 @@ const Error = ({ hasFullWidth = true }: ErrorProps) => {
   );
 };
 
-// Capture errors with Sentry, then fall back to Next.js’ default error handling
-Error.getInitialProps = async (contextData: NextPageContext) => {
-  await Sentry.captureUnderscoreErrorException(contextData);
+Error.getInitialProps = (contextData: NextPageContext) => {
   return NextErrorComponent.getInitialProps(contextData);
 };
 

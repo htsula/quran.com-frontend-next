@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../RootState';
 
 import SliceName from '@/redux/types/SliceName';
-import { isLoggedIn } from '@/utils/auth/login';
 
 export type SessionState = {
   count: number;
@@ -28,7 +27,7 @@ export const { incrementSessionCount } = sessionSlice.actions;
 
 export const selectSessionCount = (state: RootState) => state.session.count;
 export const selectUserState = (state: RootState) => {
-  const isGuest = !isLoggedIn();
+  const isGuest = true;
   return {
     isGuest,
     isFirstTimeGuest: isGuest && state.session.count === 2,

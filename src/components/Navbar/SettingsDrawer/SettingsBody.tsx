@@ -7,13 +7,11 @@ import ResetButton from './ResetButton';
 import styles from './SettingsBody.module.scss';
 import SettingTabs from './SettingTabs';
 
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import { selectNavbar, setLastSettingsTab, SettingsTab, SettingsView } from '@/redux/slices/navbar';
 import { logEvent } from '@/utils/eventLogger';
 
 const SettingsBody = () => {
   const dispatch = useDispatch();
-  const { isActive, nextStep, activeStepIndex } = useOnboarding();
   const { lastSettingsView, lastSettingsTab } = useSelector(selectNavbar);
 
   const getTabFromSettingsView = (view: SettingsView): SettingsTab => {
@@ -36,18 +34,6 @@ const SettingsBody = () => {
     },
     [dispatch],
   );
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout = null;
-
-    // wait for transition to finish (.4s)
-    if (isActive && activeStepIndex === 0) timeout = setTimeout(() => nextStep(), 400);
-
-    return () => {
-      if (timeout !== null) clearTimeout(timeout);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeStepIndex, isActive]);
 
   // Update active tab when returning from a sub-view (e.g., Translation selection)
   // Don't log since this is auto-navigation, not user-initiated

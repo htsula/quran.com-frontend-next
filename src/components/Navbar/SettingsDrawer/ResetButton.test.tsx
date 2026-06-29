@@ -7,7 +7,6 @@ import { afterEach, describe, it, expect, vi } from 'vitest';
 import ResetButton from './ResetButton';
 
 import { DEFAULT_XSTATE_INITIAL_STATE } from '@/redux/defaultSettings/defaultSettings';
-import { isLoggedIn } from '@/utils/auth/login';
 import { AudioPlayerMachineContext } from 'src/xstate/AudioPlayerMachineContext';
 
 vi.mock('next/router', () => ({
@@ -26,10 +25,6 @@ vi.mock('next-translate/useTranslation', () => ({
 
 vi.mock('react-redux', () => ({
   useDispatch: vi.fn(),
-}));
-
-vi.mock('@/utils/auth/login', () => ({
-  isLoggedIn: vi.fn(() => false),
 }));
 
 vi.mock('@/utils/eventLogger', () => ({
@@ -153,9 +148,8 @@ describe('ResetButton', () => {
     });
   });
 
-  it('resets settings for logged-in users after persisting defaults', async () => {
+  it('resets settings after persisting defaults', async () => {
     vi.mocked(useDispatch).mockReturnValue(dispatchMock);
-    vi.mocked(isLoggedIn).mockReturnValue(true);
     const audioContext = createAudioContext(NON_DEFAULT_RECITER_ID);
 
     renderButton(audioContext);

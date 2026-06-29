@@ -6,10 +6,9 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "prettier",
-    "plugin:i18next/recommended",
-    "plugin:storybook/recommended"
+    "plugin:i18next/recommended"
   ],
-  "plugins": ["prettier", "react", "react-func", "sonarjs", "unicorn", "jsdoc", "@remotion"],
+  "plugins": ["prettier", "react", "react-func", "sonarjs", "unicorn", "jsdoc"],
   "rules": {
     "i18next/no-literal-string": [
       "error",
@@ -199,7 +198,7 @@
       }
     },
     {
-      "files": ["**/*.ts", "*.stories.tsx", "*.js"],
+      "files": ["**/*.ts", "*.js"],
       "rules": {
         "i18next/no-literal-string": 0
       }
@@ -210,10 +209,6 @@
         "react-func/max-lines-per-function": "off",
         "max-lines": "off"
       }
-    },
-    {
-      "files": ["remotion/*.{ts,tsx}"],
-      "extends": ["plugin:@remotion/recommended"]
     }
   ],
   "settings": {

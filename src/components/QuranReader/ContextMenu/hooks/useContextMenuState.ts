@@ -3,12 +3,10 @@ import { useContext, useMemo } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import useDebounceNavbarVisibility from '@/hooks/useDebounceNavbarVisibility';
 import useGetMushaf from '@/hooks/useGetMushaf';
 import { selectNavbar } from '@/redux/slices/navbar';
 import { selectContextMenu } from '@/redux/slices/QuranReader/contextMenu';
-import { selectNotes } from '@/redux/slices/QuranReader/notes';
 import { selectReadingPreference } from '@/redux/slices/QuranReader/readingPreferences';
 import { selectLastReadVerseKey } from '@/redux/slices/QuranReader/readingTracker';
 import {
@@ -33,18 +31,16 @@ const useContextMenuState = () => {
   const isSidebarNavigationVisible = useSelector(selectIsSidebarNavigationVisible);
   const { t, lang } = useTranslation('common');
   const mushaf = useGetMushaf();
-  const isSideBarVisible = useSelector(selectNotes, shallowEqual).isVisible;
   const { isExpanded, showReadingPreferenceSwitcher: isReadingPreferenceSwitcherVisible } =
     useSelector(selectContextMenu, shallowEqual);
 
-  const { isActive } = useOnboarding();
   const { isVisible: isNavbarVisible } = useSelector(selectNavbar, shallowEqual);
   const readingPreference = useSelector(selectReadingPreference);
   const isTranslationMode = readingPreference === ReadingPreference.ReadingTranslation;
 
   // Use the shared hook to debounce navbar visibility changes
-  const showNavbar = useDebounceNavbarVisibility(isNavbarVisible, isActive);
-  const showReadingPreferenceSwitcher = isReadingPreferenceSwitcherVisible && !isActive;
+  const showNavbar = useDebounceNavbarVisibility(isNavbarVisible);
+  const showReadingPreferenceSwitcher = isReadingPreferenceSwitcherVisible;
 
   const { verseKey, chapterId, page, hizb } = useSelector(selectLastReadVerseKey, shallowEqual);
 
@@ -96,7 +92,6 @@ const useContextMenuState = () => {
     isSidebarNavigationVisible,
     showNavbar,
     showReadingPreferenceSwitcher,
-    isSideBarVisible,
     isExpanded,
     mushaf,
     verseKey,

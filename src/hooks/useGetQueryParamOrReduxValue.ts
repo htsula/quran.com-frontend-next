@@ -1,63 +1,43 @@
-/* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { ParsedUrlQuery } from 'querystring';
 
 import { useRouter } from 'next/router';
 import { shallowEqual, useSelector } from 'react-redux';
 
-import {
-  selectBackgroundColor,
-  selectBorderColor,
-  selectBorderSize,
-  selectFontColor,
-  selectOpacity,
-  selectOrientation,
-  selectPreviewMode,
-  selectQuranTextFontScale,
-  selectQuranTextFontStyle,
-  selectReciter,
-  selectSurah,
-  selectSurahAndVersesFromAndTo,
-  selectTranslationAlignment,
-  selectTranslationFontScale,
-  selectTranslations,
-  selectVerseAlignment,
-  selectVideoId,
-} from '@/redux/slices/mediaMaker';
+import { RootState } from '@/redux/RootState';
 import { selectWordByWordLocale } from '@/redux/slices/QuranReader/readingPreferences';
 import { selectSelectedTranslations } from '@/redux/slices/QuranReader/translations';
 import ChaptersData from '@/types/ChaptersData';
 import { areArraysEqual } from '@/utils/array';
 import {
-  DEFAULT_BACKGROUND_COLOR,
-  DEFAULT_BORDER_COLOR,
-  DEFAULT_FONT_COLOR,
-  DEFAULT_PREVIEW_MODE,
-  DEFAULT_RECITER_ID,
-  DEFAULT_SURAH,
-  DEFAULT_TRANSLATION,
-  DEFAULT_VERSE,
-} from '@/utils/media/constants';
-import { isValidHexColor, isValidVerseToOrFrom, QueryParamsData } from '@/utils/media/utils';
-import {
   getQueryParamValueByType,
   isQueryParamDifferentThanReduxValue,
   QueryParamValueType,
 } from '@/utils/query-params';
-import {
-  isValidAlignmentQueryParamValue,
-  isValidBorderSizeQueryParamValue,
-  isValidFontScaleQueryParamValue,
-  isValidFontStyleQueryParamValue,
-  isValidOpacityQueryParamValue,
-  isValidOrientationQueryParamValue,
-  isValidPreviewModeQueryParamValue,
-  isValidReciterId,
-  isValidTranslationsQueryParamValue,
-  isValidTranslationsQueryParamValueWithExistingKey,
-  isValidVideoIdQueryParamValue,
-} from '@/utils/queryParamValidator';
-import { isValidChapterId } from '@/utils/validator';
+import { isValidTranslationsQueryParamValue } from '@/utils/queryParamValidator';
 import QueryParam from 'types/QueryParam';
+
+type QueryParamsData = Record<
+  QueryParam,
+  {
+    reduxValueSelector: (state: RootState) => any;
+    queryParamValueType: QueryParamValueType;
+    reduxValueEqualityFunction?: (left: any, right: any) => boolean;
+    isValidQueryParam: (
+      queryParamValue?: any,
+      chaptersData?: ChaptersData,
+      query?: ParsedUrlQuery,
+      reduxSelectorValueOrValues?: any,
+      extraData?: any,
+    ) => boolean;
+    reduxObjectKey?: string;
+    customValueGetterWhenParamIsInvalid?: <T>(
+      reduxSelectorValueOrValues?: T,
+      reduxParamValue?: any,
+    ) => any;
+  }
+>;
 
 export const QUERY_PARAMS_DATA = {
   [QueryParam.TRANSLATIONS]: {
@@ -66,141 +46,13 @@ export const QUERY_PARAMS_DATA = {
     queryParamValueType: QueryParamValueType.ArrayOfNumbers,
     isValidQueryParam: (val) => isValidTranslationsQueryParamValue(val),
   },
-  [QueryParam.MEDIA_TRANSLATIONS]: {
-    reduxValueSelector: selectTranslations,
-    reduxValueEqualityFunction: areArraysEqual,
-    queryParamValueType: QueryParamValueType.ArrayOfNumbers,
-    isValidQueryParam: (val, chaptersData, query, surahAndVersesReduxValues, extraData) =>
-      isValidTranslationsQueryParamValueWithExistingKey(val, extraData),
-    customValueGetterWhenParamIsInvalid: () => [DEFAULT_TRANSLATION],
-  },
   [QueryParam.WBW_LOCALE]: {
     reduxValueSelector: selectWordByWordLocale,
     reduxValueEqualityFunction: shallowEqual,
     queryParamValueType: QueryParamValueType.String,
     isValidQueryParam: () => true,
   },
-  [QueryParam.VERSE_TO]: {
-    reduxValueSelector: selectSurahAndVersesFromAndTo,
-    reduxValueEqualityFunction: shallowEqual,
-    reduxObjectKey: QueryParam.VERSE_TO,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (verseToQueryParamValue: string, chaptersData: ChaptersData, query) =>
-      isValidVerseToOrFrom(QueryParam.VERSE_TO, chaptersData, query),
-    customValueGetterWhenParamIsInvalid: (surahAndVersesReduxValues: any, query) =>
-      query[QueryParam.VERSE_FROM],
-  },
-  [QueryParam.VERSE_FROM]: {
-    reduxValueSelector: selectSurahAndVersesFromAndTo,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    reduxObjectKey: QueryParam.VERSE_FROM,
-    isValidQueryParam: (verseFromQueryParamValue: string, chaptersData: ChaptersData, query) =>
-      isValidVerseToOrFrom(QueryParam.VERSE_FROM, chaptersData, query),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_VERSE,
-  },
-  [QueryParam.RECITER]: {
-    reduxValueSelector: selectReciter,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val, chaptersData, query, surahAndVersesReduxValues, extraData) =>
-      isValidReciterId(val, extraData),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_RECITER_ID,
-  },
-  [QueryParam.QURAN_TEXT_FONT_SCALE]: {
-    reduxValueSelector: selectQuranTextFontScale,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val) => isValidFontScaleQueryParamValue(val),
-  },
-  [QueryParam.TRANSLATION_FONT_SCALE]: {
-    reduxValueSelector: selectTranslationFontScale,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val) => isValidFontScaleQueryParamValue(val),
-  },
-  [QueryParam.QURAN_TEXT_FONT_STYLE]: {
-    reduxValueSelector: selectQuranTextFontStyle,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidFontStyleQueryParamValue(val),
-  },
-  [QueryParam.VERSE_ALIGNMENT]: {
-    reduxValueSelector: selectVerseAlignment,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidAlignmentQueryParamValue(val),
-  },
-  [QueryParam.TRANSLATION_ALIGNMENT]: {
-    reduxValueSelector: selectTranslationAlignment,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidAlignmentQueryParamValue(val),
-  },
-  [QueryParam.ORIENTATION]: {
-    reduxValueSelector: selectOrientation,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidOrientationQueryParamValue(val),
-  },
-  [QueryParam.SURAH]: {
-    reduxValueSelector: selectSurah,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val) => isValidChapterId(val),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_SURAH,
-  },
-  [QueryParam.OPACITY]: {
-    reduxValueSelector: selectOpacity,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val) => isValidOpacityQueryParamValue(val),
-  },
-  [QueryParam.FONT_COLOR]: {
-    reduxValueSelector: selectFontColor,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidHexColor(val),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_FONT_COLOR,
-  },
-  [QueryParam.BACKGROUND_COLOR]: {
-    reduxValueSelector: selectBackgroundColor,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidHexColor(val),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_BACKGROUND_COLOR,
-  },
-  [QueryParam.BORDER_COLOR]: {
-    reduxValueSelector: selectBorderColor,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidHexColor(val),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_BORDER_COLOR,
-  },
-  [QueryParam.BORDER_SIZE]: {
-    reduxValueSelector: selectBorderSize,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val) => isValidBorderSizeQueryParamValue(val),
-  },
-  [QueryParam.VIDEO_ID]: {
-    reduxValueSelector: selectVideoId,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.Number,
-    isValidQueryParam: (val) => isValidVideoIdQueryParamValue(val),
-  },
-  [QueryParam.PREVIEW_MODE]: {
-    reduxValueSelector: selectPreviewMode,
-    reduxValueEqualityFunction: shallowEqual,
-    queryParamValueType: QueryParamValueType.String,
-    isValidQueryParam: (val) => isValidPreviewModeQueryParamValue(val),
-    customValueGetterWhenParamIsInvalid: () => DEFAULT_PREVIEW_MODE,
-  },
 } as QueryParamsData;
-
-export const getQueryParamsData = () => {
-  return QUERY_PARAMS_DATA;
-};
 
 /**
  * A hook that searches the query params of the url for specific values,

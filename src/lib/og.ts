@@ -7,9 +7,6 @@ interface BaseOgOptions {
 export const getDefaultOgImageUrl = ({ locale }: BaseOgOptions) =>
   `${BASE_OG_URL}/api/og?lang=${locale}`;
 
-export const getMediaGeneratorOgImageUrl = ({ locale }: BaseOgOptions) =>
-  `${BASE_OG_URL}/api/og/media?lang=${locale}`;
-
 export const getChapterOgImageUrl = ({
   chapterId,
   locale,

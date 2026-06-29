@@ -124,22 +124,6 @@ export const makeChapterAudioDataUrl = (
   segments: boolean,
 ): string => makeAudioUrl(`/audio/reciters/${reciterId}/audio_files`, { chapter, segments });
 
-export const makeAudioTimestampsUrl = (reciterId: number, verseKey: string) =>
-  makeAudioUrl(`/audio/reciters/${reciterId}/timestamp?verse_key=${verseKey}`);
-
-/**
- * Compose the url for the translations' filter API.
- *
- * @param {string} locale the user's language code.
- * @param {number[]} translations an array holding the translations' IDs.
- * @returns {string}
- */
-export const makeTranslationsInfoUrl = (locale: string, translations: number[]): string =>
-  makeUrl('/resources/translations/filter', {
-    locale,
-    translations: translations.join(', '),
-  });
-
 /**
  * Compose the url for the advanced copy API.
  *
@@ -155,14 +139,6 @@ export const makeNewSearchResultsUrl = <T extends SearchMode>(params: SearchRequ
     `/v1/search?${stringify(decamelizeKeys(params))}`,
   );
 };
-
-/**
- * Compose the url for the navigation search API that is used to show results inside the command bar.
- *
- * @param {string} query the request params.
- * @returns {string}
- */
-export const makeNavigationSearchUrl = (query: string): string => makeUrl('/navigate', { query });
 
 /**
  * Compose the url for the tafsirs API.

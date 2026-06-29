@@ -9,7 +9,6 @@ import { useSelector as useReduxSelector } from 'react-redux';
 
 import styles from './AudioPlayer.module.scss';
 
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import Spinner from '@/dls/Spinner/Spinner';
 import { selectStudyModeIsOpen } from '@/redux/slices/QuranReader/studyMode';
 import { milliSecondsToSeconds } from '@/utils/datetime';
@@ -56,7 +55,6 @@ const AudioPlayer = () => {
   const audioService = useContext(AudioPlayerMachineContext);
   const isVisible = useSelector(audioService, (state) => state.matches('VISIBLE'));
   const isStudyModeOpen = useReduxSelector(selectStudyModeIsOpen);
-  const { isActive } = useOnboarding();
 
   useEffect(() => {
     window.audioPlayerEl = audioPlayerRef.current;
@@ -147,7 +145,6 @@ const AudioPlayer = () => {
       <div
         className={classNames(styles.container, styles.containerDefault, {
           [styles.containerHidden]: !isVisible || isStudyModeOpen,
-          [styles.containerOnboarding]: isActive,
         })}
         data-testid="audio-player-body"
       >

@@ -2,26 +2,15 @@
 /* eslint-disable max-lines */
 import { describe, it, expect } from 'vitest';
 
-import Alignment from '../../types/Media/Alignment';
-import Orientation from '../../types/Media/Orientation';
-import { QuranFont } from '../../types/QuranReader';
-
 import {
   isValidTranslationsQueryParamValueWithExistingKey,
   isValidReciterId,
   isValidBooleanQueryParamValue,
   isValidNumberQueryParamValue,
   isValidFontScaleQueryParamValue,
-  isValidAlignmentQueryParamValue,
-  isValidOrientationQueryParamValue,
-  isValidOpacityQueryParamValue,
-  isValidVideoIdQueryParamValue,
-  isValidFontStyleQueryParamValue,
-  isValidPreviewModeQueryParamValue,
 } from './queryParamValidator';
 
 import AvailableTranslation from '@/types/AvailableTranslation';
-import PreviewMode from '@/types/Media/PreviewMode';
 import Reciter from '@/types/Reciter';
 
 const reciters = [
@@ -132,91 +121,5 @@ describe('isValidFontScaleQueryParamValue', () => {
   });
   it('Returns false for invalid font scale', () => {
     expect(isValidFontScaleQueryParamValue('11')).toBe(false);
-  });
-});
-
-describe('isValidAlignmentQueryParamValue', () => {
-  it('Returns true for valid alignment', () => {
-    expect(isValidAlignmentQueryParamValue(Alignment.CENTRE)).toBe(true);
-  });
-  it('Returns true for valid alignment', () => {
-    expect(isValidAlignmentQueryParamValue(Alignment.JUSTIFIED)).toBe(true);
-  });
-  it('Returns false for invalid alignment', () => {
-    expect(isValidAlignmentQueryParamValue('test')).toBe(false);
-  });
-});
-
-describe('isValidOrientationQueryParamValue', () => {
-  it('Returns true for valid orientation', () => {
-    expect(isValidOrientationQueryParamValue(Orientation.LANDSCAPE)).toBe(true);
-  });
-  it('Returns true for valid orientation', () => {
-    expect(isValidOrientationQueryParamValue(Orientation.PORTRAIT)).toBe(true);
-  });
-  it('Returns false for invalid orientation', () => {
-    expect(isValidOrientationQueryParamValue('sdfsdfsdf')).toBe(false);
-  });
-});
-
-describe('isValidPreviewModeQueryParamValue', () => {
-  it('Returns true for valid preview mode', () => {
-    expect(isValidPreviewModeQueryParamValue(PreviewMode.DISABLED)).toBe(true);
-    expect(isValidPreviewModeQueryParamValue(PreviewMode.ENABLED)).toBe(true);
-  });
-
-  it('Returns false for invalid preview mode', () => {
-    expect(isValidPreviewModeQueryParamValue('sdfsdfsdf')).toBe(false);
-  });
-});
-
-describe('isValidOpacityQueryParamValue', () => {
-  it('Returns true for valid opacity', () => {
-    expect(isValidOpacityQueryParamValue(0.6)).toBe(true);
-  });
-  it('Returns false for invalid opacity', () => {
-    expect(isValidOpacityQueryParamValue(0.5)).toBe(false);
-  });
-  it('Returns false for invalid opacity', () => {
-    expect(isValidOpacityQueryParamValue(null)).toBe(false);
-  });
-});
-
-describe('isValidVideoIdQueryParamValue', () => {
-  it('Returns true for valid video id', () => {
-    expect(isValidVideoIdQueryParamValue('3')).toBe(true);
-  });
-  it('Returns false for invalid video id', () => {
-    expect(isValidVideoIdQueryParamValue('7')).toBe(false);
-  });
-  it('Returns false for invalid video id', () => {
-    expect(isValidVideoIdQueryParamValue('test')).toBe(false);
-  });
-  it('Returns false for invalid video id', () => {
-    expect(isValidVideoIdQueryParamValue(null)).toBe(false);
-  });
-});
-
-describe('isValidFontStyleQueryParamValue', () => {
-  it('should return true for valid QuranFont values', () => {
-    expect(isValidFontStyleQueryParamValue(QuranFont.MadaniV1)).toBe(true);
-    expect(isValidFontStyleQueryParamValue(QuranFont.MadaniV2)).toBe(true);
-    expect(isValidFontStyleQueryParamValue(QuranFont.Uthmani)).toBe(true);
-    expect(isValidFontStyleQueryParamValue(QuranFont.IndoPak)).toBe(true);
-    expect(isValidFontStyleQueryParamValue(QuranFont.QPCHafs)).toBe(true);
-    expect(isValidFontStyleQueryParamValue(QuranFont.Tajweed)).toBe(true);
-  });
-
-  it('should return false for invalid QuranFont values', () => {
-    expect(isValidFontStyleQueryParamValue('invalid_value' as QuranFont)).toBe(false);
-    expect(isValidFontStyleQueryParamValue('' as QuranFont)).toBe(false);
-    expect(isValidFontStyleQueryParamValue('text_madani' as QuranFont)).toBe(false);
-  });
-
-  it('should return false for non-string values', () => {
-    expect(isValidFontStyleQueryParamValue(123 as unknown as QuranFont)).toBe(false);
-    expect(isValidFontStyleQueryParamValue(null as unknown as QuranFont)).toBe(false);
-    expect(isValidFontStyleQueryParamValue(undefined as unknown as QuranFont)).toBe(false);
-    expect(isValidFontStyleQueryParamValue({} as unknown as QuranFont)).toBe(false);
   });
 });

@@ -17,7 +17,6 @@ import TopActions from './TopActions';
 import TranslationText from './TranslationText';
 import styles from './TranslationViewCell.module.scss';
 
-import { useOnboarding } from '@/components/Onboarding/OnboardingProvider';
 import VerseText from '@/components/Verse/VerseText';
 import Separator from '@/dls/Separator/Separator';
 import useNavbarAutoHide from '@/hooks/useNavbarAutoHide';
@@ -54,10 +53,8 @@ const TranslationViewCell: React.FC<TranslationViewCellProps> = ({
     return makeVerseKey(surah, ayahNumber) === verse.verseKey;
   });
 
-  const { isActive } = useOnboarding();
   const isStudyModeOpen = useSelector(selectStudyModeIsOpen);
-  const enableAutoScrolling =
-    useSelector(selectEnableAutoScrolling) && !isActive && !isStudyModeOpen;
+  const enableAutoScrolling = useSelector(selectEnableAutoScrolling) && !isStudyModeOpen;
 
   // Use our custom hook that handles scrolling with context menu offset
   const [scrollToSelectedItem, selectedItemRef] = useScrollWithContextMenuOffset<HTMLDivElement>();

@@ -23,7 +23,6 @@ interface PinnedVersesContentProps {
   onCompareClick?: () => void;
   onClear: () => void;
   onCopy: () => void;
-  onAddNote?: () => void;
 }
 
 const PinnedVersesContent: React.FC<PinnedVersesContentProps> = ({
@@ -36,7 +35,6 @@ const PinnedVersesContent: React.FC<PinnedVersesContentProps> = ({
   onCompareClick,
   onClear,
   onCopy,
-  onAddNote,
 }) => {
   const { t } = useTranslation('quran-reader');
 
@@ -63,7 +61,7 @@ const PinnedVersesContent: React.FC<PinnedVersesContentProps> = ({
                 <CompareIcon />
               </Button>
             )}
-            <PinnedVersesMenu onClear={onClear} onCopy={onCopy} onAddNote={onAddNote} />
+            <PinnedVersesMenu onClear={onClear} onCopy={onCopy} />
           </div>
         </div>
         <Scrollable

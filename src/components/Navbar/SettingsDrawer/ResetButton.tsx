@@ -1,7 +1,6 @@
 /* eslint-disable react-func/max-lines-per-function */
 import { useContext } from 'react';
 
-import { unwrapResult } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import { useDispatch } from 'react-redux';
@@ -12,8 +11,6 @@ import Button, { ButtonVariant } from '@/dls/Button/Button';
 import { ToastStatus, useToast } from '@/dls/Toast/Toast';
 import resetSettings from '@/redux/actions/reset-settings';
 import { DEFAULT_XSTATE_INITIAL_STATE } from '@/redux/defaultSettings/defaultSettings';
-import { persistDefaultSettings } from '@/redux/slices/defaultSettings';
-import { isLoggedIn } from '@/utils/auth/login';
 import { logButtonClick } from '@/utils/eventLogger';
 import { AudioPlayerMachineContext } from 'src/xstate/AudioPlayerMachineContext';
 import QueryParam from 'types/QueryParam';
@@ -61,20 +58,10 @@ const ResetButton = () => {
     }
   };
 
-  const onResetSettingsClicked = async () => {
+  const onResetSettingsClicked = () => {
     logButtonClick('reset_settings');
-    if (isLoggedIn()) {
-      try {
-        await dispatch(persistDefaultSettings(lang)).then(unwrapResult);
-        resetAndSetInitialState();
-        cleanupUrlAndShowSuccess();
-      } catch {
-        toast(t('error.general'), { status: ToastStatus.Error });
-      }
-    } else {
-      resetAndSetInitialState();
-      cleanupUrlAndShowSuccess();
-    }
+    resetAndSetInitialState();
+    cleanupUrlAndShowSuccess();
   };
 
   return (

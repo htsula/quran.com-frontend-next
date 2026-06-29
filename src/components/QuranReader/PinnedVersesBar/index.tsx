@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -10,7 +10,6 @@ import copyPinnedVerses from '../PinnedVerses/utils/copyPinnedVerses';
 import styles from './PinnedVersesBar.module.scss';
 import PinnedVersesContent from './PinnedVersesContent';
 
-import AddNoteModal from '@/components/Notes/modal/AddNoteModal';
 import DataContext from '@/contexts/DataContext';
 import { ToastStatus, useToast } from '@/dls/Toast/Toast';
 import usePinnedVerseSync from '@/hooks/usePinnedVerseSync';
@@ -20,9 +19,8 @@ import { openStudyMode } from '@/redux/slices/QuranReader/studyMode';
 import { selectSelectedTranslations } from '@/redux/slices/QuranReader/translations';
 import ChaptersData from '@/types/ChaptersData';
 import { areArraysEqual } from '@/utils/array';
-import { isLoggedIn } from '@/utils/auth/login';
 import { logButtonClick } from '@/utils/eventLogger';
-import { getChapterWithStartingVerseUrl, getLoginNavigationUrl } from '@/utils/navigation';
+import { getChapterWithStartingVerseUrl } from '@/utils/navigation';
 
 const PinnedVersesBar: React.FC = () => {
   const { t, lang } = useTranslation('quran-reader');
@@ -36,7 +34,6 @@ const PinnedVersesBar: React.FC = () => {
   const isSidebarNavigationVisible = useSelector(selectIsSidebarNavigationVisible);
 
   const { unpinVerseWithSync, clearPinnedWithSync } = usePinnedVerseSync();
-  const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
 
   const handleCompareClick = useCallback(() => {
     logButtonClick('pinned_bar_compare');
@@ -88,50 +85,25 @@ const PinnedVersesBar: React.FC = () => {
     [router],
   );
 
-  const handleAddNote = useCallback(() => {
-    logButtonClick('pinned_menu_add_note');
-    if (!isLoggedIn()) {
-      router.push(getLoginNavigationUrl(router.asPath));
-      return;
-    }
-
-    setIsNoteModalOpen(true);
-  }, [router]);
-
   if (pinnedVerses.length === 0) return null;
 
   return (
-    <>
-      <div
-        className={classNames(styles.container, {
-          [styles.withSidebarNavigation]: isSidebarNavigationVisible,
-        })}
-      >
-        <PinnedVersesContent
-          pinnedVerses={pinnedVerses}
-          selectedVerseKey={null}
-          showCompareButton
-          onVerseTagClick={handleVerseTagClick}
-          onRemoveVerse={handleRemoveVerse}
-          onCompareClick={handleCompareClick}
-          onClear={handleClear}
-          onCopy={handleCopy}
-          onAddNote={handleAddNote}
-        />
-      </div>
-
-      {isLoggedIn() && (
-        <>
-          <AddNoteModal
-            showRanges
-            isModalOpen={isNoteModalOpen}
-            onModalClose={() => setIsNoteModalOpen(false)}
-            onMyNotes={() => setIsNoteModalOpen(false)}
-            verseKeys={pinnedVerseKeys}
-          />
-        </>
-      )}
-    </>
+    <div
+      className={classNames(styles.container, {
+        [styles.withSidebarNavigation]: isSidebarNavigationVisible,
+      })}
+    >
+      <PinnedVersesContent
+        pinnedVerses={pinnedVerses}
+        selectedVerseKey={null}
+        showCompareButton
+        onVerseTagClick={handleVerseTagClick}
+        onRemoveVerse={handleRemoveVerse}
+        onCompareClick={handleCompareClick}
+        onClear={handleClear}
+        onCopy={handleCopy}
+      />
+    </div>
   );
 };
 

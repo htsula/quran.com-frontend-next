@@ -3,7 +3,6 @@
 /* eslint-disable global-require */
 
 import { RootState } from '../RootState';
-import NotificationsState from '../types/NotificationsState';
 
 import { DefaultSettings } from '@/redux/defaultSettings/defaultSettings';
 import AudioState from '@/redux/types/AudioState';
@@ -30,7 +29,6 @@ export const getStoreInitialState = (locale: string): RootState => {
     // @ts-ignore
     [SliceName.AUDIO_PLAYER_STATE]: getAudioPlayerStateInitialState(locale),
     [SliceName.DEFAULT_SETTINGS]: { isUsingDefaultSettings: true },
-    [SliceName.NOTIFICATIONS]: getNotificationsInitialState(locale),
   };
 };
 
@@ -78,8 +76,4 @@ export const getTafsirsInitialState = (locale = DEFAULT_LOCALE): TafsirsSettings
 };
 export const getAudioPlayerStateInitialState = (locale = DEFAULT_LOCALE): AudioState => {
   return getLocaleInitialStateByKey(locale, SliceName.AUDIO_PLAYER_STATE);
-};
-
-export const getNotificationsInitialState = (locale = DEFAULT_LOCALE): NotificationsState => {
-  return getLocaleInitialStateByKey(locale, SliceName.NOTIFICATIONS);
 };

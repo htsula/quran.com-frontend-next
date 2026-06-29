@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
-import { ParsedUrlQuery, stringify } from 'querystring';
+import { stringify } from 'querystring';
 
-import REVELATION_ORDER from './revelationOrder';
 import { searchIdToNavigationKey } from './search';
 import { getBasePath } from './url';
 import { getVerseAndChapterNumbersFromKey, getVerseNumberRangeFromKey } from './verse';
@@ -36,31 +35,8 @@ export const AUTH_ROUTES = [
   ROUTES.COMPLETE_SIGNUP,
 ];
 
-/**
- * routes that require authentication
- */
-export const PROTECTED_ROUTES = [ROUTES.READING_GOAL_PROGRESS, ROUTES.COMPLETE_SIGNUP];
-
-export const EXTERNAL_ROUTES = {
-  QURAN_REFLECT_ANDROID:
-    'https://play.google.com/store/apps/details?id=com.quranreflect.quranreflect&hl=en',
-  QURAN_REFLECT_IOS: 'https://apps.apple.com/us/app/quranreflect/id1444969758',
-};
-
-export const QURAN_URL = 'https://quran.com';
 export const RADIO_URL = '/radio';
 export const RECITERS_URL = '/reciters';
-
-/**
- * Get the href link to a verse.
- *
- * @param {string} verseKey
- * @returns {string}
- */
-export const getVerseNavigationUrlByVerseKey = (verseKey: string): string => {
-  const [chapterId, verseNumber] = getVerseAndChapterNumbersFromKey(verseKey);
-  return `/${chapterId}/${verseNumber}`;
-};
 
 /**
  * Get the href link to a verse range e.g. 3:5-7.
@@ -191,53 +167,6 @@ export const getSurahNavigationUrl = (surahIdOrSlug: string | number): string =>
   `/${surahIdOrSlug}`;
 
 /**
- * Get the href link to the previous surah.
- *
- * @param {number} chapterNumber
- * @param {boolean} isReadingByRevelationOrder
- * @returns  {string}
- */
-export const getPreviousSurahNavigationUrl = (
-  chapterNumber: number,
-  isReadingByRevelationOrder?: boolean,
-): string => {
-  if (!isReadingByRevelationOrder) {
-    return getSurahNavigationUrl(chapterNumber - 1);
-  }
-  const currentChapterRevelationOrderIndex = REVELATION_ORDER.indexOf(chapterNumber);
-  const previousChapterRevelationOrderIndex = currentChapterRevelationOrderIndex - 1;
-
-  const previousChapterNumberByRevelationOrder =
-    REVELATION_ORDER[previousChapterRevelationOrderIndex];
-
-  return getSurahNavigationUrl(previousChapterNumberByRevelationOrder);
-};
-
-/**
- * Get the href link to the next surah.
- *
- * @param chapterNumber
- * @param isReadingByRevelationOrder
- * @returns  {string}
- */
-
-export const getNextSurahNavigationUrl = (
-  chapterNumber: number,
-  isReadingByRevelationOrder?: boolean,
-): string => {
-  if (!isReadingByRevelationOrder) {
-    return getSurahNavigationUrl(chapterNumber + 1);
-  }
-
-  const currentChapterRevelationOrderIndex = REVELATION_ORDER.indexOf(chapterNumber);
-  const nextChapterRevelationOrderIndex = currentChapterRevelationOrderIndex + 1;
-
-  const nextChapterNumberByRevelationOrder = REVELATION_ORDER[nextChapterRevelationOrderIndex];
-
-  return getSurahNavigationUrl(nextChapterNumberByRevelationOrder);
-};
-
-/**
  * Generate the navigation url based on the type.
  *
  * @param {SearchNavigationType} type
@@ -334,34 +263,7 @@ export const getReciterChapterNavigationUrl = (reciterId: string, chapterId: str
 export const getCanonicalUrl = (lang: string, path: string): string =>
   `${getBasePath()}${lang === 'en' ? '' : `/${lang}`}${path}`;
 
-export const getProfileNavigationUrl = () => {
-  return '/profile';
-};
-
-export const getReadingGoalNavigationUrl = (example?: string) =>
-  example && example.trim() !== ''
-    ? `/reading-goal?example=${encodeURIComponent(example)}`
-    : '/reading-goal';
-export const getLoginNavigationUrl = (redirectTo?: string) =>
-  `/login${redirectTo ? `?${QueryParam.REDIRECT_TO}=${encodeURIComponent(redirectTo)}` : ''}`;
-
-export const getReadingGoalProgressNavigationUrl = () => '/reading-goal/progress';
-
 export const getFirstTimeReadingGuideNavigationUrl = () => '/first-time-reading-guide';
-
-export const getNotesNavigationUrl = () => '/notes-and-reflections';
-
-export const getForgotPasswordNavigationUrl = () => `/forgot-password`;
-
-export const getResetPasswordNavigationUrl = () => `/reset-password`;
-
-export const getVerifyEmailNavigationUrl = (email?: string) =>
-  `/verify-email${email ? `?${QueryParam.EMAIL}=${email}` : ''}`;
-
-export const getQuranMediaMakerNavigationUrl = (params?: ParsedUrlQuery) => {
-  const baseUrl = '/media';
-  return params ? `${baseUrl}?${stringify(params)}` : baseUrl;
-};
 
 /**
  * Build a url with query parameters
@@ -404,13 +306,4 @@ export const fakeNavigate = (url: string, locale: string) => {
  */
 export const fakeNavigateReplace = (url: string, locale: string) => {
   window.history.replaceState({}, '', `${locale === 'en' ? '' : `/${locale}`}${url}`);
-};
-
-/**
- * Scroll to the top of the page.
- */
-export const scrollWindowToTop = (): void => {
-  if (typeof window !== 'undefined') {
-    window.scrollTo(0, 0);
-  }
 };

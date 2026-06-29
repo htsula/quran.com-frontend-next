@@ -12,11 +12,8 @@ import useLanguageChange from './useLanguageChange';
 
 import resetSettings from '@/redux/actions/reset-settings';
 import syncLocaleDependentSettings from '@/redux/actions/sync-locale-dependent-settings';
-import { addOrUpdateUserPreference } from '@/utils/auth/api';
-import { isLoggedIn } from '@/utils/auth/login';
 import { setLocaleCookie } from '@/utils/cookies';
 import { logValueChange } from '@/utils/eventLogger';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 declare global {
   // React checks this global flag to decide whether `act()` semantics are enabled.
@@ -48,14 +45,6 @@ vi.mock('@/redux/actions/sync-locale-dependent-settings', () => ({
 
 vi.mock('@/redux/actions/reset-settings', () => ({
   default: vi.fn((locale: string) => ({ type: 'resetSettings', payload: { locale } })),
-}));
-
-vi.mock('@/utils/auth/api', () => ({
-  addOrUpdateUserPreference: vi.fn().mockResolvedValue(undefined),
-}));
-
-vi.mock('@/utils/auth/login', () => ({
-  isLoggedIn: vi.fn(),
 }));
 
 vi.mock('@/utils/cookies', () => ({
@@ -93,8 +82,7 @@ describe('useLanguageChange', () => {
     vi.mocked(useDispatch).mockReturnValue(dispatch);
   });
 
-  it('dispatches syncLocaleDependentSettings for guests when not using default settings', async () => {
-    vi.mocked(isLoggedIn).mockReturnValue(false);
+  it('dispatches syncLocaleDependentSettings when not using default settings', async () => {
     vi.mocked(useSelector).mockReturnValue(false); // isUsingDefaultSettings=false
 
     const { result } = renderHook(() => useLanguageChange());
@@ -109,13 +97,11 @@ describe('useLanguageChange', () => {
     });
     expect(dispatch).toHaveBeenCalledWith(expect.any(Function));
     expect(dispatch).not.toHaveBeenCalledWith({ type: 'resetSettings', payload: { locale: 'en' } });
-    expect(addOrUpdateUserPreference).not.toHaveBeenCalled();
     expect(setLocaleCookie).toHaveBeenCalledWith('en');
     expect(logValueChange).toHaveBeenCalledWith('locale', 'ar', 'en');
   });
 
-  it('does not dispatch syncLocaleDependentSettings for guests when using default settings', async () => {
-    vi.mocked(isLoggedIn).mockReturnValue(false);
+  it('does not dispatch syncLocaleDependentSettings when using default settings', async () => {
     vi.mocked(useSelector).mockReturnValue(true); // isUsingDefaultSettings=true
 
     const { result } = renderHook(() => useLanguageChange());
@@ -127,29 +113,9 @@ describe('useLanguageChange', () => {
     expect(syncLocaleDependentSettings).not.toHaveBeenCalled();
     expect(resetSettings).toHaveBeenCalledWith('en');
     expect(dispatch).toHaveBeenCalledWith({ type: 'resetSettings', payload: { locale: 'en' } });
-    expect(addOrUpdateUserPreference).not.toHaveBeenCalled();
   });
 
-  it('does not dispatch syncLocaleDependentSettings for logged-in users', async () => {
-    vi.mocked(isLoggedIn).mockReturnValue(true);
-    vi.mocked(useSelector).mockReturnValue(false); // isUsingDefaultSettings=false
-
-    const { result } = renderHook(() => useLanguageChange());
-
-    await act(async () => {
-      await result.current.onLanguageChange('en');
-    });
-
-    expect(syncLocaleDependentSettings).not.toHaveBeenCalled();
-    expect(addOrUpdateUserPreference).toHaveBeenCalledWith(
-      PreferenceGroup.LANGUAGE,
-      'en',
-      PreferenceGroup.LANGUAGE,
-    );
-  });
-
-  it('still applies resetSettings when using default settings (independent of login)', async () => {
-    vi.mocked(isLoggedIn).mockReturnValue(true);
+  it('still applies resetSettings when using default settings', async () => {
     vi.mocked(useSelector).mockReturnValue(true); // isUsingDefaultSettings=true
 
     const { result } = renderHook(() => useLanguageChange());

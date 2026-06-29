@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import resetSettings from '@/redux/actions/reset-settings';
-import syncUserPreferences from '@/redux/actions/sync-user-preferences';
 import { getTafsirsInitialState } from '@/redux/defaultSettings/util';
 import { RootState } from '@/redux/RootState';
 import SliceName from '@/redux/types/SliceName';
-import TafsirsSettings from '@/redux/types/TafsirsSettings';
 import { areArraysEqual } from '@/utils/array';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 export const tafsirsSlice = createSlice({
   name: SliceName.TAFSIRS,
@@ -28,22 +25,6 @@ export const tafsirsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(resetSettings, (state, action) => {
       return getTafsirsInitialState(action.payload.locale);
-    });
-    builder.addCase(syncUserPreferences, (state, action) => {
-      const {
-        payload: { userPreferences, locale },
-      } = action;
-      const remotePreferences = userPreferences[PreferenceGroup.TAFSIRS] as TafsirsSettings;
-      if (remotePreferences) {
-        const { selectedTafsirs: defaultTafsirs } = getTafsirsInitialState(locale);
-        const { selectedTafsirs: remoteTafsirs } = remotePreferences;
-        return {
-          ...state,
-          ...remotePreferences,
-          isUsingDefaultTafsirs: areArraysEqual(defaultTafsirs, remoteTafsirs),
-        };
-      }
-      return state;
     });
   },
 });

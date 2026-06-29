@@ -7,15 +7,11 @@ import { useRouter } from 'next/router';
 
 import AppContent from '@/components/AppContent/AppContent';
 import FontPreLoader from '@/components/Fonts/FontPreLoader';
-import { OnboardingProvider } from '@/components/Onboarding/OnboardingProvider';
 import SessionIncrementor from '@/components/SessionIncrementor';
-import ThirdPartyScripts from '@/components/ThirdPartyScripts/ThirdPartyScripts';
-import { AuthProvider } from '@/contexts/AuthContext';
 import ToastContainerProvider from '@/dls/Toast/ToastProvider';
 import ReduxProvider from '@/redux/Provider';
 import { API_HOST } from '@/utils/api';
 import { logAndRedirectUnsupportedLogicalCSS } from '@/utils/css';
-import * as gtag from '@/utils/gtag';
 import { getDir } from '@/utils/locale';
 import DataContext from 'src/contexts/DataContext';
 import ThemeProvider from 'src/styles/ThemeProvider';
@@ -57,14 +53,8 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
     return undefined;
   }, [languageDirection]);
 
-  useEffect(() => {
-    const handleRouteChange = (url: string) => gtag.pageView(url);
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => router.events.off('routeChangeComplete', handleRouteChange);
-  }, [router.events]);
-
   return (
-    <AuthProvider>
+    <>
       <Head>
         <link rel="apple-touch-icon" sizes="192x192" href="/images/logo/Logo@192x192.png" />
         <link rel="manifest" href="/manifest.json" />
@@ -89,9 +79,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
               <AudioPlayerMachineProvider>
                 <ReduxProvider locale={resolvedLocale}>
                   <ThemeProvider>
-                    <OnboardingProvider>
-                      <AppContent Component={Component} pageProps={pageProps} />
-                    </OnboardingProvider>
+                    <AppContent Component={Component} pageProps={pageProps} />
                   </ThemeProvider>
                   <SessionIncrementor />
                 </ReduxProvider>
@@ -100,8 +88,7 @@ function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
           </ToastContainerProvider>
         </TooltipProvider>
       </DirectionProvider>
-      <ThirdPartyScripts />
-    </AuthProvider>
+    </>
   );
 }
 

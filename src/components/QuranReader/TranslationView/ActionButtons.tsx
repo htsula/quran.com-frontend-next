@@ -5,7 +5,6 @@ import TranslationsButton from '../ReadingView/TranslationsButton';
 import ActionItem from './ActionItem';
 import styles from './TranslationViewCell.module.scss';
 
-import TranslationViewNoteAction from '@/components/Notes/modal/TranslationViewNoteAction';
 import CopyButton from '@/components/QuranReader/ReadingView/CopyButton';
 import OverflowVerseActionsMenu from '@/components/Verse/OverflowVerseActionsMenu';
 import PlayVerseAudioButton from '@/components/Verse/PlayVerseAudioButton';
@@ -69,13 +68,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
               isTranslationView={isTranslationView}
               isMenu={false}
               onClick={openShareModal}
-            />
-          </ActionItem>
-
-          <ActionItem>
-            <TranslationViewNoteAction
-              verseKey={verse.verseKey}
-              isInsideStudyMode={shouldUseModalZIndex}
             />
           </ActionItem>
 

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Button, { ButtonShape, ButtonVariant } from '../dls/Button/Button';
 import PopoverMenu, { PopoverMenuExpandDirection } from '../dls/PopoverMenu/PopoverMenu';
-import { ToastStatus, useToast } from '../dls/Toast/Toast';
 
 import styles from './LanguageSelector.module.scss';
 
@@ -16,13 +15,10 @@ import GlobeIcon from '@/icons/globe.svg';
 import resetSettings from '@/redux/actions/reset-settings';
 import syncLocaleDependentSettings from '@/redux/actions/sync-locale-dependent-settings';
 import { selectIsUsingDefaultSettings } from '@/redux/slices/defaultSettings';
-import { addOrUpdateUserPreference } from '@/utils/auth/api';
-import { isLoggedIn } from '@/utils/auth/login';
 import { setLocaleCookie } from '@/utils/cookies';
 import { logEvent, logValueChange } from '@/utils/eventLogger';
 import { getLocaleName } from '@/utils/locale';
 import i18nConfig from 'i18n.json';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 const { locales } = i18nConfig;
 
@@ -43,7 +39,6 @@ const LanguageSelector = ({
   const isUsingDefaultSettings = useSelector(selectIsUsingDefaultSettings);
   const dispatch = useDispatch();
   const { t, lang } = useTranslation('common');
-  const toast = useToast();
 
   /**
    * When the user changes the language, we will:
@@ -60,11 +55,10 @@ const LanguageSelector = ({
    */
   const onChange = async (newLocale: string) => {
     if (newLocale === lang) return;
-    const loggedIn = isLoggedIn();
 
-    // Guest-only: keep locale-dependent content tabs (tafsir, lessons, reflections, etc.)
-    // following defaults unless the user has customized those preferences.
-    if (!loggedIn && !isUsingDefaultSettings) {
+    // Keep locale-dependent content tabs (tafsir, etc.) following defaults
+    // unless the user has customized those preferences.
+    if (!isUsingDefaultSettings) {
       dispatch(syncLocaleDependentSettings({ prevLocale: lang, nextLocale: newLocale }));
     }
 
@@ -76,35 +70,6 @@ const LanguageSelector = ({
 
     await setLanguage(newLocale);
     setLocaleCookie(newLocale);
-
-    if (loggedIn) {
-      addOrUpdateUserPreference(
-        PreferenceGroup.LANGUAGE,
-        newLocale,
-        PreferenceGroup.LANGUAGE,
-      ).catch(() => {
-        toast(t('error.pref-persist-fail'), {
-          status: ToastStatus.Warning,
-          actions: [
-            {
-              text: t('undo'),
-              primary: true,
-              onClick: async () => {
-                await setLanguage(newLocale);
-                setLocaleCookie(newLocale);
-              },
-            },
-            {
-              text: t('continue'),
-              primary: false,
-              onClick: () => {
-                // do nothing
-              },
-            },
-          ],
-        });
-      });
-    }
   };
 
   const onOpenChange = (open: boolean) => {

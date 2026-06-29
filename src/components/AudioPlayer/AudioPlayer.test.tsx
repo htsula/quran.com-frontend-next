@@ -14,10 +14,6 @@ vi.mock('next/dynamic', () => ({
   },
 }));
 
-vi.mock('@/components/Onboarding/OnboardingProvider', () => ({
-  useOnboarding: () => ({ isActive: false }),
-}));
-
 vi.mock('react-redux', () => ({
   useSelector: () => false,
 }));

@@ -2,10 +2,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import resetSettings from '@/redux/actions/reset-settings';
-import syncUserPreferences from '@/redux/actions/sync-user-preferences';
 import { getReadingPreferencesInitialState } from '@/redux/defaultSettings/util';
 import { RootState } from '@/redux/RootState';
-import ReadingPreferences from '@/redux/types/ReadingPreferences';
 import SliceName from '@/redux/types/SliceName';
 import {
   ReadingPreference,
@@ -13,25 +11,6 @@ import {
   WordByWordType,
   WordClickFunctionality,
 } from '@/types/QuranReader';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
-
-const getWordByWordFieldsFromRemote = (p: ReadingPreferences) => {
-  if (p.wordByWordTooltipContentType !== undefined || p.wordByWordInlineContentType !== undefined) {
-    const tooltip = p.wordByWordTooltipContentType || [];
-    const inline = p.wordByWordInlineContentType || [];
-    const display: WordByWordDisplay[] = [];
-    if (tooltip.length > 0) display.push(WordByWordDisplay.TOOLTIP);
-    if (inline.length > 0) display.push(WordByWordDisplay.INLINE);
-    return { tooltip, inline, display };
-  }
-  const oldContent = p.wordByWordContentType || [];
-  const oldDisplay = p.wordByWordDisplay || [];
-  return {
-    tooltip: oldDisplay.includes(WordByWordDisplay.TOOLTIP) ? oldContent : [],
-    inline: oldDisplay.includes(WordByWordDisplay.INLINE) ? oldContent : [],
-    display: oldDisplay,
-  };
-};
 
 export const readingPreferencesSlice = createSlice({
   name: SliceName.READING_PREFERENCES,
@@ -90,25 +69,6 @@ export const readingPreferencesSlice = createSlice({
     builder.addCase(resetSettings, (unusedState, action) =>
       getReadingPreferencesInitialState(action.payload.locale),
     );
-    builder.addCase(syncUserPreferences, (state, action) => {
-      const remote = action.payload.userPreferences[PreferenceGroup.READING] as ReadingPreferences;
-      if (!remote) return state;
-      const { tooltip, inline, display } = getWordByWordFieldsFromRemote(remote);
-      const defLocale = getReadingPreferencesInitialState(
-        action.payload.locale,
-      ).selectedWordByWordLocale;
-      return {
-        ...state,
-        readingPreference: remote.readingPreference ?? state.readingPreference,
-        selectedWordByWordLocale: remote.selectedWordByWordLocale ?? state.selectedWordByWordLocale,
-        wordClickFunctionality: remote.wordClickFunctionality ?? state.wordClickFunctionality,
-        wordByWordTooltipContentType: tooltip,
-        wordByWordInlineContentType: inline,
-        wordByWordDisplay: display,
-        wordByWordContentType: tooltip,
-        isUsingDefaultWordByWordLocale: remote.selectedWordByWordLocale === defLocale,
-      };
-    });
   },
 });
 

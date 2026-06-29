@@ -2,12 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 
 import resetSettings from '@/redux/actions/reset-settings';
-import syncUserPreferences from '@/redux/actions/sync-user-preferences';
 import { getAudioPlayerStateInitialState } from '@/redux/defaultSettings/util';
 import { RootState } from '@/redux/RootState';
-import AudioState, { RepeatSettings } from '@/redux/types/AudioState';
+import { RepeatSettings } from '@/redux/types/AudioState';
 import SliceName from '@/redux/types/SliceName';
-import PreferenceGroup from 'types/auth/PreferenceGroup';
 
 export const selectAudioPlayerState = (state: RootState) => state.audioPlayerState;
 export const selectEnableAutoScrolling = (state: RootState) =>
@@ -47,19 +45,6 @@ export const audioPlayerStateSlice = createSlice({
       ...state,
       ...getAudioPlayerStateInitialState(action.payload.locale),
     }));
-    builder.addCase(syncUserPreferences, (state, action) => {
-      const {
-        payload: { userPreferences },
-      } = action;
-      const remotePreferences = userPreferences[PreferenceGroup.AUDIO] as AudioState;
-      if (remotePreferences) {
-        return {
-          ...state,
-          ...remotePreferences,
-        };
-      }
-      return state;
-    });
     // listen to redux-persist's REHYDRATE event
     builder.addCase(REHYDRATE, (state, action) => {
       // @ts-ignore

@@ -9,16 +9,14 @@ import Button, { ButtonShape, ButtonSize, ButtonVariant } from '@/dls/Button/But
 import PopoverMenu, { PopoverMenuAlign } from '@/dls/PopoverMenu/PopoverMenu';
 import CopyIcon from '@/icons/copy.svg';
 import OverflowMenuIcon from '@/icons/menu_more_horiz.svg';
-import NotesIcon from '@/icons/notes-with-pencil.svg';
 import TrashIcon from '@/icons/trash.svg';
 
 interface PinnedVersesMenuProps {
   onClear: () => void;
   onCopy?: () => void;
-  onAddNote?: () => void;
 }
 
-const PinnedVersesMenu: React.FC<PinnedVersesMenuProps> = ({ onClear, onCopy, onAddNote }) => {
+const PinnedVersesMenu: React.FC<PinnedVersesMenuProps> = ({ onClear, onCopy }) => {
   const { t } = useTranslation('quran-reader');
 
   return (
@@ -38,15 +36,6 @@ const PinnedVersesMenu: React.FC<PinnedVersesMenuProps> = ({ onClear, onCopy, on
         </Button>
       }
     >
-      <PopoverMenu.Item
-        icon={<NotesIcon className={menuStyles.menuItemIcon} />}
-        onClick={onAddNote}
-        shouldCloseMenuAfterClick
-        className={menuStyles.menuItem}
-      >
-        <span className={menuStyles.menuItemText}>{t('take-a-note')}</span>
-      </PopoverMenu.Item>
-
       <PopoverMenu.Item
         icon={<CopyIcon className={menuStyles.menuItemIcon} />}
         onClick={onCopy}
