@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { getUserIdCookie } from './auth/login';
-
 import SearchService from '@/types/Search/SearchService';
 import SearchQuerySource from '@/types/SearchQuerySource';
 import SearchType from '@/types/SearchType';
-import { isFirebaseEnabled } from 'src/lib/firebase';
 
 /**
  * Filter out empty search queries.
@@ -22,23 +19,10 @@ const getSearchQuery = (rawSearchQuery: string): string => {
   return rawSearchQuery.trim();
 };
 
-export const logEvent = async (eventName: string, params?: { [key: string]: any }) => {
-  if (isFirebaseEnabled) {
-    import('src/lib/firebase').then((firebaseModule) => {
-      const userId = getUserIdCookie();
-      // Set GA4 User-ID (idempotent, safe to call on every event)
-      if (userId) {
-        firebaseModule.analytics().setUserId(userId);
-      }
-      const eventParams = {
-        ...params,
-        ...(userId && { user_id: userId }),
-      };
-      // eslint-disable-next-line i18next/no-literal-string
-      firebaseModule.analytics().logEvent(eventName, eventParams);
-    });
-  }
-};
+// Analytics logging has been removed. These functions are kept as no-ops so the
+// many call sites across the app continue to work without an analytics backend.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const logEvent = async (eventName: string, params?: { [key: string]: any }) => {};
 
 /**
  * Log when a button is clicked.

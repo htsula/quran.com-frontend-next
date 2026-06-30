@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { ParsedUrlQuery } from 'querystring';
-
 import { useRouter } from 'next/router';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -27,7 +25,7 @@ type QueryParamsData = Record<
     isValidQueryParam: (
       queryParamValue?: any,
       chaptersData?: ChaptersData,
-      query?: ParsedUrlQuery,
+      query?: Record<string, string | string[] | undefined>,
       reduxSelectorValueOrValues?: any,
       extraData?: any,
     ) => boolean;

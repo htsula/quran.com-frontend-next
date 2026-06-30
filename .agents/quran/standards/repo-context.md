@@ -87,7 +87,6 @@ repository.
 - Functional components with TypeScript interfaces for props
 - Custom hooks for reusable logic
 - Storybook stories for component development
-- Form building with `FormBuilder` component
 
 ### Testing Strategy
 

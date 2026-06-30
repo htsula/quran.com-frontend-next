@@ -7,7 +7,6 @@
 /* eslint-disable import/no-dynamic-require */
 const CryptoJS = require('crypto-js');
 const range = require('lodash/range');
-const fetch = require('node-fetch');
 
 const englishChaptersData = require('./data/chapters/en.json');
 const { locales } = require('./i18n.json');

@@ -1,6 +1,4 @@
 /* eslint-disable max-lines */
-import { stringify } from 'querystring';
-
 import { searchIdToNavigationKey } from './search';
 import { getBasePath } from './url';
 import { getVerseAndChapterNumbersFromKey, getVerseNumberRangeFromKey } from './verse';
@@ -124,7 +122,9 @@ export const getVerseTafsirNavigationUrl = (
   verseNumber: number,
   tafsirId?: string,
 ): string =>
-  `/${chapterIdOrSlug}/${verseNumber}/tafsirs${tafsirId ? `?${stringify({ tafsirId })}` : ''}`;
+  `/${chapterIdOrSlug}/${verseNumber}/tafsirs${
+    tafsirId ? `?${new URLSearchParams({ tafsirId }).toString()}` : ''
+  }`;
 
 /**
  * Get the href link to selected tafsir for Ayah.
