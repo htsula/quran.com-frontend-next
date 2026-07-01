@@ -1,4 +1,8 @@
-# quran.com-frontend — Personal Fork
+# Quranbasic.com
+
+This project is available on quranbasic.com to use.
+
+## quran.com-frontend — Personal Fork
 
 This is a personal fork of the [Quran Foundation's](https://quran.foundation) open-source Next.js
 frontend for [quran.com](https://quran.com). The goal is a leaner, less-bloated reading experience
