@@ -9,7 +9,7 @@ const CryptoJS = require('crypto-js');
 const range = require('lodash/range');
 
 const englishChaptersData = require('./data/chapters/en.json');
-const { locales } = require('./i18n.json');
+const { locales, defaultLocale } = require('./i18n.json');
 
 const isProduction = process.env.NEXT_PUBLIC_VERCEL_ENV === 'production';
 const isDevelopment = process.env.NEXT_PUBLIC_VERCEL_ENV === 'development';
@@ -123,6 +123,33 @@ module.exports = {
   siteUrl: BASE_PATH,
   sitemapSize: 20000,
   generateRobotsTxt: isProduction,
+  // Keep chapter (surah) pages crawlable in every language and English verses
+  // crawlable, but block the write-heavy long-tail so crawlers can't trigger a
+  // flood of ISR regenerations. See '/*/...' spanning behaviour: '*' matches '/'
+  // so path depth is controlled via keyword segments + non-English locale prefixes.
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: '*',
+        allow: '/_next/',
+        disallow: [
+          // long-tail sections - blocked in every language, including English
+          '/*/tafsirs',
+          '/*/related-verses',
+          '/*/hadith',
+          '/page/',
+          '/juz/',
+          '/hizb/',
+          '/rub/',
+          '/reciters',
+          '/search',
+          // non-English locales: block verses and anything deeper than the
+          // chapter page ('/ar/2' stays allowed, '/ar/2/255' is blocked).
+          ...locales.filter((locale) => locale !== defaultLocale).map((locale) => `/${locale}/*/`),
+        ],
+      },
+    ],
+  },
   exclude: [...locales.map((locale) => `/${locale}`), '/*/search'],
   alternateRefs: locales.map((locale) => ({
     href: `${BASE_PATH}/${locale}`,
