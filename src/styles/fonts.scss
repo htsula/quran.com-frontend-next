@@ -16,16 +16,18 @@
 @font-face {
   font-family: 'UthmanicHafs';
   src: local('KFGQPC HAFS Uthmanic Script'),
-    url('/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2') format('woff2'),
-    url('/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.ttf') format('truetype');
+    url('https://static.qurancdn.com/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2')
+      format('woff2'),
+    url('https://static.qurancdn.com/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.ttf')
+      format('truetype');
   font-display: swap;
 }
 
 // TODO: regenerate this font and add font-family name
 @font-face {
   font-family: 'surahnames';
-  src: url('/fonts/quran/surah-names/v1/sura_names.woff2'),
-    url('/fonts/quran/quran/surah-names/v1/sura_names.woff') format('woff');
+  src: url('https://static.qurancdn.com/fonts/quran/surah-names/v1/sura_names.woff2'),
+    url('https://static.qurancdn.com/fonts/quran/surah-names/v1/sura_names.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

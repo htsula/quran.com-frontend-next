@@ -9,6 +9,13 @@ import Verse from 'types/Verse';
 
 const QCFFontCodes = [QuranFont.MadaniV1, QuranFont.MadaniV2, QuranFont.TajweedV4];
 
+/**
+ * QCF fonts (v1 and v2) are served from the Quran.com CDN rather than being
+ * bundled inside the deployment. Tajweed v4 (colrv1/ot-svg) is not hosted
+ * there yet and is still served from the same origin.
+ */
+export const QCF_FONTS_CDN_BASE_URL = 'https://static.qurancdn.com';
+
 export enum QCFFontVersion {
   V1 = 'v1',
   V2 = 'v2',
@@ -65,16 +72,18 @@ const getFontPath = (
   theme: ThemeTypeVariant,
 ) => {
   let path = version as string;
+  const isV4 = quranFont === QuranFont.TajweedV4;
   // if it's TajweedV4, we need to add the ot-svg or colrv1 path base on the browser
   // colrv1 should be used for all browsers desktop & mobile except Firefox dark mode
-  if (quranFont === QuranFont.TajweedV4) {
+  if (isV4) {
     const isFirefoxDarkMode = isFirefox() && theme === ThemeType.Dark;
     path = isFirefoxDarkMode ? `${path}/ot-svg/${theme}` : `${path}/colrv1`;
   }
 
-  const woff2 = `/fonts/quran/hafs/${path}/woff2/p${pageNumber}.woff2`;
-  const woff = `/fonts/quran/hafs/${path}/woff/p${pageNumber}.woff`;
-  const ttf = `/fonts/quran/hafs/${path}/ttf/p${pageNumber}.ttf`;
+  const baseUrl = isV4 ? '' : QCF_FONTS_CDN_BASE_URL;
+  const woff2 = `${baseUrl}/fonts/quran/hafs/${path}/woff2/p${pageNumber}.woff2`;
+  const woff = `${baseUrl}/fonts/quran/hafs/${path}/woff/p${pageNumber}.woff`;
+  const ttf = `${baseUrl}/fonts/quran/hafs/${path}/ttf/p${pageNumber}.ttf`;
   return { woff2, woff, ttf };
 };
 

@@ -2,11 +2,13 @@ import React from 'react';
 
 import Head from 'next/head';
 
+import { QCF_FONTS_CDN_BASE_URL } from '@/utils/fontFaceHelper';
+
 const DEFAULT_LOCALE = 'en';
 
 const SURAH_NAMES_FONT = {
   type: 'font/woff2',
-  location: '/fonts/quran/surah-names/v1/sura_names.woff2',
+  location: `${QCF_FONTS_CDN_BASE_URL}/fonts/quran/surah-names/v1/sura_names.woff2`,
 };
 
 const LOCALE_PRELOADED_FONTS = {
@@ -41,7 +43,10 @@ const INDOPAK = {
 
 const QURAN_READER_LOCALE_PRELOADED_FONTS = {
   [DEFAULT_LOCALE]: [
-    { type: 'font/woff2', location: '/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2' },
+    {
+      type: 'font/woff2',
+      location: `${QCF_FONTS_CDN_BASE_URL}/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2`,
+    },
   ],
   bn: [INDOPAK],
   ur: [INDOPAK],
