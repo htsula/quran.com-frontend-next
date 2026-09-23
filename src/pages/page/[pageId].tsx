@@ -27,10 +27,7 @@ import { PAGES_MUSHAF_MAP } from '@/utils/page';
 import getPageVersesParams from '@/utils/pages/getPageVersesParams';
 import getQuranReaderData from '@/utils/pages/getQuranReaderData';
 import { getPageOrJuzMetaDescription } from '@/utils/seo';
-import {
-  ONE_WEEK_REVALIDATION_PERIOD_SECONDS,
-  REVALIDATION_PERIOD_ON_ERROR_SECONDS,
-} from '@/utils/staticPageGeneration';
+import { REVALIDATION_PERIOD_ON_ERROR_SECONDS } from '@/utils/staticPageGeneration';
 import { isValidPageNumber } from '@/utils/validator';
 import ChaptersData from 'types/ChaptersData';
 
@@ -141,7 +138,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         chaptersData,
         pageVerses: getQuranReaderData(pagesLookupResponse, pageVersesResponse),
       },
-      revalidate: ONE_WEEK_REVALIDATION_PERIOD_SECONDS, // verses will be generated at runtime if not found in the cache, then cached for subsequent requests for 7 days.
+      revalidate: false, // Quran text never changes: generated on first request, then cached until the next deployment.
     };
   } catch (error) {
     logErrorToSentry(error, {

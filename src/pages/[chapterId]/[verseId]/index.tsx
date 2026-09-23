@@ -16,10 +16,7 @@ import { getAllChaptersData, getChapterData } from '@/utils/chapter';
 import { getLanguageAlternates, toLocalizedNumber, toLocalizedVersesRange } from '@/utils/locale';
 import { getCanonicalUrl, getVerseNavigationUrl } from '@/utils/navigation';
 import getPlainTranslationText from '@/utils/plainTranslationText';
-import {
-  REVALIDATION_PERIOD_ON_ERROR_SECONDS,
-  ONE_WEEK_REVALIDATION_PERIOD_SECONDS,
-} from '@/utils/staticPageGeneration';
+import { REVALIDATION_PERIOD_ON_ERROR_SECONDS } from '@/utils/staticPageGeneration';
 import {
   getToAndFromFromRange,
   isValidVerseRange,
@@ -164,7 +161,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         },
         isVerse,
       },
-      revalidate: ONE_WEEK_REVALIDATION_PERIOD_SECONDS, // verses will be generated at runtime if not found in the cache, then cached for subsequent requests for 7 days.
+      revalidate: false, // Quran text never changes: generated on first request, then cached until the next deployment.
     };
   } catch (error) {
     logErrorToSentry(error, {

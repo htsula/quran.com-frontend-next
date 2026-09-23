@@ -10,11 +10,13 @@ import Verse from 'types/Verse';
 const QCFFontCodes = [QuranFont.MadaniV1, QuranFont.MadaniV2, QuranFont.TajweedV4];
 
 /**
- * QCF fonts (v1 and v2) are served from the Quran.com CDN rather than being
- * bundled inside the deployment. Tajweed v4 (colrv1/ot-svg) is not hosted
- * there yet and is still served from the same origin.
+ * QCF fonts are served from CDNs rather than being bundled inside the deployment
+ * (they are ~2GB and would be re-uploaded with every deployment).
+ * v1/v2 come from the Quran.com CDN. Tajweed v4 (colrv1/ot-svg) is not hosted
+ * there, so it comes from the Quran Foundation CDN instead.
  */
 export const QCF_FONTS_CDN_BASE_URL = 'https://static.qurancdn.com';
+const TAJWEED_V4_FONTS_CDN_BASE_URL = 'https://verses.quran.foundation';
 
 export enum QCFFontVersion {
   V1 = 'v1',
@@ -80,7 +82,7 @@ const getFontPath = (
     path = isFirefoxDarkMode ? `${path}/ot-svg/${theme}` : `${path}/colrv1`;
   }
 
-  const baseUrl = isV4 ? '' : QCF_FONTS_CDN_BASE_URL;
+  const baseUrl = isV4 ? TAJWEED_V4_FONTS_CDN_BASE_URL : QCF_FONTS_CDN_BASE_URL;
   const woff2 = `${baseUrl}/fonts/quran/hafs/${path}/woff2/p${pageNumber}.woff2`;
   const woff = `${baseUrl}/fonts/quran/hafs/${path}/woff/p${pageNumber}.woff`;
   const ttf = `${baseUrl}/fonts/quran/hafs/${path}/ttf/p${pageNumber}.ttf`;

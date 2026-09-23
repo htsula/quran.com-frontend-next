@@ -158,7 +158,7 @@ const QuranWord = ({
     wordText = (
       <GlyphWord
         font={font}
-        qpcUthmaniHafs={word.qpcUthmaniHafs}
+        qpcUthmaniHafs={word.qpcUthmaniHafs || word.textUthmani || ''}
         pageNumber={word.pageNumber}
         textCodeV1={word.codeV1}
         textCodeV2={word.codeV2}

@@ -27,10 +27,7 @@ import {
   getVerseNavigationUrl,
 } from '@/utils/navigation';
 import { formatStringNumber } from '@/utils/number';
-import {
-  REVALIDATION_PERIOD_ON_ERROR_SECONDS,
-  ONE_WEEK_REVALIDATION_PERIOD_SECONDS,
-} from '@/utils/staticPageGeneration';
+import { REVALIDATION_PERIOD_ON_ERROR_SECONDS } from '@/utils/staticPageGeneration';
 import { isRangesStringValid, isValidChapterId, isValidVerseKey } from '@/utils/validator';
 import { getVerseAndChapterNumbersFromKey } from '@/utils/verse';
 import { parseVerseRange, generateVerseKeysBetweenTwoVerseKeys } from '@/utils/verseKeys';
@@ -264,7 +261,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
           versesResponse,
           quranReaderDataType: QuranReaderDataType.Ranges,
         },
-        revalidate: ONE_WEEK_REVALIDATION_PERIOD_SECONDS, // chapters will be generated at runtime if not found in the cache, then cached for subsequent requests for 7 days.
+        revalidate: false, // Quran text never changes: generated on first request, then cached until the next deployment.
       };
     }
     // if it's a verseKey
@@ -319,7 +316,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
           ? QuranReaderDataType.Chapter
           : QuranReaderDataType.Verse,
       },
-      revalidate: ONE_WEEK_REVALIDATION_PERIOD_SECONDS, // chapters will be generated at runtime if not found in the cache, then cached for subsequent requests for 7 days.
+      revalidate: false, // Quran text never changes: generated on first request, then cached until the next deployment.
     };
   } catch (error) {
     logErrorToSentry(error, {

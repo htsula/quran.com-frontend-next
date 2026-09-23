@@ -16,10 +16,7 @@ import { getLanguageAlternates, toLocalizedNumber } from '@/utils/locale';
 import { getCanonicalUrl, getJuzNavigationUrl } from '@/utils/navigation';
 import { formatStringNumber } from '@/utils/number';
 import { getPageOrJuzMetaDescription } from '@/utils/seo';
-import {
-  REVALIDATION_PERIOD_ON_ERROR_SECONDS,
-  ONE_WEEK_REVALIDATION_PERIOD_SECONDS,
-} from '@/utils/staticPageGeneration';
+import { REVALIDATION_PERIOD_ON_ERROR_SECONDS } from '@/utils/staticPageGeneration';
 import { isValidJuzId } from '@/utils/validator';
 import { generateVerseKeysBetweenTwoVerseKeys } from '@/utils/verseKeys';
 import { VersesResponse } from 'types/ApiResponses';
@@ -106,7 +103,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
         chaptersData,
         juzVerses: juzVersesResponse,
       },
-      revalidate: ONE_WEEK_REVALIDATION_PERIOD_SECONDS, // verses will be generated at runtime if not found in the cache, then cached for subsequent requests for 7 days.
+      revalidate: false, // Quran text never changes: generated on first request, then cached until the next deployment.
     };
   } catch (error) {
     logErrorToSentry(error, {
